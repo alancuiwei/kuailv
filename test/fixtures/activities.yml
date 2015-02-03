@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  start_city: MyString
+  end_city: MyString
+  start_time: 2015-02-03
+  end_time: 2015-02-03
+  founder: MyString
+  f_wechatid: MyString
+  remarks: MyText
+  f_weiboid: MyString
+
+two:
+  start_city: MyString
+  end_city: MyString
+  start_time: 2015-02-03
+  end_time: 2015-02-03
+  founder: MyString
+  f_wechatid: MyString
+  remarks: MyText
+  f_weiboid: MyString

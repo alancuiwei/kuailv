@@ -1,0 +1,41 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Activities</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Start city</th>
+      <th>End city</th>
+      <th>Start time</th>
+      <th>End time</th>
+      <th>Founder</th>
+      <th>F wechatid</th>
+      <th>Remarks</th>
+      <th>F weiboid</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @activities.each do |activity| %>
+      <tr>
+        <td><%= activity.start_city %></td>
+        <td><%= activity.end_city %></td>
+        <td><%= activity.start_time %></td>
+        <td><%= activity.end_time %></td>
+        <td><%= activity.founder %></td>
+        <td><%= activity.f_wechatid %></td>
+        <td><%= activity.remarks %></td>
+        <td><%= activity.f_weiboid %></td>
+        <td><%= link_to 'Show', activity %></td>
+        <td><%= link_to 'Edit', edit_activity_path(activity) %></td>
+        <td><%= link_to 'Destroy', activity, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Activity', new_activity_path %>

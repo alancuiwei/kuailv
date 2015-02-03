@@ -1,0 +1,44 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Start city:</strong>
+  <%= @activity.start_city %>
+</p>
+
+<p>
+  <strong>End city:</strong>
+  <%= @activity.end_city %>
+</p>
+
+<p>
+  <strong>Start time:</strong>
+  <%= @activity.start_time %>
+</p>
+
+<p>
+  <strong>End time:</strong>
+  <%= @activity.end_time %>
+</p>
+
+<p>
+  <strong>Founder:</strong>
+  <%= @activity.founder %>
+</p>
+
+<p>
+  <strong>F wechatid:</strong>
+  <%= @activity.f_wechatid %>
+</p>
+
+<p>
+  <strong>Remarks:</strong>
+  <%= @activity.remarks %>
+</p>
+
+<p>
+  <strong>F weiboid:</strong>
+  <%= @activity.f_weiboid %>
+</p>
+
+<%= link_to 'Edit', edit_activity_path(@activity) %> |
+<%= link_to 'Back', activities_path %>
