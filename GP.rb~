@@ -1,0 +1,61 @@
+# encoding : utf-8
+require 'nokogiri'
+require 'open-uri'
+
+#example：baidu encoding：GB2312
+fh = File.new("persondetail.out", "w")  #创建一个可写文件流 
+
+html=open("http://you.ctrip.com/events/qingdao5/4119947.html").read
+charset=Nokogiri::HTML(html).meta_encoding#！有些网页没有定义charset则不适用
+#puts charset 	#打印当前页面编码格式-utf8 否则转码
+html.force_encoding(charset)
+html.encode!("utf-8", :undef => :replace, :replace => "?", :invalid => :replace)
+doc = Nokogiri::HTML.parse html
+
+
+#个人主页的csspath
+homepage = doc.css("#eventusercardview > div") 
+##eventusercardview > div > p:nth-child(2)
+#eventusercardview > div > p:nth-child(2) > a
+fh.puts "主页" #写入数据
+p homepage
+fh.puts homepage #写入数据
+fh.puts "\n发起人" #写入数据
+homepage = (doc.css("#eventusercardview > div > p:nth-child(2) > a")).inner_text
+fh.puts homepage #写入数据
+
+
+
+homepage = doc.css('#eventsummaryinfoview > p.events_place').inner_text.delete('去哪里：')
+citys= homepage.split('～') 
+fh.puts "\n出发地" #写入数据
+fh.puts citys[0].lstrip
+fh.puts "\n目的地" 
+fh.puts citys[1].lstrip
+
+
+fh.puts "\n出发时间" #写入数据
+homepage = doc.css("#eventsummaryinfoview > p.events_time > span.littlepadding").inner_text
+fh.puts homepage #写入数据
+fh.puts "\n回来时间" #写入数据
+homepage = doc.css("#eventsummaryinfoview > p.events_time").inner_text
+position =homepage.rindex("共") 
+homepage= homepage[position,3]
+homepage = homepage.delete("共") .delete("天").to_i
+fh.puts homepage #写入数据
+ 
+fh.puts "\n备注" #写入数据
+homepage = doc.css("body > div.content.cf > div.mainrwd > div.events_infotext > p").inner_text
+fh.puts homepage.lstrip #写入数据
+
+fh.puts "\n发起人weibo：" #写入数据
+homepage = "nil"
+fh.puts homepage #写入数据
+fh.puts "\n发起人wechat：" #写入数据
+homepage = "nil"
+fh.puts homepage #写入数据
+#Xpath://*[@id="events_list_content"]/ul 
+#CSSpath:#events_list_content > ul
+#找到这个div IndexListPage 然后获取其中数据
+
+fh.close #关闭文件流

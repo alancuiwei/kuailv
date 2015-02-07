@@ -1,0 +1,8 @@
+#encoding: UTF-8
+desc "auto"
+task :auto do
+fh = Fi le.new("temp.out", "w")  #创建一个可写文件流 
+fh.puts "huoda" #写入数据
+fh.close #关闭文件流
+end
+

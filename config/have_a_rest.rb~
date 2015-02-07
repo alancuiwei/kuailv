@@ -1,0 +1,12 @@
+require 'nokogiri'
+
+html = 'www.baidu.com'
+doc = Nokogiri::HTML(html)
+
+# 获取页面上所有的链接
+doc.css('a').each do |link|
+  puts "#{link.content}, #{link['href']}"
+end
+
+# 打出 meta-keywords
+puts doc.css('meta[name="keywords"'])[0].content
