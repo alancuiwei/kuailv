@@ -5,6 +5,7 @@ require "mysql"
 
 dbh = Mysql.real_connect("localhost","root","zhongren#1234","kuailv-development",3306);  
 sql = "INSERT INTO `activities` ( `start_city`, `end_city`, `start_time`, `end_time`, `founder`, `f_wechatid`, `f_weiboid`, `remarks`, `f_homepage`) VALUES ( ?,?,?,?,?,?,?,?,?) "
+dbh.query("SET NAMES utf8")
 stmt=dbh.prepare(sql)  
 
 #保存入数据库同时写入文件备查
@@ -40,7 +41,7 @@ urls =doc.scan(/href="(.*)html/)
 	charset=Nokogiri::HTML(html).meta_encoding#！有些网页没有定义charset则不适用
 	#puts charset 	#打印当前页面编码格式-utf8 否则转码
 	html.force_encoding(charset)
-	html.encode!("utf-8", :undef => :replace, :replace => "?", :invalid => :replace)
+	html.encode!("gb2312", :undef => :replace, :replace => "?", :invalid => :replace)
 	doc = Nokogiri::HTML.parse html
 
 
