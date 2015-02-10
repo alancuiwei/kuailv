@@ -11,11 +11,12 @@ development:
   encoding: utf8
   adapter: mysql2
   username: root
-  password: zhongren#1234
+  password: 123456
   pool: 5
   timeout: 5000
   database: kuailv-development
-  socket: /var/run/mysqld/mysqld.sock
+
+
 test:
   encoding: utf8
   adapter: mysql2
@@ -29,7 +30,7 @@ production:
   encoding: utf8
   adapter: mysql2
   username: root
-  password: 123456
+  password: zhongren#1234
   pool: 5
   timeout: 5000
   database: kuailv-production
