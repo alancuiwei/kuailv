@@ -15,7 +15,7 @@ $getPageTimes = 0;
 $num = 10;
 begin
    $getPageTimes +=1;
-html=open("http://you.ctrip.com/CommunitySite/Activity/Home/IndexList?page="+$getPageTimes.to_s).read #获取数据列表page调整页码 
+html=open("http://you.ctrip.com/CommunitySite/Activity/Home/IndexList?page="+$getPageTimes.to_s+"& sorttab=eventstab_publish").read #获取数据列表page调整页码 
 doc = Nokogiri::HTML.parse html
 
 #使用此页面http://you.ctrip.com/events/时 需要找到这个div IndexListPage 然后获取其中数据
