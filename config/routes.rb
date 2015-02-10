@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
-  get 'weixins/show'
-  get 'weixins/create'
+#  get 'weixins/show'
+#  get 'weixins/create'
   get 'weixin' => 'weixins#show'
   post 'weixin' => 'weixins#create'
   
