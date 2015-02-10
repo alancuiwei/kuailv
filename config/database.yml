@@ -11,7 +11,7 @@ development:
   encoding: utf8
   adapter: mysql2
   username: root
-  password: 19921228
+  password: zhongren#1234
   pool: 5
   timeout: 5000
   database: kuailv-development
