@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150210034952) do
+ActiveRecord::Schema.define(version: 20150203103655) do
 
   create_table "activities", force: :cascade do |t|
     t.string   "start_city", limit: 255
@@ -19,12 +19,12 @@ ActiveRecord::Schema.define(version: 20150210034952) do
     t.date     "start_time"
     t.date     "end_time"
     t.string   "founder",    limit: 255
+    t.string   "f_homepage", limit: 255
     t.string   "f_wechatid", limit: 255
     t.text     "remarks",    limit: 65535
     t.string   "f_weiboid",  limit: 255
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
-    t.string   "f_homepage", limit: 255
   end
 
 end
