@@ -3,7 +3,7 @@ require 'nokogiri'
 require 'open-uri'
 require "mysql"  
 
-dbh = Mysql.real_connect("localhost","root","zhongren#1234","kuailv-development",3306);  
+dbh = Mysql.real_connect("localhost","root","zhongren#1234","kuailv-production",3306);  
 sql = "INSERT INTO `activities` ( `start_city`, `end_city`, `start_time`, `end_time`, `founder`, `f_wechatid`, `f_weiboid`, `remarks`, `f_homepage`) VALUES ( ?,?,?,?,?,?,?,?,?) "
 dbh.query("SET NAMES utf8")
 stmt=dbh.prepare(sql)  
