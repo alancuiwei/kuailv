@@ -7,24 +7,23 @@ class WeixinsController < ApplicationController
   end
 
   def create
-#    if params[:xml][:MsgType] == "text"
-#      render "echo", :formats => :xml
-#    end
+    if params[:xml][:MsgType] == "text"
+      render "echo", :formats => :xml
+    end
 
 
-
+=begin
     if params[:xml][:Event] == "CLICK"
         case params[:xml][:EventKey]
-
           when "V110"
               render "rtn110", :formats => :xml
 
-          when "V203"
+          when "V302"
               render "rtn302", :formats => :xml    
 
         end
-      end
-
+    end
+=end
   end
 
   private
@@ -37,5 +36,6 @@ class WeixinsController < ApplicationController
   def weixin_params
     params.require(:weixin).permit(:xml)
   end
+
 
 end
