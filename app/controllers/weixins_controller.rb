@@ -7,12 +7,11 @@ class WeixinsController < ApplicationController
   end
 
   def create
-    if params[:xml][:MsgType] == "text"
-      render "echo", :formats => :xml
-    end
+#    if params[:xml][:MsgType] == "text"
+#      render "echo", :formats => :xml
+#    end
 
 
-=begin
     if params[:xml][:Event] == "CLICK"
         case params[:xml][:EventKey]
           when "V110"
@@ -23,7 +22,6 @@ class WeixinsController < ApplicationController
 
         end
     end
-=end
   end
 
   private
