@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150203103655) do
+ActiveRecord::Schema.define(version: 20150211055334) do
 
   create_table "activities", force: :cascade do |t|
     t.string   "start_city", limit: 255
@@ -25,6 +25,9 @@ ActiveRecord::Schema.define(version: 20150203103655) do
     t.string   "f_weiboid",  limit: 255
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
+    t.string   "avatar",     limit: 255
+    t.string   "mobile",     limit: 255
+    t.string   "qq",         limit: 255
   end
 
 end

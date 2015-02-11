@@ -16,6 +16,7 @@ class WeixinsController < ApplicationController
         case params[:xml][:EventKey]
           when "V110"
               @travelevent = Activity.take
+              @avatarurl = "http://www.productgaga.com/assets/kuailv-features.png"
               render "rtn110", :formats => :xml
 
           when "V302"

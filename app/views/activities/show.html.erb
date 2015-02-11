@@ -1,6 +1,8 @@
 <p id="notice"><%= notice %></p>
 
 
+<%= image_tag(@activity.avatar_url(:thumb)) %>
+
 <p>
   <strong>Start city:</strong>
   <%= @activity.start_city %>
