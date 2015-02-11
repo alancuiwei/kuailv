@@ -15,6 +15,7 @@ class WeixinsController < ApplicationController
     if params[:xml][:Event] == "CLICK"
         case params[:xml][:EventKey]
           when "V110"
+              @travelevent = Activity.take
               render "rtn110", :formats => :xml
 
           when "V302"
