@@ -15,8 +15,8 @@ class WeixinsController < ApplicationController
     if params[:xml][:Event] == "CLICK"
         case params[:xml][:EventKey]
           when "V110"
-              @travelevent = Activity.take
-              @avatarurl = "http://www.productgaga.com/assets/kuailv-features.png"
+              @travelevent = Activity.find(1019)
+
               render "rtn110", :formats => :xml
 
           when "V302"

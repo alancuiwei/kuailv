@@ -9,7 +9,7 @@
  <item>
  <Title><![CDATA[快驴 － 找驴友]]></Title> 
  <Description><![CDATA[HELLO, <%=@travelevent.start_time %>]]></Description>
- <PicUrl><![CDATA[#{@avatarurl}]]></PicUrl>
+ <PicUrl><![CDATA[<%= image_tag(@travelevent.avatar_url(:thumb)) %>]]></PicUrl>
  <Url><![CDATA[http://www.productgaga.com/ideas/56]]></Url>
  </item>
 
