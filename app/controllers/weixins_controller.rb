@@ -20,7 +20,7 @@ class WeixinsController < ApplicationController
 
           when "V302"
 
-              @travelevent = Activity.take
+              @travelevent = Activity.where(beauty:1).take
 
               render "rtn302", :formats => :xml    
 

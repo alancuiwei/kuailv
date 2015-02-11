@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150211055334) do
+ActiveRecord::Schema.define(version: 20150211083614) do
 
   create_table "activities", force: :cascade do |t|
     t.string   "start_city", limit: 255
@@ -28,6 +28,7 @@ ActiveRecord::Schema.define(version: 20150211055334) do
     t.string   "avatar",     limit: 255
     t.string   "mobile",     limit: 255
     t.string   "qq",         limit: 255
+    t.integer  "beauty",     limit: 4
   end
 
 end

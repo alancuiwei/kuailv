@@ -10,6 +10,16 @@
       </ul>
     </div>
   <% end %>
+
+  <%#= radio_button_tag :beauty, 1 %>
+  <%#= label_tag(:beauty, "美女专区") %>
+
+  <div class="field">
+    <%= f.label :beauty %><br>
+    <%= f.number_field :beauty %>
+  </div>
+
+
   <div class= "field">
     <%= f.label :上传头像 %><br>
     <%= f.file_field :avatar %>
