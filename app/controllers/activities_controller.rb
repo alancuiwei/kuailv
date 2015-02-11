@@ -11,6 +11,8 @@ class ActivitiesController < ApplicationController
   # GET /activities/1.json
   def show
 
+#    @travelevent = Activity.where(beauty:1).limit(2).order("RAND()").first
+
   end
 
   # GET /activities/new
