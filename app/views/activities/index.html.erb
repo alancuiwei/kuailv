@@ -9,10 +9,11 @@
       <th>End city</th>
       <th>Start time</th>
       <th>End time</th>
-      <th>Founder</th>
+      <th>homepage</th>
       <th>F wechatid</th>
       <th>Remarks</th>
       <th>F weiboid</th>
+      <th>Founder</th>      
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -24,10 +25,11 @@
         <td><%= activity.end_city %></td>
         <td><%= activity.start_time %></td>
         <td><%= activity.end_time %></td>
-        <td><%= activity.founder %></td>
+        <td><%= activity.f_homepage %></td>
         <td><%= activity.f_wechatid %></td>
         <td><%= activity.remarks %></td>
         <td><%= activity.f_weiboid %></td>
+        <td><%= activity.founder %></td>
         <td><%= link_to 'Show', activity %></td>
         <td><%= link_to 'Edit', edit_activity_path(activity) %></td>
         <td><%= link_to 'Destroy', activity, method: :delete, data: { confirm: 'Are you sure?' } %></td>
