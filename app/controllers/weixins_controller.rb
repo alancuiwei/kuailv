@@ -1,3 +1,5 @@
+require 'Date'
+
 class WeixinsController < ApplicationController
   skip_before_filter :verify_authenticity_token
   before_filter :check_weixin_legality
@@ -33,8 +35,8 @@ class WeixinsController < ApplicationController
             Activity.new do |newrecord|
               newrecord.start_city = @userinfo[0]
               newrecord.end_city = @userinfo[1]
-              newrecord.start_time = Date.strptime("{ #{@userinfo[2]}}", "{ %Y-%m-%d }")
-              newrecord.end_time = Date.strptime("{ #{@userinfo[3]}}", "{ %Y-%m-%d }")
+              newrecord.start_time = Date.strptime("{ 2015-#{@userinfo[2]}}", "{ %Y-%m-%d }")
+              newrecord.end_time = Date.strptime("{ 2015-#{@userinfo[3]}}", "{ %Y-%m-%d }")
               newrecord.f_wechatid = @userinfo[4]
               newrecord.save       
             end
