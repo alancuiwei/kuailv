@@ -22,7 +22,10 @@ class WeixinsController < ApplicationController
 
 #              @travelevent = Activity.where(beauty:1).take
               @travelevent = Activity.where(beauty:1).limit(2).order("RAND()").first
-
+              if @travelevent.avatar?nil
+                @thepicurl = @travelevent.founder
+              else
+                @thepicurl = "http://www.lvdazi.com/uploads/activity/avatar/#{@travelevent.id}/thumb_lvdazi.jpg"
               render "rtn302", :formats => :xml    
         end
     end
@@ -48,14 +51,8 @@ class WeixinsController < ApplicationController
     if params[:xml][:MsgType]=="image"
 
             uploadpicurl = params[:xml][:PicUrl]
-            @theactivity = Activity.where(f_wechatencrypt:params[:xml][:FromUserName]).last
-            puts "@@@@@@@@@@@@@@@@@@@@@@"
-            puts @theactivity.f_wechatencrypt
-            puts uploadpicurl
-            puts "@@@@@@@@@@@@@@@@@@@@@@"
-  
+            @theactivity = Activity.where(f_wechatencrypt:params[:xml][:FromUserName]).last  
             @theactivity.update_attributes(:founder=>uploadpicurl)
-#            @theactivity.save
                         
             render "rtn130", :formats => :xml
 
