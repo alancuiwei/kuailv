@@ -12,7 +12,7 @@ class ActivitiesController < ApplicationController
   def show
 
 #    @travelevent = Activity.where(beauty:1).limit(2).order("RAND()").first
-
+#    @resultactivity = Activity.find(10)
   end
 
   # GET /activities/new
