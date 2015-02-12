@@ -29,7 +29,8 @@ class WeixinsController < ApplicationController
 
     if params[:xml][:MsgType]=="text"
         if params[:xml][:Content].include?'/'
-            render "rtn120", :formats => :xml        
+            render "rtn120", :formats => :xml
+        end        
     end
   end
 
