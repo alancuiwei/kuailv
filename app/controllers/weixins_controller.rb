@@ -52,22 +52,14 @@ class WeixinsController < ApplicationController
             @theactivity.update_attributes(:founder=>uploadpicurl)
   
             @resultactivity = Activity.limit(2).order("RAND()").first
-            puts "$$$$$$$$$$$$$$$$"
-            puts @resultactivity.id
 
             if !@resultactivity.founder.empty?
-              puts "1111111111111111111"
               @resultpicurl = @resultactivity.founder
             elsif !@resultactivity.beauty.nil?
-              puts "2222222222222222222"
               @resultpicurl = "http://www.lvdazi.com/uploads/activity/avatar/#{@resultactivity.id}/thumb_lvdazi.jpg"
             else
-              puts "3333333333333333333"
               @resultpicurl = "https://mmbiz.qlogo.cn/mmbiz/5NNlNxENLIsAQ686s5sQm0mO0xgMZ2ZUAjJmKLEl4w2pTwOlX0pN4wgIyBuic4Ljx70wrrhpVOu8elukXkfQmAA/0"
             end  
-
-            puts "@@@@@@@@@@@@@@@@@@@"
-            puts @resultpicurl
 
             render "rtn130", :formats => :xml
 
