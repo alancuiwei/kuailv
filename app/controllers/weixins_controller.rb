@@ -54,7 +54,7 @@ class WeixinsController < ApplicationController
             puts uploadpicurl
             puts "@@@@@@@@@@@@@@@@@@@@@@"
   
-            @theactivity.update_attributes(:avatar=>uploadpicurl)
+            @theactivity.update_attributes(:founder=>uploadpicurl)
 #            @theactivity.save
                         
             render "rtn130", :formats => :xml
