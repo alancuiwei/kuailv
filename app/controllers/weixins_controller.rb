@@ -22,7 +22,7 @@ class WeixinsController < ApplicationController
 
 #              @travelevent = Activity.where(beauty:1).take
               @travelevent = Activity.where(beauty:1).limit(2).order("RAND()").first
-              if @travelevent.avatar?nil
+              if @travelevent.avatar.nil?
                 @thepicurl = @travelevent.founder
               else
                 @thepicurl = "http://www.lvdazi.com/uploads/activity/avatar/#{@travelevent.id}/thumb_lvdazi.jpg"
