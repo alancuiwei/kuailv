@@ -49,9 +49,13 @@ class WeixinsController < ApplicationController
 
             uploadpicurl = params[:xml][:PicUrl]
             @theactivity = Activity.where(f_wechatencrypt:params[:xml][:FromUserName]).last
+            puts "@@@@@@@@@@@@@@@@@@@@@@"
             puts @theactivity.f_wechatencrypt
-            @theactivity.avatar = uploadpicurl
-            @theactivity.save
+            puts uploadpicurl
+            puts "@@@@@@@@@@@@@@@@@@@@@@"
+  
+            @theactivity.update_attributes(:avatar=>uploadpicurl)
+#            @theactivity.save
                         
             render "rtn130", :formats => :xml
 
