@@ -36,6 +36,7 @@ class WeixinsController < ApplicationController
               newrecord.start_time = Date.strptime("{ 2015-#{@userinfo[2]}}", "{ %Y-%m-%d }")
               newrecord.end_time = Date.strptime("{ 2015-#{@userinfo[3]}}", "{ %Y-%m-%d }")
               newrecord.f_wechatid = @userinfo[4]
+              newrecord.f_wechatencrypt = params[:xml][:FromUserName]
               newrecord.save       
             end
 
@@ -46,7 +47,11 @@ class WeixinsController < ApplicationController
 
     if params[:xml][:MsgType]=="image"
 
-            @uploadpicurl = params[:xml][:PicUrl]            
+            uploadpicurl = params[:xml][:PicUrl]
+            @theactivity = Activity.where(f_wechatencrypt:params[:xml][:FromUserName]).last
+            @theactivity.avatar = uploadpicurl
+            @theactivity.save
+                        
             render "rtn130", :formats => :xml
 
     end
