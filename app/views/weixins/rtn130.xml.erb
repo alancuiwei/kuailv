@@ -1,10 +1,19 @@
-<xml>
-     <ToUserName><![CDATA[<%= params[:xml][:FromUserName] %>]]></ToUserName>
-     <FromUserName><![CDATA[<%= params[:xml][:ToUserName] %>]]></FromUserName>
-     <CreateTime><%= Time.now.to_i %></CreateTime>
-     <MsgType><![CDATA[text]]></MsgType>
-     <Content><![CDATA[图片输入反馈。
 
-]]></Content>
-     <FuncFlag>0</FuncFlag>
+ <xml>
+ <ToUserName><![CDATA[<%= params[:xml][:FromUserName] %>]]></ToUserName>
+ <FromUserName><![CDATA[<%= params[:xml][:ToUserName] %>]]></FromUserName>
+ <CreateTime><%= Time.now.to_i %></CreateTime>
+ <MsgType><![CDATA[news]]></MsgType>
+ <ArticleCount>1</ArticleCount>
+ <Articles>
+
+ <item>
+ <Title><![CDATA[快驴 － 检索结果]]></Title> 
+ <Description><![CDATA[《提示：驴友记录随机显示》]]></Description>
+ <PicUrl><![CDATA[<%= @resultpicurl %>]]></PicUrl>
+ <Url><![CDATA[<%= @resultpicurl %>]]></Url>
+ </item>
+
+ </Articles>
+ <FuncFlag>1</FuncFlag>
  </xml>

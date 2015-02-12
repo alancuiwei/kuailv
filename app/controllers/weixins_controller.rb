@@ -50,7 +50,16 @@ class WeixinsController < ApplicationController
             uploadpicurl = params[:xml][:PicUrl]
             @theactivity = Activity.where(f_wechatencrypt:params[:xml][:FromUserName]).last  
             @theactivity.update_attributes(:founder=>uploadpicurl)
-                        
+  
+            @resultactivity = Activity.limit(2).order("RAND()").first
+            if !@resultactivity.founder.nil?
+              @resultpicurl = @resultactivity.founder
+            elsif !@resultactivity.avatar.nil?
+              @resultpicurl = "http://www.lvdazi.com/uploads/activity/avatar/<%=@resultactivity.id %>/thumb_lvdazi.jpg"
+            else
+              @resultpicurl = "https://mmbiz.qlogo.cn/mmbiz/5NNlNxENLIsAQ686s5sQm0mO0xgMZ2ZUAjJmKLEl4w2pTwOlX0pN4wgIyBuic4Ljx70wrrhpVOu8elukXkfQmAA/0"
+            end  
+
             render "rtn130", :formats => :xml
 
     end
