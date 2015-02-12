@@ -26,7 +26,9 @@ class WeixinsController < ApplicationController
                 @thepicurl = @travelevent.founder
               else
                 @thepicurl = "http://www.lvdazi.com/uploads/activity/avatar/#{@travelevent.id}/thumb_lvdazi.jpg"
+              end
               render "rtn302", :formats => :xml    
+
         end
     end
 
