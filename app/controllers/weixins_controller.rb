@@ -42,6 +42,15 @@ class WeixinsController < ApplicationController
             render "rtn120", :formats => :xml
         end        
     end
+
+    if params[:xml][:MsgType]=="image"
+
+
+            render "rtn130", :formats => :xml
+
+    end
+
+
   end
 
   private
