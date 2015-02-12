@@ -51,7 +51,8 @@ class WeixinsController < ApplicationController
             @theactivity = Activity.where(f_wechatencrypt:params[:xml][:FromUserName]).last  
             @theactivity.update_attributes(:founder=>uploadpicurl)
   
-            @resultactivity = Activity.limit(2).order("RAND()").first
+#            @resultactivity = Activity.limit(2).order("RAND()").first
+            @resultactivity = Activity.find(421)
 
             if !@resultactivity.founder.empty?
               @resultpicurl = @resultactivity.founder
