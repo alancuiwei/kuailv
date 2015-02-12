@@ -19,18 +19,9 @@ class WeixinsController < ApplicationController
               render "rtn110", :formats => :xml
 
           when "V302"
-=begin
+
               @travelevent = Activity.where(beauty:1).limit(2).order("RAND()").first
-              if @travelevent.founder
-                @thepicurl = @travelevent.founder
-              else
-                @thepicurl = "http://www.lvdazi.com/uploads/activity/avatar/#{@travelevent.id}/thumb_lvdazi.jpg"
-              end
-=end
-              @travelevent = Activity.find(1023)
-              puts "@@@@@@@@@@@@@@@@@@@@"
-              puts @travelevent.founder
-              @thepicurl = @travelevent.founder
+
               render "rtn302", :formats => :xml    
 
         end
