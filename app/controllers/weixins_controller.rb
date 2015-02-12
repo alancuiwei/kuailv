@@ -52,10 +52,13 @@ class WeixinsController < ApplicationController
             @theactivity.update_attributes(:founder=>uploadpicurl)
   
             @resultactivity = Activity.limit(2).order("RAND()").first
-            if !@resultactivity.founder.nil?
+            puts "$$$$$$$$$$$$$$$$"
+            puts @resultactivity.id
+
+            if @resultactivity.founder
               puts "1111111111111111111"
               @resultpicurl = @resultactivity.founder
-            elsif !@resultactivity.avatar.nil?
+            elsif @resultactivity.avatar
               puts "2222222222222222222"
               @resultpicurl = "http://www.lvdazi.com/uploads/activity/avatar/#{resultactivity.id}/thumb_lvdazi.jpg"
             else
