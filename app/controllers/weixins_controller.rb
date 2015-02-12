@@ -24,8 +24,12 @@ class WeixinsController < ApplicationController
               @travelevent = Activity.where(beauty:1).limit(2).order("RAND()").first
 
               render "rtn302", :formats => :xml    
-
         end
+    end
+
+    if params[:xml][:MsgType]=="text"
+        if params[:xml][:Content].include?'/'
+            render "rtn120", :formats => :xml        
     end
   end
 
