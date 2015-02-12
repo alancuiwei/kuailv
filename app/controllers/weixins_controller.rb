@@ -40,10 +40,12 @@ class WeixinsController < ApplicationController
             end
 
             render "rtn120", :formats => :xml
+
         end        
     end
 
     if params[:xml][:MsgType]=="image"
+
             @uploadpicurl = params[:xml][:PicUrl]            
             render "rtn130", :formats => :xml
 
