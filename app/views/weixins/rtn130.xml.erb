@@ -3,7 +3,7 @@
      <FromUserName><![CDATA[<%= params[:xml][:ToUserName] %>]]></FromUserName>
      <CreateTime><%= Time.now.to_i %></CreateTime>
      <MsgType><![CDATA[text]]></MsgType>
-     <Content><![CDATA[图片输入反馈。
+     <Content><![CDATA[图片输入反馈。<%= @uploadpicurl %>
 
 ]]></Content>
      <FuncFlag>0</FuncFlag>
