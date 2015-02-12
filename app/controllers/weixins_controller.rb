@@ -22,10 +22,10 @@ class WeixinsController < ApplicationController
 
 #              @travelevent = Activity.where(beauty:1).take
               @travelevent = Activity.where(beauty:1).limit(2).order("RAND()").first
-              if @travelevent.avatar
-                @thepicurl = "http://www.lvdazi.com/uploads/activity/avatar/#{@travelevent.id}/thumb_lvdazi.jpg"
-              else
+              if @travelevent.founder
                 @thepicurl = @travelevent.founder
+              else
+                @thepicurl = "http://www.lvdazi.com/uploads/activity/avatar/#{@travelevent.id}/thumb_lvdazi.jpg"
               end
               render "rtn302", :formats => :xml    
 
