@@ -30,6 +30,10 @@ class WeixinsController < ApplicationController
     if params[:xml][:MsgType]=="text"
         if params[:xml][:Content].include?'/'
           @userinfo = params[:xml][:Content].split("/")
+        else
+          @userinfo = params[:xml][:Content].split("／")
+        end
+
             Activity.new do |newrecord|
               newrecord.start_city = @userinfo[0]
               newrecord.end_city = @userinfo[1]
@@ -42,7 +46,7 @@ class WeixinsController < ApplicationController
 
             render "rtn120", :formats => :xml
 
-        end        
+     
     end
 
     if params[:xml][:MsgType]=="image"
