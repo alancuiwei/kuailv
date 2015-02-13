@@ -12,14 +12,15 @@ citys = [{name:"上海",code:310000,num:10},{name:"广州",code:440100,num:15},{
 
 citys.each do |city|
 
-	$getPageTimes = 1;
+	$getPageTimes = 0;
 	$num = city[:num];
 	$citycode = city[:code];
 	$cityname = city[:name];
 
 	begin
 		$getPageTimes +=1;
-		# 440300: 深圳
+		puts "http://www.doyouhike.net/event/search?date=all&cid="+$citycode.to_s+"&page="+$getPageTimes.to_s
+
 		html=open("http://www.doyouhike.net/event/search?date=all&cid="+$citycode.to_s+"&page="+$getPageTimes.to_s).read
 
 		doc = Nokogiri::HTML.parse html
@@ -34,7 +35,6 @@ citys.each do |city|
 			thetitle = thevent.css("dd.des").text
 
 			anatitile = thetitle.split()
-			puts anatitile
 
 			if (anatitile.count == 5)
 
@@ -52,14 +52,11 @@ citys.each do |city|
 				endposition_enddate = ana_enddate.index'天'
 				dateinterval = ana_enddate[1..endposition_enddate-1]
 				end_time = start_time + dateinterval.to_i
-				puts end_time
-
+				
 				homepage = "http://www.doyouhike.net/"+thevent.css("dt > a")[0]["href"]
-				puts homepage
-
+				
 				comments = thevent.css("dt > a")[0].text
-				puts comments
-
+				
 				stmt.execute(homepage.to_s,start_city.to_s,end_city.to_s,start_time.to_s,end_time.to_s,comments.to_s)
 
 			end
