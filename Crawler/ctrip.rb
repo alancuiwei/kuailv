@@ -28,35 +28,39 @@ begin
 
 		anatitile = thetitle.split()
 
-		#出发城市处理
-		ana_startcity = anatitile[0]
-		endposition_startcity = ana_startcity.index'出发'
-		start_city = ana_startcity[0..endposition_startcity-1]
+		if (anatitile.count == 5)
 
-		#目的城市处理
-		end_city = anatitile[2]
+			#出发城市处理
+			ana_startcity = anatitile[0]
+			endposition_startcity = ana_startcity.index'出发'
+			start_city = ana_startcity[0..endposition_startcity-1]
 
-		#出发日期处理
-		ana_startdate = anatitile[1]
-		endposition_startmonth = ana_startdate.index'月'
-		endposition_startdate = ana_startdate.index'日'
+			#目的城市处理
+			end_city = anatitile[2]
 
-		startmonth = ana_startdate[0..endposition_startmonth-1]
-		startday = ana_startdate[endposition_startmonth+1..endposition_startdate-1]
+			#出发日期处理
+			ana_startdate = anatitile[1]
+			endposition_startmonth = ana_startdate.index'月'
+			endposition_startdate = ana_startdate.index'日'
 
-		start_time = Date.strptime("{ 2015-#{startmonth}-#{startday}}", "{ %Y-%m-%d }")
+			startmonth = ana_startdate[0..endposition_startmonth-1]
+			startday = ana_startdate[endposition_startmonth+1..endposition_startdate-1]
 
-		#回来日期处理
-		ana_enddate = anatitile[3]
-		endposition_enddate = ana_enddate.index'日'
-		dateinterval = ana_enddate[0..endposition_enddate-1]
-		end_time = start_time + dateinterval.to_i
+			start_time = Date.strptime("{ 2015-#{startmonth}-#{startday}}", "{ %Y-%m-%d }")
 
-		homepage = "http://you.ctrip.com"+thevent.css("h2 a")[0]["href"]
+			#回来日期处理
+			ana_enddate = anatitile[3]
+			endposition_enddate = ana_enddate.index'日'
+			dateinterval = ana_enddate[0..endposition_enddate-1]
+			end_time = start_time + dateinterval.to_i
 
-		comments = thevent.css("p").text
+			homepage = "http://you.ctrip.com"+thevent.css("h2 a")[0]["href"]
 
-		stmt.execute(homepage.to_s,start_city.to_s,end_city.to_s,start_time.to_s,end_time.to_s,comments.to_s)
+			comments = thevent.css("p").text
+
+			stmt.execute(homepage.to_s,start_city.to_s,end_city.to_s,start_time.to_s,end_time.to_s,comments.to_s)
+
+		end
 
 	end
 end while $getPageTimes < $num
