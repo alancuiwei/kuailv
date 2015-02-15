@@ -77,7 +77,7 @@ class WeixinsController < ApplicationController
                 l3_resultevents = l3_resultcityevents.where(start_time:((target_start_time-7)..(target_start_time+7)))
                 puts "resulteventsresulteventsresulteventsresulteventsresultevents"
                 puts l3_resultevents
-                if !l3_resultevents.count == 1
+                if l3_resultevents.count == 1
                   puts "NONONONONONONONONONONONONONONONONONO"
                   noresult = true
                 else
