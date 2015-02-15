@@ -37,9 +37,13 @@ class WeixinsController < ApplicationController
             Activity.new do |newrecord|
               newrecord.start_city = @userinfo[0]
               newrecord.end_city = @userinfo[1]
-              newrecord.start_time = Date.strptime("{ 2015-#{@userinfo[2]}}", "{ %Y-%m-%d }")
-              newrecord.end_time = Date.strptime("{ 2015-#{@userinfo[3]}}", "{ %Y-%m-%d }")
-              newrecord.f_wechatid = @userinfo[4]
+              startmonth = @userinfo[2][0..1]
+              startday = @userinfo[2][2..3]
+              endmonth = @userinfo[3][0..1]
+              endday = @userinfo[3][2..3]
+              newrecord.start_time = Date.strptime("{ 2015-#{startmonth}-#{startday}}", "{ %Y-%m-%d }")
+              newrecord.end_time = Date.strptime("{ 2015-#{endmonth}-#{endday}}", "{ %Y-%m-%d }")
+              newrecord.qq = @userinfo[4]
               newrecord.f_wechatencrypt = params[:xml][:FromUserName]
               newrecord.save       
             end
@@ -50,6 +54,8 @@ class WeixinsController < ApplicationController
     end
 
     if params[:xml][:MsgType]=="image"
+
+            noresult = false
 
             uploadpicurl = params[:xml][:PicUrl]
             @theactivity = Activity.where(f_wechatencrypt:params[:xml][:FromUserName]).last  
@@ -71,7 +77,7 @@ class WeixinsController < ApplicationController
                 l3_resultcityevents = Activity.where('end_city LIKE ? or start_city LIKE ?', "%#{target_end_city}%","%#{target_start_city}%")
                 l3_resultevents = l3_resultcityevents.where(start_time:((target_start_time-7)..(target_start_time+7)))
                 if l3_resultevents.empty?
-                  @resultactivity = nil
+                  noresult = true
                 else
                   @resultactivity = l3_resultevents.limit(1).order("RAND()").first
                 end
@@ -83,7 +89,7 @@ class WeixinsController < ApplicationController
             end
   
 #            @resultactivity = Activity.limit(2).order("RAND()").first
-            if @resultactivity.nil?
+            if noresult
               render "rtn404", :format => :xml
             else
               if @resultactivity.beauty == 100  #手动纪录
