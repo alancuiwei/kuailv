@@ -3,15 +3,12 @@
 <h1>Listing Activities</h1>
 
 <table class="table table-striped">
+
   <thead>
     <tr>
-      <th>ID </th>
-      <th>Start city</th>
-      <th>End city</th>
       <th>L1 matches</th>
       <th>L2 matches</th>
       <th>L3 matches</th>
-      <th colspan="3"></th>
     </tr>
   </thead>
 
@@ -67,18 +64,10 @@
       end
       %>      
 
-        <td><%= activity.id %></td>
-
-        <td><%= activity.start_city %></td>
-        <td><%= activity.end_city %></td>
-
         <td><%= l1_resultevents.count %></td>
         <td><%= l2_resultevents.count %></td>
         <td><%= l3_resultevents.count %></td>
 
-        <td><%= link_to 'Show', activity %></td>
-        <td><%= link_to 'Edit', edit_activity_path(activity) %></td>
-        <td><%= link_to 'Destroy', activity, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
     <p>level1 successful num = <%=l1_successful_matched %></p>
@@ -94,5 +83,3 @@
 </table>
 
 <br>
-
-<%= link_to 'New Activity', new_activity_path %>
