@@ -5,8 +5,11 @@ require "mysql"
 require 'faraday'
 require 'excon'
 
+
+txt = File.open("ctrip.txt","a")
+
+
 def datacheck(title_content)
-	puts title_content
 
 	titleana = title_content.split()
 
@@ -33,6 +36,8 @@ def datacheck(title_content)
 	return true
 end
 
+
+
 dbh = Mysql.real_connect("localhost","root","123456","kuailv-development",3306);  
 sql = "INSERT IGNORE INTO `activities` ( `f_homepage`, `start_city`, `end_city`, `start_time`, `end_time`, `remarks`,`created_at`,`beauty`) VALUES ( ?,?,?,?,?,?,?,?) "
 dbh.query("SET NAMES utf8")
@@ -53,7 +58,8 @@ $getPageTimes = 0;
 begin
 	$getPageTimes +=1;
 
-	puts "#{$getPageTimes} / 600"	
+		
+	txt.puts("#{$getPageTimes} / 600")
 
 		response = conn.get "/CommunitySite/Activity/Home/IndexList?page="+$getPageTimes.to_s+"&sorttab=eventstab_publish"     # GET http://sushi.com/nigiri/sake.json
 
@@ -69,6 +75,8 @@ begin
 			thevent = doc.css("#events_list_content > ul > li")[lid]	
 
 			thetitle = thevent.css("h2 a").text
+
+			txt.puts(thetitle)
 
 			checkresult = datacheck(thetitle)
 
@@ -125,6 +133,8 @@ begin
 #end while $getPageTimes < $num
 end while li_in_onepage != 0
 
+txt.close
 stmt.close if stmt
 dbh.close if dbh
+
 
