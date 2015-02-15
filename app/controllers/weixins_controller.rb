@@ -68,16 +68,16 @@ class WeixinsController < ApplicationController
             l1_resultcityevents = Activity.where('end_city LIKE ? AND start_city LIKE ?', "%#{target_end_city}%","%#{target_start_city}%")
             l1_resultevents = l1_resultcityevents.where(start_time:((target_start_time-7)..(target_start_time+7)))
 
-            if l1_resultevents.empty?
+            if l1_resultevents.count == 1
               l2_resultcityevents = Activity.where('end_city LIKE ? AND start_city LIKE ?', "%#{target_end_city}%","%#{target_start_city}%")
               l2_resultevents = l2_resultcityevents.where(start_time:((target_start_time-30)..(target_start_time+30)))
 
-              if l2_resultevents.empty?
+              if l2_resultevents.count == 1
                 l3_resultcityevents = Activity.where('end_city LIKE ? or start_city LIKE ?', "%#{target_end_city}%","%#{target_start_city}%")
                 l3_resultevents = l3_resultcityevents.where(start_time:((target_start_time-7)..(target_start_time+7)))
                 puts "resulteventsresulteventsresulteventsresulteventsresultevents"
                 puts l3_resultevents
-                if !l3_resultevents.empty?
+                if !l3_resultevents.count == 1
                   puts "NONONONONONONONONONONONONONONONONONO"
                   noresult = true
                 else
