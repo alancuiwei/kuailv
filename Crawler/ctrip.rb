@@ -3,13 +3,37 @@ require 'nokogiri'
 require 'open-uri'
 require "mysql"  
 
+def datacheck(title_content)
+	puts title_content
+
+	titleana = title_content.split()
+
+	if titleana.count !=5
+		puts "传入参数数目错误"
+		return false		
+	end	
+
+	if titleana[1].include?"-" 
+		puts "出发时间包含 － "
+		return false
+	end
+
+	if titleana[3].include?"-" 
+		puts "回来时间包含 － "
+		return false
+	end
+
+	return true
+end
+
 dbh = Mysql.real_connect("localhost","root","zhongren#1234","kuailv-production",3306);  
 sql = "INSERT IGNORE INTO `activities` ( `f_homepage`, `start_city`, `end_city`, `start_time`, `end_time`, `remarks`,`created_at`,`beauty`) VALUES ( ?,?,?,?,?,?,?,?) "
 dbh.query("SET NAMES utf8")
 stmt=dbh.prepare(sql)  
 
 $getPageTimes = 0;
-$num = 10;
+$num = 500;
+
 begin
 	$getPageTimes +=1;
 	html=open("http://you.ctrip.com/CommunitySite/Activity/Home/IndexList?page="+$getPageTimes.to_s+"&sorttab=eventstab_publish").read #获取数据列表page调整页码 
@@ -24,16 +48,21 @@ begin
 		thevent = doc.css("#events_list_content > ul > li")[lid]	
 
 		thetitle = thevent.css("h2 a").text
-		puts thetitle
+		
+		checkresult = datacheck(thetitle)
 
-		anatitile = thetitle.split()
+		if (checkresult)
 
-		if (anatitile.count == 5)
+			anatitile = thetitle.split()
 
 			#出发城市处理
 			ana_startcity = anatitile[0]
 			endposition_startcity = ana_startcity.index'出发'
 			start_city = ana_startcity[0..endposition_startcity-1]
+
+			if start_city == '出发'
+				start_city = 'all'
+			end
 
 			#目的城市处理
 			end_city = anatitile[2]
@@ -68,7 +97,12 @@ begin
 		end
 
 	end
+
+	sleep 5
+
 end while $getPageTimes < $num
+
 
 stmt.close if stmt
 dbh.close if dbh
+

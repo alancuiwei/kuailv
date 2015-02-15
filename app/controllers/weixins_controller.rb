@@ -75,10 +75,7 @@ class WeixinsController < ApplicationController
               if l2_resultevents.count == 1
                 l3_resultcityevents = Activity.where('end_city LIKE ? or start_city LIKE ?', "%#{target_end_city}%","%#{target_start_city}%")
                 l3_resultevents = l3_resultcityevents.where(start_time:((target_start_time-7)..(target_start_time+7)))
-                puts "resulteventsresulteventsresulteventsresulteventsresultevents"
-                puts l3_resultevents
                 if l3_resultevents.count == 1
-                  puts "NONONONONONONONONONONONONONONONONONO"
                   noresult = true
                 else
                   @resultactivity = l3_resultevents.limit(1).order("RAND()").first
@@ -91,12 +88,10 @@ class WeixinsController < ApplicationController
             end
   
 #            @resultactivity = Activity.limit(2).order("RAND()").first
-            puts "NO ----- RESULT = "
-            puts noresult
             if noresult
               render "rtn404", :format => :xml
             else
-              if @resultactivity.beauty == 100  #手动纪录
+              if @resultactivity.beauty == 1  #手动纪录
                 @resultpicurl = "http://www.lvdazi.com/uploads/activity/avatar/#{@resultactivity.id}/thumb_lvdazi.jpg"
                 @resulturl = "http://www.lvdazi.com/uploads/activity/avatar/#{@resultactivity.id}/thumb_lvdazi.jpg"
               else
