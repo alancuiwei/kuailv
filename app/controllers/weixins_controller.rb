@@ -55,7 +55,7 @@ class WeixinsController < ApplicationController
 
     if params[:xml][:MsgType]=="image"
 
-            noresult = false
+            noresult = true
 
             uploadpicurl = params[:xml][:PicUrl]
             @theactivity = Activity.where(f_wechatencrypt:params[:xml][:FromUserName]).last  
@@ -79,12 +79,15 @@ class WeixinsController < ApplicationController
                 if l3_resultevents.empty?
                   noresult = true
                 else
+                  noresult = false
                   @resultactivity = l3_resultevents.limit(1).order("RAND()").first
                 end
               else
+                noresult = false
                 @resultactivity = l2_resultevents.limit(1).order("RAND()").first
               end
             else
+              noresult = false
               @resultactivity = l1_resultevents.limit(1).order("RAND()").first
             end
   
