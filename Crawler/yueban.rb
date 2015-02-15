@@ -83,6 +83,7 @@ begin
 	end
 
 	$getPageTimes +=20;
+	puts "#{$getPageTimes} / #{$num}"
 
 end while $getPageTimes < $num
 

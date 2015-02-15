@@ -13,6 +13,11 @@ def datacheck(title_content)
 		return false		
 	end	
 
+	if !(titleana[0].include?"出发")
+		puts "出发城市格式不正确"
+		return false
+	end
+
 	if ((titleana[1].include?"-") || !(titleana[1].include?"月") || !(titleana[1].include?"日"))  
 		puts "出发时间格式不正确 "
 		return false
@@ -36,6 +41,9 @@ $num = 500;
 
 begin
 	$getPageTimes +=1;
+
+	puts "#{$getPageTimes} / #{$num}"	
+
 	html=open("http://you.ctrip.com/CommunitySite/Activity/Home/IndexList?page="+$getPageTimes.to_s+"&sorttab=eventstab_publish").read #获取数据列表page调整页码 
 
 	doc = Nokogiri::HTML.parse html
@@ -48,7 +56,7 @@ begin
 		thevent = doc.css("#events_list_content > ul > li")[lid]	
 
 		thetitle = thevent.css("h2 a").text
-		
+
 		checkresult = datacheck(thetitle)
 
 		if (checkresult)
