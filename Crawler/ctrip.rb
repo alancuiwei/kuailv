@@ -4,7 +4,7 @@ require 'open-uri'
 require "mysql"  
 
 dbh = Mysql.real_connect("localhost","root","zhongren#1234","kuailv-production",3306);  
-sql = "INSERT IGNORE INTO `activities` ( `f_homepage`, `start_city`, `end_city`, `start_time`, `end_time`, `remarks`) VALUES ( ?,?,?,?,?,?) "
+sql = "INSERT IGNORE INTO `activities` ( `f_homepage`, `start_city`, `end_city`, `start_time`, `end_time`, `remarks`,`created_at`,`beauty`) VALUES ( ?,?,?,?,?,?,?,?) "
 dbh.query("SET NAMES utf8")
 stmt=dbh.prepare(sql)  
 
@@ -58,7 +58,11 @@ begin
 
 			comments = thevent.css("p").text
 
-			stmt.execute(homepage.to_s,start_city.to_s,end_city.to_s,start_time.to_s,end_time.to_s,comments.to_s)
+			createdate = Time.now
+
+			beautytype = 100
+
+			stmt.execute(homepage.to_s,start_city.to_s,end_city.to_s,start_time.to_s,end_time.to_s,comments.to_s,createdate.to_s,beautytype.to_s)
 
 		end
 
