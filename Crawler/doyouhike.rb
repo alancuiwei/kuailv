@@ -9,7 +9,7 @@ sql = "INSERT IGNORE INTO `activities` ( `f_homepage`, `start_city`, `end_city`,
 dbh.query("SET NAMES utf8")
 stmt=dbh.prepare(sql)  
 
-citys = [{name:"上海",code:310000,num:2},{name:"广州",code:440100,num:5},{name:"深圳",code:440300,num:5},{name:"北京",code:110000,num:5}]
+citys = [{name:"上海",code:310000,num:9},{name:"广州",code:440100,num:10},{name:"深圳",code:440300,num:20},{name:"北京",code:110000,num:4}]
 
 citys.each do |city|
 
@@ -56,6 +56,8 @@ citys.each do |city|
 				homepage = "http://www.doyouhike.net/"+thevent.css("dt > a")[0]["href"]
 				
 				comments = thevent.css("dt > a")[0].text
+				
+				createdate = Time.now				
 				
 				beautytype = 101				
 				

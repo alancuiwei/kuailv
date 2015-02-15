@@ -11,8 +11,16 @@ class ActivitiesController < ApplicationController
   # GET /activities/1.json
   def show
 
-#    @travelevent = Activity.where(beauty:1).limit(2).order("RAND()").first
-#    @resultactivity = Activity.find(10)
+=begin
+      target_start_city = @activity.start_city
+      target_end_city   = @activity.end_city
+      target_start_time = @activity.start_time
+      target_end_time = @activity.end_time
+
+      # SC/DC ==, ^SD < 7days
+      resultcityevents = Activity.where('end_city LIKE ? AND start_city LIKE ?', "%#{target_end_city}%","%#{target_start_city}%")
+      @resultevents = resultcityevents.where(start_time:((target_start_time-7)..(target_start_time+7)))
+=end
   end
 
   # GET /activities/new

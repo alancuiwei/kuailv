@@ -39,7 +39,9 @@ begin
 			start_city = ana_startcity[0..endposition_startcity-1]
 
 			#目的城市处理
-			end_city = anatitile[2]
+			ana_end_city = anatitile[2]
+			endcitylength = ana_end_city.length
+			end_city = ana_end_city[3..endcitylength]
 
 			#出发日期处理
 			ana_startdate = anatitile[0]

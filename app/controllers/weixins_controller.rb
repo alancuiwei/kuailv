@@ -54,18 +54,48 @@ class WeixinsController < ApplicationController
             uploadpicurl = params[:xml][:PicUrl]
             @theactivity = Activity.where(f_wechatencrypt:params[:xml][:FromUserName]).last  
             @theactivity.update_attributes(:founder=>uploadpicurl)
-  
-            @resultactivity = Activity.limit(2).order("RAND()").first
 
-            if !@resultactivity.founder.empty?
-              @resultpicurl = @resultactivity.founder
-            elsif !@resultactivity.beauty.nil?
-              @resultpicurl = "http://www.lvdazi.com/uploads/activity/avatar/#{@resultactivity.id}/thumb_lvdazi.jpg"
+            target_start_city = @theactivity.start_city
+            target_end_city   = @theactivity.end_city
+            target_start_time = @theactivity.start_time
+            target_start_time = @theactivity.start_time
+
+            l1_resultcityevents = Activity.where('end_city LIKE ? AND start_city LIKE ?', "%#{target_end_city}%","%#{target_start_city}%")
+            l1_resultevents = l1_resultcityevents.where(start_time:((target_start_time-7)..(target_start_time+7)))
+
+            if l1_resultevents.empty?
+              l2_resultcityevents = Activity.where('end_city LIKE ? AND start_city LIKE ?', "%#{target_end_city}%","%#{target_start_city}%")
+              l2_resultevents = l2_resultcityevents.where(start_time:((target_start_time-30)..(target_start_time+30)))
+
+              if l2_resultevents.empty?
+                l3_resultcityevents = Activity.where('end_city LIKE ? or start_city LIKE ?', "%#{target_end_city}%","%#{target_start_city}%")
+                l3_resultevents = l3_resultcityevents.where(start_time:((target_start_time-7)..(target_start_time+7)))
+                if l3_resultevents.empty?
+                  @resultactivity = nil
+                else
+                  @resultactivity = l3_resultevents.limit(1).order("RAND()").first
+                end
+              else
+                @resultactivity = l2_resultevents.limit(1).order("RAND()").first
+              end
             else
-              @resultpicurl = "https://mmbiz.qlogo.cn/mmbiz/5NNlNxENLIsAQ686s5sQm0mO0xgMZ2ZUAjJmKLEl4w2pTwOlX0pN4wgIyBuic4Ljx70wrrhpVOu8elukXkfQmAA/0"
-            end  
+              @resultactivity = l1_resultevents.limit(1).order("RAND()").first
+            end
+  
+#            @resultactivity = Activity.limit(2).order("RAND()").first
+            if @resultactivity.nil?
+              render "rtn404", :format => :xml
+            else
+              if @resultactivity.beauty == 100  #手动纪录
+                @resultpicurl = "http://www.lvdazi.com/uploads/activity/avatar/#{@resultactivity.id}/thumb_lvdazi.jpg"
+                @resulturl = "http://www.lvdazi.com/uploads/activity/avatar/#{@resultactivity.id}/thumb_lvdazi.jpg"
+              else
+                @resultpicurl = "https://mmbiz.qlogo.cn/mmbiz/5NNlNxENLIsAQ686s5sQm0mO0xgMZ2ZUAjJmKLEl4w2pTwOlX0pN4wgIyBuic4Ljx70wrrhpVOu8elukXkfQmAA/0"
+                @resulturl = @resultactivity.f_homepage
+              end  
 
-            render "rtn130", :formats => :xml
+              render "rtn130", :formats => :xml
+            end
 
     end
 

@@ -1,12 +1,12 @@
 <p id="notice"><%= notice %></p>
 
-<!--
 <p>
   <strong>Random</strong>
-  <%#= @travelevent.start_city %>
+  <%= @resultevents.count %>
+  <% @resultevents.each do |event| %>
+    <%= event.id %>
+  <% end %>
 </p>
--->
-  <%= @resultpicurl %>
 
 <p>
   <strong>Beauty-flag</strong>

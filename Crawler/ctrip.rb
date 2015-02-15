@@ -55,6 +55,7 @@ begin
 			end_time = start_time + dateinterval.to_i
 
 			homepage = "http://you.ctrip.com"+thevent.css("h2 a")[0]["href"]
+#			puts homepage
 
 			comments = thevent.css("p").text
 
