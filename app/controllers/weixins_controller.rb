@@ -55,8 +55,7 @@ class WeixinsController < ApplicationController
 
     if params[:xml][:MsgType]=="image"
 
-            noresult = true
-
+            noresult = false
             uploadpicurl = params[:xml][:PicUrl]
             @theactivity = Activity.where(f_wechatencrypt:params[:xml][:FromUserName]).last  
             @theactivity.update_attributes(:founder=>uploadpicurl)
@@ -76,22 +75,24 @@ class WeixinsController < ApplicationController
               if l2_resultevents.empty?
                 l3_resultcityevents = Activity.where('end_city LIKE ? or start_city LIKE ?', "%#{target_end_city}%","%#{target_start_city}%")
                 l3_resultevents = l3_resultcityevents.where(start_time:((target_start_time-7)..(target_start_time+7)))
-                if l3_resultevents.empty?
+                puts "resulteventsresulteventsresulteventsresulteventsresultevents"
+                puts l3_resultevents
+                if !l3_resultevents.empty?
+                  puts "NONONONONONONONONONONONONONONONONONO"
                   noresult = true
                 else
-                  noresult = false
                   @resultactivity = l3_resultevents.limit(1).order("RAND()").first
                 end
               else
-                noresult = false
                 @resultactivity = l2_resultevents.limit(1).order("RAND()").first
               end
             else
-              noresult = false
               @resultactivity = l1_resultevents.limit(1).order("RAND()").first
             end
   
 #            @resultactivity = Activity.limit(2).order("RAND()").first
+            puts "NO ----- RESULT = "
+            puts noresult
             if noresult
               render "rtn404", :format => :xml
             else
