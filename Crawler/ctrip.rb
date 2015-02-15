@@ -13,12 +13,12 @@ def datacheck(title_content)
 		return false		
 	end	
 
-	if titleana[1].include?"-" 
-		puts "出发时间包含 － "
+	if ((titleana[1].include?"-") || !(titleana[1].include?"月") || !(titleana[1].include?"日"))  
+		puts "出发时间格式不正确 "
 		return false
 	end
 
-	if titleana[3].include?"-" 
+	if (!titleana[3].include?"日") 
 		puts "回来时间包含 － "
 		return false
 	end
