@@ -91,20 +91,6 @@ class WeixinsController < ApplicationController
             if noresult
               render "rtn404", :format => :xml
             else
-
-              puts "@@@@@@@@@@@@@@@"
-              puts params[:xml][:FromUserName]
-              puts "resultactivities num "
-              puts @resultactivities.count
-              @resultactivities.each do |test|
-                puts test.f_wechatencrypt
-              end
-
-              @resultactivities = @resultactivities.where.not(f_wechatencrypt:params[:xml][:FromUserName])
-
-              puts "$$$$$$$$$$$$$$$$$$$"
-              puts @resultactivities.count
-
               if (@resultactivities.count > 10)
                 @resultactivities = @resultactivities.limit(10)
               end
