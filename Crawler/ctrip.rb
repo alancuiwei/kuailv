@@ -53,6 +53,8 @@ $getPageTimes = 0;
   	faraday.request  :url_encoded             # form-encode POST params
 #  	faraday.response :logger                  # log requests to STDOUT
   	faraday.adapter  :excon  					# make requests with Net::HTTP
+  	faraday.options[:timeout] = 20
+  	faraday.options[:open_timeout] = 20
 	end
 
 begin
@@ -62,12 +64,12 @@ begin
 	txt.puts("#{$getPageTimes} / 600")
 	puts "#{$getPageTimes} / 600"
 
-#		response = conn.get "/CommunitySite/Activity/Home/IndexList?page="+$getPageTimes.to_s+"&sorttab=eventstab_publish"     # GET http://sushi.com/nigiri/sake.json
-		response = conn.get do |req|
-			req.url "/CommunitySite/Activity/Home/IndexList?page="+$getPageTimes.to_s+"&sorttab=eventstab_publish"
-			req.options[:timeout] = 5
-			req.options[:open_timeout] = 2
-		end
+		response = conn.get "/CommunitySite/Activity/Home/IndexList?page="+$getPageTimes.to_s+"&sorttab=eventstab_publish"     # GET http://sushi.com/nigiri/sake.json
+#		response = conn.get do |req|
+#			req.url "/CommunitySite/Activity/Home/IndexList?page="+$getPageTimes.to_s+"&sorttab=eventstab_publish"
+#			req.options[:timeout] = 5
+#			req.options[:open_timeout] = 2
+#		end
 
 		doc = Nokogiri::HTML(response.body)
 
