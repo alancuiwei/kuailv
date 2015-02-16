@@ -93,12 +93,13 @@ class WeixinsController < ApplicationController
             else
 
               puts "@@@@@@@@@@@@@@@"
-              puts @resultactivities.count
+              puts @resultactivities
+              
               @resultactivities = @resultactivities.where.not(f_wechatencrypt:params[:xml][:FromUserName])
 
               puts "$$$$$$$$$$$$$$$$$$$"
               puts @resultactivities.count
-              
+
               if (@resultactivities.count > 10)
                 @resultactivities = @resultactivities.limit(10)
               end
