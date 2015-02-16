@@ -28,10 +28,10 @@ class WeixinsController < ApplicationController
     end
 
     if params[:xml][:MsgType]=="text"
-        if params[:xml][:Content].include?'/'
-          @userinfo = params[:xml][:Content].split("/")
+        if params[:xml][:Content].include?','
+          @userinfo = params[:xml][:Content].split(",")
         else
-          @userinfo = params[:xml][:Content].split("／")
+          @userinfo = params[:xml][:Content].split("，")
         end
 
             Activity.new do |newrecord|
