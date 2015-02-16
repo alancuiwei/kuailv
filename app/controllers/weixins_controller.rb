@@ -78,13 +78,13 @@ class WeixinsController < ApplicationController
                 if l3_resultevents.count == 1
                   noresult = true
                 else
-                  @resultactivities = l3_resultevents.where("f_wechatencrypt != ?",params[:xml][:FromUserName])
+                  @resultactivities = l3_resultevents
                 end
               else
-                @resultactivities = l2_resultevents.where("f_wechatencrypt != ?",params[:xml][:FromUserName])
+                @resultactivities = l2_resultevents
               end
             else
-              @resultactivities = l1_resultevents.where("f_wechatencrypt != ?",params[:xml][:FromUserName])
+              @resultactivities = l1_resultevents
             end
   
 #            @resultactivity = Activity.limit(2).order("RAND()").first
