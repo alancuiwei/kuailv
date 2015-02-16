@@ -14,22 +14,22 @@ def datacheck(title_content)
 	titleana = title_content.split()
 
 	if titleana.count !=5
-		puts "传入参数数目错误"
+#		puts "传入参数数目错误"
 		return false		
 	end	
 
 	if !(titleana[0].include?"出发")
-		puts "出发城市格式不正确"
+#		puts "出发城市格式不正确"
 		return false
 	end
 
 	if ((titleana[1].include?"-") || !(titleana[1].include?"月") || !(titleana[1].include?"日"))  
-		puts "出发时间格式不正确 "
+#		puts "出发时间格式不正确 "
 		return false
 	end
 
 	if (!titleana[3].include?"日") 
-		puts "回来时间包含 － "
+#		puts "回来时间包含 － "
 		return false
 	end
 
@@ -60,10 +60,15 @@ begin
 
 		
 	txt.puts("#{$getPageTimes} / 600")
+	puts "#{$getPageTimes} / 600"
 
-		response = conn.get "/CommunitySite/Activity/Home/IndexList?page="+$getPageTimes.to_s+"&sorttab=eventstab_publish"     # GET http://sushi.com/nigiri/sake.json
+#		response = conn.get "/CommunitySite/Activity/Home/IndexList?page="+$getPageTimes.to_s+"&sorttab=eventstab_publish"     # GET http://sushi.com/nigiri/sake.json
+		response = conn.get do |req|
+			req.url "/CommunitySite/Activity/Home/IndexList?page="+$getPageTimes.to_s+"&sorttab=eventstab_publish"
+			req.options[:timeout] = 5
+			req.options[:open_timeout] = 2
+		end
 
-	#	doc = Nokogiri::HTML.parse req.body
 		doc = Nokogiri::HTML(response.body)
 
 		thevents = doc.css("#events_list_content > ul > li")
