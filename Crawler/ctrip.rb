@@ -28,6 +28,10 @@ def datacheck(title_content)
 		return false
 	end
 
+	if(titleana[1].length > 6)
+		return false
+	end
+
 	if (!titleana[3].include?"日") 
 #		puts "回来时间包含 － "
 		return false
@@ -44,7 +48,7 @@ dbh.query("SET NAMES utf8")
 stmt=dbh.prepare(sql)  
 
 $getPageTimes = 0;
-$num = 200;
+#$num = 200;
 
 
 #	html=open("http://you.ctrip.com/CommunitySite/Activity/Home/IndexList?page="+$getPageTimes.to_s+"&sorttab=eventstab_publish").read #获取数据列表page调整页码 
@@ -53,16 +57,16 @@ $num = 200;
   	faraday.request  :url_encoded             # form-encode POST params
 #  	faraday.response :logger                  # log requests to STDOUT
   	faraday.adapter  :excon  					# make requests with Net::HTTP
-  	faraday.options[:timeout] = 2000
-  	faraday.options[:open_timeout] = 2000
+  	faraday.options[:timeout] = 200
+  	faraday.options[:open_timeout] = 200
 	end
 
 begin
 	$getPageTimes +=1;
 
 		
-	txt.puts("#{$getPageTimes} / 200-p1")
-	puts "#{$getPageTimes} / 200-p1"
+	txt.puts("#{$getPageTimes} / 600")
+	puts "#{$getPageTimes} / 600"
 
 		response = conn.get "/CommunitySite/Activity/Home/IndexList?page="+$getPageTimes.to_s+"&sorttab=eventstab_publish"     # GET http://sushi.com/nigiri/sake.json
 #		response = conn.get do |req|
@@ -137,8 +141,8 @@ begin
 
 #	sleep 5
 
-end while $getPageTimes < $num
-#end while li_in_onepage != 0
+#end while $getPageTimes < $num
+end while li_in_onepage != 0
 
 txt.close
 stmt.close if stmt

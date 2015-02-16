@@ -1,0 +1,17 @@
+#!/bin/bash
+
+/usr/local/rvm/gems/ruby-2.1.5/wrappers/ruby /root/kuailv/Crawler/ctrip.rb
+
+echo "Ctrip data collected"
+
+/usr/local/rvm/gems/ruby-2.1.5/wrappers/ruby /root/kuailv/Crawler/doyouhike.rb
+
+echo "doyouhike data collected"
+
+/usr/local/rvm/gems/ruby-2.1.5/wrappers/ruby /root/kuailv/Crawler/yueban.rb
+
+echo "yueban data collected"
+
+/usr/local/rvm/gems/ruby-2.1.5/wrappers/ruby /root/kuailv/Crawler/dbclean.rb
+
+echo "dbclean done"
