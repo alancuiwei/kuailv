@@ -78,24 +78,23 @@ class WeixinsController < ApplicationController
                 if l3_resultevents.count == 1
                   noresult = true
                 else
-                  @resultactivities = l3_resultevents
+                  @resultactivities = l3_resultevents.where("f_wechatencrypt != ?",params[:xml][:FromUserName])
                 end
               else
-                @resultactivities = l2_resultevents
+                @resultactivities = l2_resultevents.where("f_wechatencrypt != ?",params[:xml][:FromUserName])
               end
             else
-              @resultactivities = l1_resultevents
+              @resultactivities = l1_resultevents.where("f_wechatencrypt != ?",params[:xml][:FromUserName])
             end
   
 #            @resultactivity = Activity.limit(2).order("RAND()").first
             if noresult
               render "rtn404", :format => :xml
             else
+
               if (@resultactivities.count > 10)
                 @resultactivities = @resultactivities.limit(10)
               end
-              puts "$$$$$$$$$$$$$$$$$"
-              puts @resultactivities.count
               render "rtn130", :formats => :xml
             end
 

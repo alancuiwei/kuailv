@@ -12,18 +12,28 @@
         if resultactivity.beauty == 1  #手动纪录
             resultpicurl = "http://www.lvdazi.com/uploads/activity/avatar/#{resultactivity.id}/thumb_lvdazi.jpg"
             resulturl = "http://www.lvdazi.com/uploads/activity/avatar/#{resultactivity.id}/thumb_lvdazi.jpg"
-        else
+        else		#自动化获取
             resultpicurl = "https://mmbiz.qlogo.cn/mmbiz/5NNlNxENLIsAQ686s5sQm0mO0xgMZ2ZUAjJmKLEl4w2pTwOlX0pN4wgIyBuic4Ljx70wrrhpVOu8elukXkfQmAA/0"
             resulturl = resultactivity.f_homepage
         end  
  	%>
 
-	 <item>
-	 <Title><![CDATA[快驴 － 检索结果]]></Title> 
-	 <Description><![CDATA[<%= resultactivity.remarks %>]]></Description>
-	 <PicUrl><![CDATA[<%= resultpicurl %>]]></PicUrl>
-	 <Url><![CDATA[<%= resulturl %>]]></Url>
-	 </item>
+ 	 <% if resultactivity.f_wechatencrypt.nil? %>
+		 <item>
+		 <Title><![CDATA[快驴 检索结果 - <%= resultactivity.id %> ]]></Title> 
+		 <Description><![CDATA[<%= resultactivity.remarks %>]]></Description>
+		 <PicUrl><![CDATA[<%= resultpicurl %>]]></PicUrl>
+		 <Url><![CDATA[<%= resulturl %>]]></Url>
+		 </item>
+	 <% else # 搜索的是用户通过微信生成的记录 %>		
+		 <item>
+		 <Title><![CDATA[<%= resultactivity.start_city %>-<%= resultactivity.end_city %>,<%= resultactivity.start_time %>-<%= resultactivity.end_time %>,QQ:<%=resultactivity.qq %>  ]]></Title> 
+		 <Description><![CDATA[<%= resultactivity.remarks %>]]></Description>
+		 <PicUrl><![CDATA[<%= resultpicurl %>]]></PicUrl>
+		 <Url><![CDATA[<%= resulturl %>]]></Url>
+		 </item>
+
+	 <% end %>
 
  <% end %>
 
