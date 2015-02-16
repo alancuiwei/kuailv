@@ -1,0 +1,88 @@
+<!-- 
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Activities</h1>
+
+<table class="table table-striped">
+
+  <thead>
+    <tr>
+      <th>L1 matches</th>
+      <th>L2 matches</th>
+      <th>L3 matches</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <%# l1_successful_matched = 0 %>
+    <%# l1_failed_matched = 0 %>
+
+    <%# l2_successful_matched = 0 %>
+    <%# l2_failed_matched = 0 %>
+
+    <%# l3_successful_matched = 0 %>
+    <%# l3_failed_matched = 0 %>
+
+
+    <%# @activities.each do |activity| %>
+      <tr>
+      <%# target_start_city = activity.start_city %>
+      <%# target_end_city   = activity.end_city %>
+      <%# target_start_time = activity.start_time %>
+
+      <%# l1_resultcityevents = Activity.where('end_city LIKE ? AND start_city LIKE ?', "%#{target_end_city}%","%#{target_start_city}%")  %>
+      <%# l1_resultevents = l1_resultcityevents.where(start_time:((target_start_time-7)..(target_start_time+7))) %>
+
+
+      <%# l2_resultcityevents = Activity.where('end_city LIKE ? AND start_city LIKE ?', "%#{target_end_city}%","%#{target_start_city}%")  %>
+      <%# l2_resultevents = l2_resultcityevents.where(start_time:((target_start_time-30)..(target_start_time+30))) %>
+
+
+      <%# l3_resultcityevents = Activity.where('end_city LIKE ? or start_city LIKE ?', "%#{target_end_city}%","%#{target_start_city}%")  %>
+      <%# l3_resultevents = l3_resultcityevents.where(start_time:((target_start_time-7)..(target_start_time+7))) %>
+
+      <%# 
+      if l1_resultevents.count ==1
+        l1_failed_matched = l1_failed_matched+1
+      else
+        l1_successful_matched = l1_successful_matched+1
+      end
+      %>
+
+      <%# 
+      if l2_resultevents.count ==1
+        l2_failed_matched = l2_failed_matched+1
+      else
+        l2_successful_matched = l2_successful_matched+1
+      end
+      %>
+
+      <%# 
+      if l3_resultevents.count ==1
+        l3_failed_matched = l3_failed_matched+1
+      else
+        l3_successful_matched = l3_successful_matched+1
+      end
+      %>      
+
+        <td><%#= l1_resultevents.count %></td>
+        <td><%#= l2_resultevents.count %></td>
+        <td><%#= l3_resultevents.count %></td>
+
+      </tr>
+    <%# end %>
+    <p>level1 successful num = <%#=l1_successful_matched %></p>
+    <p>level1 failed num = <%#=l1_failed_matched %></p>
+    <p>level 1 rate = <%#= l1_successful_matched*100/@activities.count %>%</p>
+    <p>level2 successful num = <%#=l2_successful_matched %></p>
+    <p>level2 failed num = <%#=l2_failed_matched %></p>    
+    <p>level 2 rate = <%#= l2_successful_matched*100/@activities.count %>%</p>
+    <p>level3 successful num = <%#=l3_successful_matched %></p>
+    <p>level3 failed num = <%#=l3_failed_matched %></p>    
+    <p>level 3 rate = <%#= l3_successful_matched*100/@activities.count %>%</p>
+    <p>total num = <%#= @activities.count %></p>  </tbody>
+</table>
+
+<br>
+
+-->
