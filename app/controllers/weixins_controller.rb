@@ -78,27 +78,19 @@ class WeixinsController < ApplicationController
                 if l3_resultevents.count == 1
                   noresult = true
                 else
-                  @resultactivity = l3_resultevents.limit(1).order("RAND()").first
+                  @resultactivities = l3_resultevents
                 end
               else
-                @resultactivity = l2_resultevents.limit(1).order("RAND()").first
+                @resultactivities = l2_resultevents
               end
             else
-              @resultactivity = l1_resultevents.limit(1).order("RAND()").first
+              @resultactivities = l1_resultevents
             end
   
 #            @resultactivity = Activity.limit(2).order("RAND()").first
             if noresult
               render "rtn404", :format => :xml
             else
-              if @resultactivity.beauty == 1  #手动纪录
-                @resultpicurl = "http://www.lvdazi.com/uploads/activity/avatar/#{@resultactivity.id}/thumb_lvdazi.jpg"
-                @resulturl = "http://www.lvdazi.com/uploads/activity/avatar/#{@resultactivity.id}/thumb_lvdazi.jpg"
-              else
-                @resultpicurl = "https://mmbiz.qlogo.cn/mmbiz/5NNlNxENLIsAQ686s5sQm0mO0xgMZ2ZUAjJmKLEl4w2pTwOlX0pN4wgIyBuic4Ljx70wrrhpVOu8elukXkfQmAA/0"
-                @resulturl = @resultactivity.f_homepage
-              end  
-
               render "rtn130", :formats => :xml
             end
 

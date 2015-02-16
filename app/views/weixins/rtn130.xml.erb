@@ -4,16 +4,28 @@
  <FromUserName><![CDATA[<%= params[:xml][:ToUserName] %>]]></FromUserName>
  <CreateTime><%= Time.now.to_i %></CreateTime>
  <MsgType><![CDATA[news]]></MsgType>
- <ArticleCount>1</ArticleCount>
+ <ArticleCount><%= @resultactivities.count %></ArticleCount>
  <Articles>
+
+ <% resultactivities.each do |resultactivity| %>
+ 	<% 
+        if resultactivity.beauty == 1  #手动纪录
+            resultpicurl = "http://www.lvdazi.com/uploads/activity/avatar/#{@resultactivity.id}/thumb_lvdazi.jpg"
+            resulturl = "http://www.lvdazi.com/uploads/activity/avatar/#{@resultactivity.id}/thumb_lvdazi.jpg"
+        else
+            resultpicurl = "https://mmbiz.qlogo.cn/mmbiz/5NNlNxENLIsAQ686s5sQm0mO0xgMZ2ZUAjJmKLEl4w2pTwOlX0pN4wgIyBuic4Ljx70wrrhpVOu8elukXkfQmAA/0"
+            resulturl = @resultactivity.f_homepage
+        end  
+ 	%>
 
  <item>
  <Title><![CDATA[快驴 － 检索结果]]></Title> 
- <Description><![CDATA[《提示：驴友记录随机显示》<%= @resultactivity.remarks %>]]></Description>
- <PicUrl><![CDATA[<%= @resultpicurl %>]]></PicUrl>
- <Url><![CDATA[<%= @resulturl %>]]></Url>
+ <Description><![CDATA[<%= resultactivity.remarks %>]]></Description>
+ <PicUrl><![CDATA[<%= resultpicurl %>]]></PicUrl>
+ <Url><![CDATA[<%= resulturl %>]]></Url>
  </item>
 
+ <% end %>
+
  </Articles>
- <FuncFlag>1</FuncFlag>
  </xml>
