@@ -92,7 +92,12 @@ class WeixinsController < ApplicationController
               render "rtn404", :format => :xml
             else
 
+              puts "@@@@@@@@@@@@@@@"
+              puts @resultactivities.count
               @resultactivities = @resultactivities.where.not(f_wechatencrypt:params[:xml][:FromUserName])
+
+              puts "$$$$$$$$$$$$$$$$$$$"
+              puts @resultactivities.count
               
               if (@resultactivities.count > 10)
                 @resultactivities = @resultactivities.limit(10)
