@@ -93,8 +93,13 @@ class WeixinsController < ApplicationController
             else
 
               puts "@@@@@@@@@@@@@@@"
-              puts @resultactivities
-              
+              puts params[:xml][:FromUserName]
+              puts "resultactivities num "
+              puts @resultactivities.count
+              @resultactivities.each do |test|
+                puts test.f_wechatencrypt
+              end
+
               @resultactivities = @resultactivities.where.not(f_wechatencrypt:params[:xml][:FromUserName])
 
               puts "$$$$$$$$$$$$$$$$$$$"
