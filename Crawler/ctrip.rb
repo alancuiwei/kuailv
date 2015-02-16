@@ -6,7 +6,7 @@ require 'faraday'
 require 'excon'
 
 
-txt = File.open("ctrip.txt","a")
+txt = File.open("ctrip.txt","w")
 
 
 def datacheck(title_content)
