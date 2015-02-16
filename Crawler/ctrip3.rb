@@ -43,8 +43,8 @@ sql = "INSERT IGNORE INTO `activities` ( `f_homepage`, `start_city`, `end_city`,
 dbh.query("SET NAMES utf8")
 stmt=dbh.prepare(sql)  
 
-$getPageTimes = 0;
-$num = 200;
+$getPageTimes = 400;
+#$num = 400;
 
 
 #	html=open("http://you.ctrip.com/CommunitySite/Activity/Home/IndexList?page="+$getPageTimes.to_s+"&sorttab=eventstab_publish").read #获取数据列表page调整页码 
@@ -61,8 +61,8 @@ begin
 	$getPageTimes +=1;
 
 		
-	txt.puts("#{$getPageTimes} / 200-p1")
-	puts "#{$getPageTimes} / 200-p1"
+	txt.puts("#{$getPageTimes} / 600-p3")
+	puts "#{$getPageTimes} / 600-p3"
 
 		response = conn.get "/CommunitySite/Activity/Home/IndexList?page="+$getPageTimes.to_s+"&sorttab=eventstab_publish"     # GET http://sushi.com/nigiri/sake.json
 #		response = conn.get do |req|
@@ -137,8 +137,8 @@ begin
 
 #	sleep 5
 
-end while $getPageTimes < $num
-#end while li_in_onepage != 0
+#end while $getPageTimes < $num
+end while li_in_onepage != 0
 
 txt.close
 stmt.close if stmt
