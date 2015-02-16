@@ -91,6 +91,8 @@ class WeixinsController < ApplicationController
             if noresult
               render "rtn404", :format => :xml
             else
+              puts "$$$$$$$$$$$$$$$$$$$$$$$$"
+              puts @resultactivities.count
               render "rtn130", :formats => :xml
             end
 
