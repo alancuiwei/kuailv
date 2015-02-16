@@ -25,14 +25,15 @@
 		 <PicUrl><![CDATA[<%= resultpicurl %>]]></PicUrl>
 		 <Url><![CDATA[<%= resulturl %>]]></Url>
 		 </item>
-	 <% else # 搜索的是用户通过微信生成的记录 %>		
-		 <item>
-		 <Title><![CDATA[<%= resultactivity.start_city %>-<%= resultactivity.end_city %>,<%= resultactivity.start_time %>-<%= resultactivity.end_time %>,QQ:<%=resultactivity.qq %>  ]]></Title> 
-		 <Description><![CDATA[<%= resultactivity.remarks %>]]></Description>
-		 <PicUrl><![CDATA[<%= resultpicurl %>]]></PicUrl>
-		 <Url><![CDATA[<%= resulturl %>]]></Url>
-		 </item>
-
+	 <% else # 搜索的是用户通过微信生成的记录 %>
+	 	 <% if (resultactivity.f_wechatencrypt != params[:xml][:FromUserName])		
+			 <item>
+			 <Title><![CDATA[<%= resultactivity.start_city %>-<%= resultactivity.end_city %>,<%= resultactivity.start_time %>出发,QQ:<%=resultactivity.qq %>  ]]></Title> 
+			 <Description><![CDATA[<%= resultactivity.remarks %>]]></Description>
+			 <PicUrl><![CDATA[<%= resultpicurl %>]]></PicUrl>
+			 <Url><![CDATA[<%= resulturl %>]]></Url>
+			 </item>
+		<% end %>	 
 	 <% end %>
 
  <% end %>
