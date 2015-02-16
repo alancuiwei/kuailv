@@ -18,5 +18,5 @@
 !/log/.keep
 /tmp
 
-/Crawler/Ctrip/*.out
+/Crawler/*.txt
 /public/uploads

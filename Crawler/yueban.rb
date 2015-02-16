@@ -3,13 +3,16 @@ require 'nokogiri'
 require 'open-uri'
 require "mysql"  
 
-dbh = Mysql.real_connect("localhost","root","zhongren#1234","kuailv-production",3306);  
+
+txt = File.open("yueban.txt","a")
+
+dbh = Mysql.real_connect("localhost","root","123456","kuailv-development",3306);  
 sql = "INSERT IGNORE INTO `activities` ( `f_homepage`, `start_city`, `end_city`, `start_time`, `end_time`, `remarks`,`created_at`,`beauty`,`qq`) VALUES ( ?,?,?,?,?,?,?,?,?) "
 dbh.query("SET NAMES utf8")
 stmt=dbh.prepare(sql)  
 
 $getPageTimes = 0;
-$num = 960;
+#$num = 960;
 
 begin
 
@@ -19,7 +22,8 @@ begin
 
 	thevents = doc.css("#topicList > div.topic-wrapper > div.inner > div.topic-list > div.topic")
 	li_in_onepage = thevents.count
-	li_in_onepage = 20
+#	puts li_in_onepage
+#	li_in_onepage = 20
 
 	li_in_onepage.times do |lid|
 
@@ -27,7 +31,11 @@ begin
 
 		thetitle = thevent.css("div.media-body > div.section > div.section-header > a").text
 
+		txt.puts(thetitle)
+
 		theothers = thevent.css("div.media-body > div.section > div.section-header > p > span").text
+
+		txt.puts(theothers)
 
 		anatitile = thetitle.split()
 
@@ -83,9 +91,13 @@ begin
 	end
 
 	$getPageTimes +=20;
-	puts "#{$getPageTimes} / #{$num}"
+	txt.puts("#{$getPageTimes} / 1000")
+#	puts "#{$getPageTimes} / 1000"
 
-end while $getPageTimes < $num
+#end while $getPageTimes < $num
+end while li_in_onepage != 0
 
+
+txt.close
 stmt.close if stmt
 dbh.close if dbh

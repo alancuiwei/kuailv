@@ -3,23 +3,29 @@ require 'nokogiri'
 require 'open-uri'
 require "mysql"  
 
-dbh = Mysql.real_connect("localhost","root","zhongren#1234","kuailv-production",3306);  
+txt = File.open("yueban.txt","a")
+
+dbh = Mysql.real_connect("localhost","root","123456","kuailv-development",3306);  
 sql = "INSERT IGNORE INTO `activities` ( `f_homepage`, `start_city`, `end_city`, `start_time`, `end_time`, `remarks`,`created_at`,`beauty`) VALUES ( ?,?,?,?,?,?,?,?) "
 
 dbh.query("SET NAMES utf8")
 stmt=dbh.prepare(sql)  
 
-citys = [{name:"上海",code:310000,num:9},{name:"广州",code:440100,num:10},{name:"深圳",code:440300,num:20},{name:"北京",code:110000,num:4}]
+
+citys = [{name:"北京",code:110000,num:4},{name:"上海",code:310000,num:9},{name:"广州",code:440100,num:10},{name:"深圳",code:440300,num:20}]
 
 citys.each do |city|
 
 	$getPageTimes = 0;
-	$num = city[:num];
+#	$num = city[:num];
 	$citycode = city[:code];
 	$cityname = city[:name];
 
 	begin
 		$getPageTimes +=1;
+
+#		puts "#{$getPageTimes} / 30"
+		txt.puts("#{$getPageTimes} / 30")
 
 		html=open("http://www.doyouhike.net/event/search?date=all&cid="+$citycode.to_s+"&page="+$getPageTimes.to_s).read
 
@@ -33,6 +39,9 @@ citys.each do |city|
 			thevent = thevents[lid]	
 
 			thetitle = thevent.css("dd.des").text
+
+#			puts thetitle
+			txt.puts(thetitle)
 
 			anatitile = thetitle.split()
 
@@ -67,8 +76,11 @@ citys.each do |city|
 
 		end
 		
-	end while $getPageTimes < $num
+	#end while $getPageTimes < $num
+	end while li_in_onepage != 0
 end
+
+txt.close
 
 stmt.close if stmt
 dbh.close if dbh
