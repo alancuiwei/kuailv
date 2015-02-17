@@ -65,7 +65,7 @@ class WeixinsController < ApplicationController
 #            l1_resultcityevents = Activity.where('end_city LIKE ? AND (start_city LIKE ? OR start_city:"all")', "%#{target_end_city}%","%#{target_start_city}%")
 #            l1_resultevents = l1_resultcityevents.where(start_time:((target_start_time-7)..(target_start_time+7)))
 
-            l1_resultevents = Activity.find_by_sql("select * from `kuailv-production`.`activities` where (`start_city` LIKE '%#{target_start_city}%' OR `start_city` LIKE '%all%') AND `end_city` LIKE '%#{target_end_city}%' AND `start_time` BETWEEN '#{target_start_time-7}' AND '#{target_start_time+7}'  limit 0,1000;")
+            l1_resultevents = Activity.find_by_sql("select * from `kuailv-production`.`activities` where (`start_city` LIKE '%#{target_start_city}%' OR `start_city` LIKE '%all%') AND `end_city` LIKE '%#{target_end_city}%' AND `start_time` BETWEEN '#{target_start_time-7}' AND '#{target_start_time+7}'")
 
             if l1_resultevents.count == 1
                   noresult = true
