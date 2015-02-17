@@ -3,7 +3,7 @@ require 'nokogiri'
 require 'open-uri'
 require "mysql"  
 
-txt = File.open("yueban.txt","w")
+txt = File.open("doyouhike.txt","w")
 
 dbh = Mysql.real_connect("localhost","root","zhongren#1234","kuailv-production",3306);  
 sql = "INSERT IGNORE INTO `activities` ( `f_homepage`, `start_city`, `end_city`, `start_time`, `end_time`, `remarks`,`created_at`,`beauty`) VALUES ( ?,?,?,?,?,?,?,?) "

@@ -4,9 +4,60 @@ class ActivitiesController < ApplicationController
   # GET /activities
   # GET /activities.json
 
-#  def index
-#    @activities = Activity.all
-#  end
+  def index
+
+    l1_successful_matched = 0
+    l1_failed_matched = 0
+
+    l2_successful_matched = 0
+    l2_failed_matched = 0
+
+    l3_successful_matched = 0
+    l3_failed_matched = 0
+
+    activities = Activity.all
+
+    activities.each do |activity|
+        target_start_city = activity.start_city
+        target_end_city   = activity.end_city
+        target_start_time = activity.start_time
+
+
+        l1_resultcityevents = Activity.where('end_city LIKE ? AND start_city LIKE ?', "%#{target_end_city}%","%#{target_start_city}%")
+        l1_resultevents = l1_resultcityevents.where(start_time:((target_start_time-7)..(target_start_time+7)))
+
+        l2_resultcityevents = Activity.where('end_city LIKE ? AND start_city LIKE ?', "%#{target_end_city}%","%#{target_start_city}%")
+        l2_resultevents = l2_resultcityevents.where(start_time:((target_start_time-30)..(target_start_time+30)))
+
+        l3_resultcityevents = Activity.where('end_city LIKE ? or start_city LIKE ?', "%#{target_end_city}%","%#{target_start_city}%")
+        l3_resultevents = l3_resultcityevents.where(start_time:((target_start_time-7)..(target_start_time+7)))
+
+        if l1_resultevents.count ==1
+            l1_failed_matched = l1_failed_matched+1
+        else
+            l1_successful_matched = l1_successful_matched+1
+        end
+
+        if l2_resultevents.count ==1
+            l2_failed_matched = l2_failed_matched+1
+        else
+            l2_successful_matched = l2_successful_matched+1
+        end
+
+        if l3_resultevents.count ==1
+            l3_failed_matched = l3_failed_matched+1
+        else
+            l3_successful_matched = l3_successful_matched+1
+        end
+
+    end  
+
+    @totalnum = activities.count
+    @l1rate = l1_successful_matched*100/@totalnum  
+    @l2rate = l2_successful_matched*100/@totalnum  
+    @l3rate = l3_successful_matched*100/@totalnum  
+
+  end
 
   # GET /activities/1
   # GET /activities/1.json
