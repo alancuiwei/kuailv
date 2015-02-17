@@ -18,11 +18,11 @@ class WeixinsController < ApplicationController
 
               render "rtn110", :formats => :xml
 
-          when "V302"
+#          when "V302"
 
-              @travelevent = Activity.where(beauty:1).limit(2).order("RAND()").first
+#              @travelevent = Activity.where(beauty:1).limit(2).order("RAND()").first
 
-              render "rtn302", :formats => :xml    
+#              render "rtn302", :formats => :xml    
 
         end
     end
@@ -39,11 +39,11 @@ class WeixinsController < ApplicationController
               newrecord.end_city = @userinfo[1]
               startmonth = @userinfo[2][0..1]
               startday = @userinfo[2][2..3]
-              endmonth = @userinfo[3][0..1]
-              endday = @userinfo[3][2..3]
+#              endmonth = @userinfo[3][0..1]
+#              endday = @userinfo[3][2..3]
               newrecord.start_time = Date.strptime("{ 2015-#{startmonth}-#{startday}}", "{ %Y-%m-%d }")
-              newrecord.end_time = Date.strptime("{ 2015-#{endmonth}-#{endday}}", "{ %Y-%m-%d }")
-              newrecord.qq = @userinfo[4]
+#              newrecord.end_time = Date.strptime("{ 2015-#{endmonth}-#{endday}}", "{ %Y-%m-%d }")
+              newrecord.qq = @userinfo[3]
               newrecord.f_wechatencrypt = params[:xml][:FromUserName]
               newrecord.save       
             end
@@ -63,26 +63,13 @@ class WeixinsController < ApplicationController
             target_start_city = @theactivity.start_city
             target_end_city   = @theactivity.end_city
             target_start_time = @theactivity.start_time
-            target_start_time = @theactivity.start_time
+#            target_start_time = @theactivity.start_time
 
             l1_resultcityevents = Activity.where('end_city LIKE ? AND start_city LIKE ?', "%#{target_end_city}%","%#{target_start_city}%")
             l1_resultevents = l1_resultcityevents.where(start_time:((target_start_time-7)..(target_start_time+7)))
 
             if l1_resultevents.count == 1
-              l2_resultcityevents = Activity.where('end_city LIKE ? AND start_city LIKE ?', "%#{target_end_city}%","%#{target_start_city}%")
-              l2_resultevents = l2_resultcityevents.where(start_time:((target_start_time-30)..(target_start_time+30)))
-
-              if l2_resultevents.count == 1
-                l3_resultcityevents = Activity.where('end_city LIKE ? or start_city LIKE ?', "%#{target_end_city}%","%#{target_start_city}%")
-                l3_resultevents = l3_resultcityevents.where(start_time:((target_start_time-7)..(target_start_time+7)))
-                if l3_resultevents.count == 1
                   noresult = true
-                else
-                  @resultactivities = l3_resultevents
-                end
-              else
-                @resultactivities = l2_resultevents
-              end
             else
               @resultactivities = l1_resultevents
             end

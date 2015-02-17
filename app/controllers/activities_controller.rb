@@ -5,7 +5,7 @@ class ActivitiesController < ApplicationController
   # GET /activities.json
 
   def index
-
+=begin
     l1_successful_matched = 0
     l1_failed_matched = 0
 
@@ -56,7 +56,7 @@ class ActivitiesController < ApplicationController
     @l1rate = l1_successful_matched*100/@totalnum  
     @l2rate = l2_successful_matched*100/@totalnum  
     @l3rate = l3_successful_matched*100/@totalnum  
-
+=end
   end
 
   # GET /activities/1

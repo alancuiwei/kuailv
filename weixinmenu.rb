@@ -19,7 +19,8 @@ puts token
 params = {"button"=>[
 
 #{"type"=>"click","name"=>"明星众筹","key"=>"V110"},{"name"=>"产品","sub_button"=>[{"type"=>"click","name"=>"我的产品","key"=>"V202"},{"type"=>"click","name"=>"关注产品","key"=>"V203"}]},{"name"=>"关于","sub_button"=>[{"type"=>"click","name"=>"新手必读","key"=>"V301"},{"type"=>"click","name"=>"服务介绍","key"=>"V302"},{"type"=>"click","name"=>"合伙人","key"=>"V304"}]}]}
-{"type"=>"click","name"=>"找驴友","key"=>"V110"},{"name"=>"特色专区","sub_button"=>[{"type"=>"click","name"=>"美女去哪我去哪","key"=>"V302"}]}]}
+#{"type"=>"click","name"=>"找驴友","key"=>"V110"},{"name"=>"特区","sub_button"=>[{"type"=>"click","name"=>"美女去哪我去哪","key"=>"V302"}]}]}
+{"type"=>"click","name"=>"找驴友","key"=>"V110"}]}
 
 http = Net::HTTP.new("api.weixin.qq.com")
 request = Net::HTTP::Post.new("/cgi-bin/menu/create?access_token="+token,{'Content-Type' => 'application/json'})
