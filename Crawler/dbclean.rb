@@ -7,7 +7,7 @@ begin
 
     txt = File.open("analysis.txt","a")
     txt.puts(Time.now)
-    con = Mysql.new 'localhost', 'root', '123456', 'kuailv-development'    
+    con = Mysql.new 'localhost', 'root', 'zhongren#1234', 'kuailv-production'    
 
     @querycondition = "SELECT * FROM activities"
     rs = con.query @querycondition
