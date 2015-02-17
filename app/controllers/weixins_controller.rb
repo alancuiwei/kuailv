@@ -39,10 +39,7 @@ class WeixinsController < ApplicationController
               newrecord.end_city = @userinfo[1]
               startmonth = @userinfo[2][0..1]
               startday = @userinfo[2][2..3]
-#              endmonth = @userinfo[3][0..1]
-#              endday = @userinfo[3][2..3]
               newrecord.start_time = Date.strptime("{ 2015-#{startmonth}-#{startday}}", "{ %Y-%m-%d }")
-#              newrecord.end_time = Date.strptime("{ 2015-#{endmonth}-#{endday}}", "{ %Y-%m-%d }")
               newrecord.qq = @userinfo[3]
               newrecord.f_wechatencrypt = params[:xml][:FromUserName]
               newrecord.save       
