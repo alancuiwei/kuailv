@@ -7,6 +7,7 @@ require 'excon'
 
 
 txt = File.open("ctrip.txt","w")
+txt.puts(Time.now)
 
 
 def datacheck(title_content)
