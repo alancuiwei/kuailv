@@ -11,12 +11,13 @@ class WeixinsController < ApplicationController
 #      render "echo", :formats => :xml
 #    end
 
-    txt = File.open("weixin.txt","w")
+=begin
     text_request_num = 0
     pic_request_num = 0
     success_num = 0
     failed_num = 0
-    
+=end 
+
     if params[:xml][:Event] == "CLICK"
         case params[:xml][:EventKey]
           when "V110"
@@ -28,7 +29,7 @@ class WeixinsController < ApplicationController
 
     if params[:xml][:MsgType]=="text"
 
-        text_request_num = text_request_num+1
+#        text_request_num = text_request_num+1
 
         if params[:xml][:Content].include?','
           @userinfo = params[:xml][:Content].split(",")
@@ -56,7 +57,7 @@ class WeixinsController < ApplicationController
 
     if params[:xml][:MsgType]=="image"
 
-            pic_request_num = pic_request_num + 1 
+#            pic_request_num = pic_request_num + 1 
 
             noresult = false
             uploadpicurl = params[:xml][:PicUrl]
@@ -81,22 +82,24 @@ class WeixinsController < ApplicationController
   
 #            @resultactivity = Activity.limit(2).order("RAND()").first
             if noresult
-              failed_num = failed_num + 1
+#              failed_num = failed_num + 1
               render "rtn404", :format => :xml
             else
               if (@resultactivities.count > 10)
                 @resultactivities = @resultactivities.first(10)
               end
-              success_num = success_num + 1
+#              success_num = success_num + 1
               render "rtn130", :formats => :xml
             end
 
     end
 
+=begin
     txt.puts("total_weixin_user_request_number = #{text_request_num}")
     txt.puts("Picture_request_number = #{pic_request_num}")
     txt.puts("success_request_number = #{success_num}")
     txt.puts("failed_request_number = #{failed_num}")
+=end
 
   end
 
