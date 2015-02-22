@@ -14,8 +14,11 @@ class WeixinsController < ApplicationController
     if params[:xml][:Event] == "CLICK"
         case params[:xml][:EventKey]
           when "V110"
-
               render "rtn110", :formats => :xml
+          when "V303"
+              render "rtn303", :formats => :xml
+          when "V304"
+              render "rtn304", :formats => :xml
 
         end
     end
@@ -57,10 +60,6 @@ class WeixinsController < ApplicationController
             target_start_city = @theactivity.start_city
             target_end_city   = @theactivity.end_city
             target_start_time = @theactivity.start_time
-#            target_start_time = @theactivity.start_time
-
-#            l1_resultcityevents = Activity.where('end_city LIKE ? AND (start_city LIKE ? OR start_city:"all")', "%#{target_end_city}%","%#{target_start_city}%")
-#            l1_resultevents = l1_resultcityevents.where(start_time:((target_start_time-7)..(target_start_time+7)))
 
             l1_resultevents = Activity.find_by_sql("select * from `kuailv-production`.`activities` where `start_city` LIKE '%#{target_start_city}%' AND `end_city` LIKE '%#{target_end_city}%' AND `start_time` BETWEEN '#{target_start_time-7}' AND '#{target_start_time+7}'  limit 0,1000;")
 
@@ -74,15 +73,12 @@ class WeixinsController < ApplicationController
               noresult = true  
             end
   
-#            @resultactivity = Activity.limit(2).order("RAND()").first
             if noresult
-#              failed_num = failed_num + 1
               render "rtn404", :format => :xml
             else
               if (@resultactivities.count > 10)
                 @resultactivities = @resultactivities.first(10)
               end
-#              success_num = success_num + 1
               render "rtn130", :formats => :xml
             end
 

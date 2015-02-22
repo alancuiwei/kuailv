@@ -1,0 +1,18 @@
+ <xml>
+ <ToUserName><![CDATA[<%= params[:xml][:FromUserName] %>]]></ToUserName>
+ <FromUserName><![CDATA[<%= params[:xml][:ToUserName] %>]]></FromUserName>
+ <CreateTime><%= Time.now.to_i %></CreateTime>
+ <MsgType><![CDATA[news]]></MsgType>
+ <ArticleCount>1</ArticleCount>
+ <Articles>
+
+ <item>
+ <Title><![CDATA[快驴:最快的方式，找到小伙伴，一起去旅行]]></Title> 
+ <Description><![CDATA[现进行第二轮融资，招募中级合伙人，仅剩2个名额，3000元/人]]></Description>
+ <PicUrl><![CDATA[http://www.productgaga.com/assets/kuailv-features.png]]></PicUrl>
+ <Url><![CDATA[http://www.productgaga.com/ideas/56]]></Url>
+ </item>
+
+ </Articles>
+ <FuncFlag>1</FuncFlag>
+ </xml>
