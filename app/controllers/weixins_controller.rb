@@ -66,9 +66,9 @@ class WeixinsController < ApplicationController
 
             l2_resultevents = Activity.find_by_sql("select * from `kuailv-production`.`activities` where `start_city` LIKE '%all%' AND `end_city` LIKE '%#{target_end_city}%' AND `start_time` BETWEEN '#{target_start_time-7}' AND '#{target_start_time+7}'  limit 0,1000;")
 
-            if l1_resultevents.count > 1
+            if (l1_resultevents.count > 1)
               @resultactivities = l1_resultevents
-            elsif l2_resultevents.count > 1)
+            elsif (l2_resultevents.count > 1)
               @resultactivities = l2_resultevents
             else
               noresult = true  
