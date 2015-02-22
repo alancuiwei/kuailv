@@ -1,6 +1,7 @@
 class ActivitiesController < ApplicationController
   before_action :set_activity, only: [:show, :edit, :update, :destroy]
 
+#  $account = 0
   # GET /activities
   # GET /activities.json
 
@@ -10,7 +11,6 @@ class ActivitiesController < ApplicationController
   # GET /activities/1
   # GET /activities/1.json
   def show
-
 
 #      target_start_city = @activity.start_city
 #      target_end_city   = @activity.end_city
@@ -25,6 +25,7 @@ class ActivitiesController < ApplicationController
 
   # GET /activities/new
   def new
+
     @activity = Activity.new
   end
 
