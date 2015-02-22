@@ -40,6 +40,7 @@ class WeixinsController < ApplicationController
               newrecord.start_time = Date.strptime("{ 2015-#{startmonth}-#{startday}}", "{ %Y-%m-%d }")
               newrecord.qq = @userinfo[3]
               newrecord.f_wechatencrypt = params[:xml][:FromUserName]
+              newrecord.beauty = 200
               newrecord.save       
             end
             render "rtn120", :formats => :xml
