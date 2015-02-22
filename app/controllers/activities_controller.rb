@@ -82,4 +82,5 @@ class ActivitiesController < ApplicationController
     def activity_params
       params.require(:activity).permit(:avatar,:avatar_cache, :beauty, :f_wechatencrypt, :qq, :mobile, :start_city, :end_city, :start_time, :end_time, :founder, :f_wechatid, :remarks, :f_weiboid)
     end
+
 end

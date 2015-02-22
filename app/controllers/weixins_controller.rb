@@ -11,13 +11,6 @@ class WeixinsController < ApplicationController
 #      render "echo", :formats => :xml
 #    end
 
-=begin
-    text_request_num = 0
-    pic_request_num = 0
-    success_num = 0
-    failed_num = 0
-=end 
-
     if params[:xml][:Event] == "CLICK"
         case params[:xml][:EventKey]
           when "V110"
@@ -28,8 +21,6 @@ class WeixinsController < ApplicationController
     end
 
     if params[:xml][:MsgType]=="text"
-
-#        text_request_num = text_request_num+1
 
         if params[:xml][:Content].include?','
           @userinfo = params[:xml][:Content].split(",")
@@ -57,11 +48,10 @@ class WeixinsController < ApplicationController
 
     if params[:xml][:MsgType]=="image"
 
-#            pic_request_num = pic_request_num + 1 
-
             noresult = false
             uploadpicurl = params[:xml][:PicUrl]
             @theactivity = Activity.where(f_wechatencrypt:params[:xml][:FromUserName]).last  
+            #将 founder字段用来储存 activity活动人的头像。
             @theactivity.update_attributes(:founder=>uploadpicurl)
 
             target_start_city = @theactivity.start_city
@@ -72,12 +62,16 @@ class WeixinsController < ApplicationController
 #            l1_resultcityevents = Activity.where('end_city LIKE ? AND (start_city LIKE ? OR start_city:"all")', "%#{target_end_city}%","%#{target_start_city}%")
 #            l1_resultevents = l1_resultcityevents.where(start_time:((target_start_time-7)..(target_start_time+7)))
 
-            l1_resultevents = Activity.find_by_sql("select * from `kuailv-production`.`activities` where (`start_city` LIKE '%#{target_start_city}%' OR `start_city` LIKE '%all%') AND `end_city` LIKE '%#{target_end_city}%' AND `start_time` BETWEEN '#{target_start_time-7}' AND '#{target_start_time+7}'  limit 0,1000;")
+            l1_resultevents = Activity.find_by_sql("select * from `kuailv-production`.`activities` where `start_city` LIKE '%#{target_start_city}%' AND `end_city` LIKE '%#{target_end_city}%' AND `start_time` BETWEEN '#{target_start_time-7}' AND '#{target_start_time+7}'  limit 0,1000;")
 
-            if l1_resultevents.count == 1
-                  noresult = true
-            else
+            l2_resultevents = Activity.find_by_sql("select * from `kuailv-production`.`activities` where `start_city` LIKE '%all%' AND `end_city` LIKE '%#{target_end_city}%' AND `start_time` BETWEEN '#{target_start_time-7}' AND '#{target_start_time+7}'  limit 0,1000;")
+
+            if l1_resultevents.count > 1
               @resultactivities = l1_resultevents
+            elsif l2_resultevents.count > 1)
+              @resultactivities = l2_resultevents
+            else
+              noresult = true  
             end
   
 #            @resultactivity = Activity.limit(2).order("RAND()").first
@@ -93,13 +87,6 @@ class WeixinsController < ApplicationController
             end
 
     end
-
-=begin
-    txt.puts("total_weixin_user_request_number = #{text_request_num}")
-    txt.puts("Picture_request_number = #{pic_request_num}")
-    txt.puts("success_request_number = #{success_num}")
-    txt.puts("failed_request_number = #{failed_num}")
-=end
 
   end
 
