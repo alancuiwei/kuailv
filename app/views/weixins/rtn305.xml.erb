@@ -1,11 +1,19 @@
-<xml>
-<ToUserName><![CDATA[toUser]]></ToUserName>
-<FromUserName><![CDATA[fromUser]]></FromUserName>
-<CreateTime><%= Time.now.to_i %></CreateTime>
-<MsgType><![CDATA[video]]></MsgType>
-<Video>
-<MediaId><![CDATA[211229480]]></MediaId>
-<Title><![CDATA[快驴使用介绍]]></Title>
-<Description><![CDATA[视频介绍，简单易懂]]></Description>
-</Video> 
-</xml>
+ <xml>
+ <ToUserName><![CDATA[<%= params[:xml][:FromUserName] %>]]></ToUserName>
+ <FromUserName><![CDATA[<%= params[:xml][:ToUserName] %>]]></FromUserName>
+ <CreateTime><%= Time.now.to_i %></CreateTime>
+ <MsgType><![CDATA[news]]></MsgType>
+ <ArticleCount>1</ArticleCount>
+ <Articles>
+
+ <item>
+ <Title><![CDATA[快驴使用说明]]></Title> 
+ <Description><![CDATA[视频介绍，简单易懂]]></Description>
+ <PicUrl><![CDATA[https://mmbiz.qlogo.cn/mmbiz/PepP9fYY41VgrH6ufZ9vHXWqhsBAqCNaSmZIVXeveP24LfMkDUCnnicicXibGUwrbB0OHuYkVO9jKialglXicS7I4TQ/0]]></PicUrl>
+ <Url><![CDATA[http://v.qq.com/page/m/m/p/m0147pnj5mp.html]]></Url>
+ </item>
+
+
+ </Articles>
+ <FuncFlag>1</FuncFlag>
+ </xml>
