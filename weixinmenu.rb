@@ -19,7 +19,7 @@ puts token
 params = {"button"=>[
 
 #{"type"=>"click","name"=>"明星众筹","key"=>"V110"},{"name"=>"产品","sub_button"=>[{"type"=>"click","name"=>"我的产品","key"=>"V202"},{"type"=>"click","name"=>"关注产品","key"=>"V203"}]},{"name"=>"关于","sub_button"=>[{"type"=>"click","name"=>"新手必读","key"=>"V301"},{"type"=>"click","name"=>"服务介绍","key"=>"V302"},{"type"=>"click","name"=>"合伙人","key"=>"V304"}]}]}
-{"type"=>"click","name"=>"找驴友","key"=>"V110"},{"name"=>"有利有奖","sub_button"=>[{"type"=>"click","name"=>"投资有利","key"=>"V303"},{"type"=>"click","name"=>"吐槽有奖","key"=>"V304"}]}]}
+{"type"=>"click","name"=>"找驴友","key"=>"V110"},{"name"=>"关于快驴","sub_button"=>[{"type"=>"click","name"=>"使用说明","key"=>"V305"},{"type"=>"click","name"=>"投资有利","key"=>"V303"},{"type"=>"click","name"=>"吐槽有奖","key"=>"V304"}]}]}
 #{"type"=>"click","name"=>"找 驴 友","key"=>"V110"}]}
 
 http = Net::HTTP.new("api.weixin.qq.com")
