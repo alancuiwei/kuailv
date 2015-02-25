@@ -12,6 +12,17 @@ class ActivitiesController < ApplicationController
   # GET /activities/1.json
   def show
 
+    target_start_city = @activity.start_city
+    target_end_city   = @activity.end_city
+    target_start_time = @activity.start_time
+
+    l1_resultevents = Activity.find_by_sql("select * from `kuailv-development`.`activities` where `start_city` LIKE '%#{target_start_city}%' AND `end_city` LIKE '%#{target_end_city}%' AND `start_time` BETWEEN '#{target_start_time-7}' AND '#{target_start_time+7}'  limit 0,1000;")
+
+    l2_resultevents = Activity.find_by_sql("select * from `kuailv-development`.`activities` where `start_city` LIKE '%all%' AND `end_city` LIKE '%#{target_end_city}%' AND `start_time` BETWEEN '#{target_start_time-7}' AND '#{target_start_time+7}'  limit 0,1000;")
+
+    @l1_match_number = l1_resultevents.count
+    @l2_match_number = l2_resultevents.count
+
   end
 
   # GET /activities/new
