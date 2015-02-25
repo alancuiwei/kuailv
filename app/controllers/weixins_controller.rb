@@ -32,7 +32,7 @@ class WeixinsController < ApplicationController
 #        else
 #          @userinfo = params[:xml][:Content].split("，")
 #        end
-        @userinfo = params[:xml][:Content].sub('，',',').split(',')
+        @userinfo = params[:xml][:Content].gsub('，',',').split(',')
 
         if (@userinfo.count == 4)
             Activity.new do |newrecord|
