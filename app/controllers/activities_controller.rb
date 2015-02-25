@@ -12,15 +12,6 @@ class ActivitiesController < ApplicationController
   # GET /activities/1.json
   def show
 
-#      target_start_city = @activity.start_city
-#      target_end_city   = @activity.end_city
-#      target_start_time = @activity.start_time
-#      target_end_time = @activity.end_time
-
-#      @l1_resultcityevents = Activity.where('end_city LIKE ? AND (start_city LIKE ? OR start_city:"all")', "%#{target_end_city}%","%#{target_start_city}%")
-#      @l1_resultevents = @l1_resultcityevents.where(start_time:((target_start_time-7)..(target_start_time+7)))
-#      @l1_resultevents = Activity.find_by_sql("select * from `kuailv-development`.`activities` where (`start_city` LIKE '%#{target_start_city}%' OR `start_city` LIKE '%all%') AND `end_city` LIKE '%#{target_end_city}%' AND `start_time` BETWEEN '#{target_start_time-7}' AND '#{target_start_time+7}'  limit 0,1000;")
-
   end
 
   # GET /activities/new
@@ -81,7 +72,7 @@ class ActivitiesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def activity_params
-      params.require(:activity).permit(:avatar,:avatar_cache, :beauty, :f_wechatencrypt, :qq, :mobile, :start_city, :end_city, :start_time, :end_time, :founder, :f_wechatid, :remarks, :f_weiboid)
+      params.require(:activity).permit(:result,:avatar,:avatar_cache, :beauty, :f_wechatencrypt, :qq, :mobile, :start_city, :end_city, :start_time, :end_time, :founder, :f_wechatid, :remarks, :f_weiboid)
     end
 
 end

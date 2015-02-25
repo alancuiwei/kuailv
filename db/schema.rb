@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150212065210) do
+ActiveRecord::Schema.define(version: 20150225014348) do
 
   create_table "activities", force: :cascade do |t|
     t.string   "start_city",      limit: 255
@@ -23,13 +23,16 @@ ActiveRecord::Schema.define(version: 20150212065210) do
     t.string   "f_wechatid",      limit: 255
     t.text     "remarks",         limit: 65535
     t.string   "f_weiboid",       limit: 255
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "avatar",          limit: 255
     t.string   "mobile",          limit: 255
     t.string   "qq",              limit: 255
     t.integer  "beauty",          limit: 4
     t.string   "f_wechatencrypt", limit: 255
+    t.integer  "result",          limit: 4
   end
+
+  add_index "activities", ["f_homepage"], name: "homeidex", unique: true, using: :btree
 
 end
