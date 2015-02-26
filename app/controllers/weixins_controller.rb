@@ -15,6 +15,9 @@ class WeixinsController < ApplicationController
         case params[:xml][:EventKey]
           when "V110"
               render "rtn110", :formats => :xml
+          when "V302"
+              @travelevents = Activity.where(beauty:1).limit(5).order("RAND()")          
+              render "rtn302", :formats => :xml
           when "V303"
               render "rtn303", :formats => :xml
           when "V304"
@@ -27,11 +30,6 @@ class WeixinsController < ApplicationController
 
     if params[:xml][:MsgType]=="text"
 
-#        if params[:xml][:Content].include?','
-#          @userinfo = params[:xml][:Content].split(",")
-#        else
-#          @userinfo = params[:xml][:Content].split("，")
-#        end
         @userinfo = params[:xml][:Content].gsub('，',',').split(',')
 
         if (@userinfo.count == 4)
@@ -83,8 +81,8 @@ class WeixinsController < ApplicationController
             if noresult
               render "rtn404", :format => :xml
             else
-              if (@resultactivities.count > 10)
-                @resultactivities = @resultactivities.first(10)
+              if (@resultactivities.count > 5)
+                @resultactivities = @resultactivities.first(5)
               end
               render "rtn130", :formats => :xml
             end
