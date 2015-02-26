@@ -9,10 +9,10 @@
  <% @travelevents.each do |travelevent| %>
 
  <item>
- <Title><![CDATA[和我一起去<%=@travelevent.end_city %>玩吧？]]></Title> 
+ <Title><![CDATA[和我一起去<%= travelevent.end_city %>玩吧？]]></Title> 
  <Description><![CDATA[
- 	<%=@travelevent.remarks %> ]]></Description>
- <PicUrl><![CDATA[http://www.lvdazi.com/uploads/activity/avatar/<%=@travelevent.id %>/thumb_lvdazi.jpg]]></PicUrl>
+ 	<%= travelevent.remarks %> ]]></Description>
+ <PicUrl><![CDATA[http://www.lvdazi.com/uploads/activity/avatar/<%= travelevent.id %>/thumb_lvdazi.jpg]]></PicUrl>
  <Url><![CDATA[<%= travelevent.f_homepage %>]]></Url>
  </item>
 
