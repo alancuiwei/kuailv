@@ -17,7 +17,7 @@
 
   <div class="field">
     <%= f.label :beauty %><br>
-    <%= f.number_field :beauty %>
+    <%= f.number_field :beauty,value:1 %>
   </div>
 
 
@@ -48,7 +48,12 @@
     <%= f.label :end_time %><br>
     <%= f.date_select :end_time %>
   </div>
-
+ 
+  <div class="field">
+    <%= f.label :f_homepage %><br>
+    <%= f.text_field :f_homepage %>
+  </div>
+<!--
   <div class="field">
     <%= f.label :f_weiboid %><br>
     <%= f.text_field :f_weiboid %>
@@ -76,7 +81,7 @@
     <%= f.label :mobile %><br>
     <%= f.text_field :mobile %>
   </div>
-
+-->
   <div class="actions">
     <%= f.submit %>
   </div>

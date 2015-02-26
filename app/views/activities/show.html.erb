@@ -1,5 +1,5 @@
 <% if @l1_match_number > 0 %>
-  <p>您好，我们冒昧的帮你，把找驴友的信息（<%= @activity.start_time %>，从<%= @activity.start_city %>出发去<%= @activity.end_city %>）,登记在快驴平台上，我们找到<%= @l1_match_number %>个几乎完全符合，<%= @l2_match_number %>个大概符合您条件的驴友。你可以在微信上，最快的方式，找到小伙伴，一起去旅行。公众号：快驴，或 kuailv-club。</p>
+  <p>您好，我们冒昧的帮你，把找驴友的信息（<%= @activity.start_time %>，从<%= @activity.start_city %>出发去<%= @activity.end_city %>）,登记在快驴平台上，我们找到<%= @l1_match_number %>个几乎完全符合，<%= @l2_match_number+@l1_match_number %>个大概符合您条件的驴友。你可以在微信上，最快的方式，找到小伙伴，一起去旅行。公众号：快驴，或 kuailv-club。</p>
 <% else %>
   <p>您好，我们冒昧的帮你，把找结伴驴友的信息（<%= @activity.start_time %>，从<%= @activity.start_city %>出发去<%= @activity.end_city %>）,登记在微信平台上（公众号：快驴，或 kuailv-club）上，你可以在微信上，最快的方式，找到小伙伴，一起去旅行。如果您不愿意的话，请回复我们，立刻删除掉，多谢！</p>
 
