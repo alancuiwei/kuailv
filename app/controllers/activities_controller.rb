@@ -1,15 +1,12 @@
 class ActivitiesController < ApplicationController
   before_action :set_activity, only: [:show, :edit, :update, :destroy]
 
-#  $account = 0
-  # GET /activities
-  # GET /activities.json
-
   def index
+    @all_yesterday_results = Activity.where(created_at:(Time.now.midnight-1.day)..Time.now.midnight)
+    @weibo_yesterday_results = @all_yesterday_results.where(beauty:1)
+#    @userself_yesterday_results = @all_yesterday_results.where(beauty:200)
   end
 
-  # GET /activities/1
-  # GET /activities/1.json
   def show
 
     target_start_city = @activity.start_city
@@ -54,7 +51,7 @@ class ActivitiesController < ApplicationController
   # PATCH/PUT /activities/1.json
   def update
     respond_to do |format|
-      if @activity.update(activity_params)
+      if (@activity.update(activity_params) && @activity.beauty ==1)
         format.html { redirect_to @activity, notice: 'Activity was successfully updated.' }
         format.json { render :show, status: :ok, location: @activity }
       else
@@ -79,6 +76,7 @@ class ActivitiesController < ApplicationController
     def set_activity
       @activity = Activity.find(params[:id])
     end
+
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def activity_params
