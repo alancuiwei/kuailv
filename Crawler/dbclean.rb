@@ -9,8 +9,8 @@ begin
 
 #    con.query "DELETE FROM activities WHERE start_time < curdate()"
         
-rescue Mysql::Error => e
-    puts e    
-ensure
-    con.close if con
+#rescue Mysql::Error => e
+#    puts e    
+#ensure
+#    con.close if con
 end
