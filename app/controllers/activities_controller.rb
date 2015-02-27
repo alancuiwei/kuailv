@@ -2,8 +2,11 @@ class ActivitiesController < ApplicationController
   before_action :set_activity, only: [:show, :edit, :update, :destroy]
 
   def index
-    @all_yesterday_results = Activity.where(created_at:(Time.now.midnight-1.day)..Time.now.midnight)
+    @all_yesterday_results = Activity.where(created_at:(Time.now.midnight-1.day)..Time.now)
     @weibo_yesterday_results = @all_yesterday_results.where(beauty:1)
+    @weibo_yesterday_L2_results = @weibo_yesterday_results.where.not(f_wechatid:nil)
+    @weibo_yesterday_L3_results = @weibo_yesterday_L2_results.where.not(f_wechatencrypt:nil)
+
 #    @userself_yesterday_results = @all_yesterday_results.where(beauty:200)
   end
 
@@ -51,7 +54,7 @@ class ActivitiesController < ApplicationController
   # PATCH/PUT /activities/1.json
   def update
     respond_to do |format|
-      if (@activity.update(activity_params) && @activity.beauty ==1)
+      if @activity.update(activity_params)
         format.html { redirect_to @activity, notice: 'Activity was successfully updated.' }
         format.json { render :show, status: :ok, location: @activity }
       else

@@ -1,5 +1,5 @@
 <div class="container">
-<% if @activity.beauty == 1 %>  
+
   <%= form_for @activity, :html => {:multipart => true } do |f| %>
     <% if @activity.errors.any? %>
       <div id="error_explanation">
@@ -15,10 +15,11 @@
 
     <%#= radio_button_tag :beauty, 1 %>
     <%#= label_tag(:beauty, "美女专区") %>
+    <h3><span class="label label-success">Phase_1_data</span></h3>
 
     <div class="field">
-      <%= f.label :beauty %><br>
-      <%= f.number_field :beauty,value:1 %>
+      <%#= f.label :beauty %><br>
+      <%= f.hidden_field :beauty,value:1 %>
     </div>
 
 
@@ -28,37 +29,39 @@
       <%= f.hidden_field :avatar_cache %>
     </div>
 
+    <br \>
     <div class="field">
-      <%= f.label :remarks %><br>
+      <%= f.label :微博发布内容 %><br>
       <%= f.text_area :remarks %>
     </div>
 
     <div class="field">
-      <%= f.label :start_city %><br>
+      <%= f.label :出发城市 %><br>
       <%= f.text_field :start_city %>
     </div>
     <div class="field">
-      <%= f.label :end_city %><br>
+      <%= f.label :目标城市 %><br>
       <%= f.text_field :end_city %>
     </div>
     <div class="field">
-      <%= f.label :start_time %><br>
+      <%= f.label :出发日期 %><br>
       <%= f.date_select :start_time %>
     </div>
     <div class="field">
-      <%= f.label :end_time %><br>
+      <%= f.label :回来日期 %><br>
       <%= f.date_select :end_time %>
+    </div>
+
+    <div class="field">
+      <%= f.label :微博名称 %><br>
+      <%= f.text_field :f_weiboid %>
     </div>
    
     <div class="field">
-      <%= f.label :f_homepage %><br>
+      <%= f.label :微博地址 %><br>
       <%= f.text_field :f_homepage %>
     </div>
   <!--
-    <div class="field">
-      <%= f.label :f_weiboid %><br>
-      <%= f.text_field :f_weiboid %>
-    </div>
 
     <div class="field">
       <%= f.label :founder %><br>
@@ -71,10 +74,6 @@
     </div>
 
     <div class="field">
-      <%= f.label :f_wechatid %><br>
-      <%= f.text_field :f_wechatid %>
-    </div>
-    <div class="field">
       <%= f.label :qq %><br>
       <%= f.text_field :qq %>
     </div>
@@ -86,6 +85,23 @@
     <div class="actions">
       <%= f.submit %>
     </div>
-  <% end %>
+
+--------------------------------------------
+    <h3><span class="label label-warning">Phase_2_data</span></h3>
+    <br \>
+
+    <div class="field">
+      <%= f.label :f_wechatid %><br>
+      <%= f.text_field :f_wechatid %>
+    </div>
+
+--------------------------------------------
+    <h3><span class="label label-danger">Phase_3_data</span></h3>
+    <br \>
+    <div class="field">
+      <%= f.label :wechat_encrypt %><br>
+      <%= f.text_field :f_wechatencrypt %>
+    </div>
+    <br \>
 <% end %>
 </div>

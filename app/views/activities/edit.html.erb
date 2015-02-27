@@ -1,6 +1,9 @@
 <h1>Editing Activity</h1>
 
+<% if @activity.beauty == 1 %>
+
 <%= render 'form' %>
 
-<%= link_to 'Show', @activity %> |
-<%= link_to 'Back', activities_path %>
+<% end %>
+<%#= link_to 'Show', @activity %> 
+<%#= link_to 'Back', activities_path %>
