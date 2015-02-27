@@ -1,74 +1,8 @@
 <% if @l1_match_number > 0 %>
   <p>我们冒昧的把您找驴友的信息（<%= @activity.start_time %>，<%= @activity.start_city %>到<%= @activity.end_city %>）,登记在快驴平台上（微信公众号：快驴，或kuailv-club），我们找到<%= @l1_match_number %>个<%= @activity.start_city %>同去<%= @activity.end_city %>，出发时间相隔几天的驴友，还找到<%= @l2_match_number %>个<%= @activity.start_time %>在<%= @activity.end_city %>愿意结伴的驴友。你可以在快驴微信服务号上和他们取得联系。</p>
+<% elsif @l2_match_number > 0 %>
+  <p>我们冒昧的把您找驴友的信息（<%= @activity.start_time %>，<%= @activity.start_city %>到<%= @activity.end_city %>）,登记在快驴平台上（微信公众号：快驴，或kuailv-club），我们找到<%= @l2_match_number %>个<%= @activity.start_time %>在<%= @activity.end_city %>愿意结伴的驴友。你可以在快驴微信服务号上和他们取得联系。</p>
 <% else %>
   <p>您好，我们冒昧的帮你，把找结伴驴友的信息（<%= @activity.start_time %>，从<%= @activity.start_city %>出发去<%= @activity.end_city %>）,登记在微信平台上（公众号：快驴，或 kuailv-club）上，你可以在微信上，最快的方式，找到小伙伴，一起去旅行。如果您不愿意的话，请回复我们，立刻删除掉，多谢！</p>
 
 <% end %>  
-
-
-<%#= image_tag(@activity.avatar_url) %>
-
-<!--
-<p id="notice"><%= notice %></p>
-
-<p> l1_number = <%= @l1_match_number %> </p>
-<p> l2_number = <%= @l2_match_number %> </p>
-
-<p>
-  <strong>Beauty-flag</strong>
-  <%= @activity.beauty %>
-</p>
-
-<%#= image_tag(@activity.avatar_url(:thumb)) %>
-
-<p>
-  <strong>Start city:</strong>
-  <%= @activity.start_city %>
-</p>
-
-<p>
-  <strong>End city:</strong>
-  <%= @activity.end_city %>
-</p>
-
-<p>
-  <strong>Start time:</strong>
-  <%= @activity.start_time %>
-</p>
-
-<p>
-  <strong>End time:</strong>
-  <%= @activity.end_time %>
-</p>
-
-<p>
-  <strong>Founder:</strong>
-  <%= @activity.founder %>
-</p>
-
-<p>
-  <strong>F wechatid:</strong>
-  <%= @activity.f_wechatid %>
-</p>
-<p>
-  <strong>F qq:</strong>
-  <%= @activity.qq %>
-</p>
-<p>
-  <strong>F mobile:</strong>
-  <%= @activity.mobile %>
-</p>
-<p>
-  <strong>Remarks:</strong>
-  <%= @activity.remarks %>
-</p>
-
-<p>
-  <strong>F weiboid:</strong>
-  <%= @activity.f_weiboid %>
-</p>
-
-<%= link_to 'Edit', edit_activity_path(@activity) %> |
-<%= link_to 'Back', activities_path %>
-
--->
