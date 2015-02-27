@@ -3,6 +3,7 @@ class ActivitiesController < ApplicationController
 
   def index
     @all_yesterday_results = Activity.where(created_at:(Time.now.midnight-1.day)..Time.now)
+    @today_results = Activity.where(created_at:Time.now.midnight..Time.now)
     @weibo_yesterday_results = @all_yesterday_results.where(beauty:1)
     @weibo_yesterday_L2_results = @weibo_yesterday_results.where.not(f_wechatid:"")
     @weibo_yesterday_L3_results = @weibo_yesterday_L2_results.where.not(f_wechatencrypt:"")

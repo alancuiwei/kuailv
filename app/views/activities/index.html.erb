@@ -1,7 +1,7 @@
 
 <p id="notice"><%= notice %></p>
 
-<p class="lead">新浪微博</p>
+<p class="lead">新浪微博: 今日 <%= @today_results.count %></p>
 
 <dl>
   <dt>触达 ¥<%= @weibo_yesterday_results.count * 0.5%></dt>
@@ -21,6 +21,7 @@
   <thead>
     <tr>
       <th>日期</th>
+      <th>更新</th>
       <th>ID</th>
       <th>微博ID</th>
       <th>微信名</th>
@@ -31,7 +32,8 @@
   <tbody>
   <% @weibo_yesterday_results.each do |activity| %>
     <tr>
-      <td><%= activity.created_at.strftime("%Y年%m月%d日") %></td>      
+      <td><%= activity.created_at.strftime("%Y年%m月%d日") %></td>   
+      <td><%= link_to 'Edit', edit_activity_path(activity) %></td>
       <td><%= activity.id %></td>
       <td><%= activity.f_homepage %></td>
       <td>
