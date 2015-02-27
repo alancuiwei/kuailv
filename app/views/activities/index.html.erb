@@ -1,7 +1,10 @@
 
 <p id="notice"><%= notice %></p>
 
+<p class="lead"><%= @all_num %> <%= @all_yesterday_results.count %></p>
+
 <p class="lead">新浪微博: 今日 <%= @today_results.count %></p>
+
 
 <dl>
   <dt>触达 ¥<%= @weibo_yesterday_results.count * 0.5%></dt>
