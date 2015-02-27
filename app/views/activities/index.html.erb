@@ -35,7 +35,8 @@
       <td><%= activity.id %></td>
       <td><%= activity.f_homepage %></td>
       <td>
-        <% if (activity.f_wechatid.nil? ) %>
+        <%# if (activity.f_wechatid.nil? || activity.f_wechatid.empty? ) %>
+        <% if (activity.f_wechatid.blank? ) %>
           N
         <% else %>
           Y
@@ -43,7 +44,7 @@
 
       </td>
       <td>
-        <% if (activity.f_wechatencrypt.nil? ) %>
+        <% if (activity.f_wechatencrypt.blank?) %>
           N
         <% else %>
           Y
