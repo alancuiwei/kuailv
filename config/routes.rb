@@ -3,6 +3,8 @@ Rails.application.routes.draw do
 #  get 'weixins/create'
   get 'weixin' => 'weixins#show'
   post 'weixin' => 'weixins#create'
+
+  get 'activities/qyer'
   
 
   resources :activities

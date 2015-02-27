@@ -34,6 +34,10 @@ class ActivitiesController < ApplicationController
     @activity = Activity.new
   end
 
+  def qyer
+    @activity = Activity.new
+  end
+
   # GET /activities/1/edit
   def edit
   end
@@ -92,6 +96,8 @@ class ActivitiesController < ApplicationController
 
 #   1: weibo input
 
+# => automatic input
+
 #   100: ctrip input
 #   101: doyouhike input
 #   102: yueban.com input
@@ -101,4 +107,7 @@ class ActivitiesController < ApplicationController
 
 #   200: userself weixin input
 
+# => employee manual input
+
+#   301: qyer manual input
 end
