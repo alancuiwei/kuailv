@@ -90,4 +90,15 @@ class ActivitiesController < ApplicationController
       params.require(:activity).permit(:result,:f_homepage, :avatar,:avatar_cache, :beauty, :f_wechatencrypt, :qq, :mobile, :start_city, :end_city, :start_time, :end_time, :founder, :f_wechatid, :remarks, :f_weiboid)
     end
 
+#   1: weibo input
+
+#   100: ctrip input
+#   101: doyouhike input
+#   102: yueban.com input
+#   103: luguai input    
+#   104: pintour input    
+#   105: mafengwo input    
+
+#   200: userself weixin input
+
 end
