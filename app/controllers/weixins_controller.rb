@@ -82,6 +82,8 @@ class WeixinsController < ApplicationController
             if noresult
               render "rtn404", :format => :xml
             else
+#              @resultactivities = l1_resultevents.merge l2_resultevents
+
               if (@resultactivities.count > 5)
                 @resultactivities = @resultactivities.first(5)
               end

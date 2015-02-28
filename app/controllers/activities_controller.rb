@@ -8,6 +8,11 @@ class ActivitiesController < ApplicationController
 
     @all_yesterday_results = Activity.where(created_at: (Time.now.midnight - 1.day)..Time.now.midnight)
     @all_today_results = Activity.where(created_at:Time.now.midnight..Time.now)
+    puts @all_yesterday_results.count
+    puts @all_today_results.count
+
+    @all_yesterday_results.merge @all_today_results
+    puts @all_yesterday_results.count
 
     @weibo_yesterday_results = @all_yesterday_results.where(beauty:1)
     @weixin_yesterday_results = @all_yesterday_results.where.not(f_wechatencrypt:"")
