@@ -69,10 +69,10 @@ class WeixinsController < ApplicationController
             l2_resultevents = Activity.find_by_sql("select * from `kuailv-production`.`activities` where `end_city` LIKE '%#{target_end_city}%' AND `start_time` BETWEEN '#{target_start_time-7}' AND '#{target_start_time+7}'  limit 0,1000;")
 
             if (l1_resultevents.count > 1)
-              @resultactivities = l1_resultevents
+#              @resultactivities = l1_resultevents
               @theactivity.update_attributes(:result=>1)
             elsif (l2_resultevents.count > 1)
-              @resultactivities = l2_resultevents
+#              @resultactivities = l2_resultevents
               @theactivity.update_attributes(:result=>2)
             else
               noresult = true  
@@ -82,7 +82,7 @@ class WeixinsController < ApplicationController
             if noresult
               render "rtn404", :format => :xml
             else
-#              @resultactivities = l1_resultevents.merge l2_resultevents
+              @resultactivities = l1_resultevents | l2_resultevents
 
               if (@resultactivities.count > 5)
                 @resultactivities = @resultactivities.first(5)
