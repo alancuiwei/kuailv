@@ -84,8 +84,8 @@ class WeixinsController < ApplicationController
             else
               @resultactivities = l1_resultevents | l2_resultevents
 
-              if (@resultactivities.count > 5)
-                @resultactivities = @resultactivities.first(5)
+              if (@resultactivities.count > 10)
+                @resultactivities = @resultactivities.first(10)
               end
               render "rtn130", :formats => :xml
             end
