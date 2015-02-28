@@ -12,6 +12,12 @@ class ActivitiesController < ApplicationController
     @weibo_yesterday_results = @all_yesterday_results.where(beauty:1)
     @weixin_yesterday_results = @all_yesterday_results.where.not(f_wechatencrypt:"")
     @auto_yesterday_results = @all_yesterday_results.where(beauty: 99..199)
+    @auto_100_yesterday_num = @all_yesterday_results.where(beauty:100).count
+    @auto_101_yesterday_num = @all_yesterday_results.where(beauty:101).count
+    @auto_102_yesterday_num = @all_yesterday_results.where(beauty:102).count
+    @auto_103_yesterday_num = @all_yesterday_results.where(beauty:103).count
+    @auto_104_yesterday_num = @all_yesterday_results.where(beauty:104).count
+    @auto_105_yesterday_num = @all_yesterday_results.where(beauty:105).count
 
     @weibo_today_results = @all_today_results.where(beauty:1)
     @weixin_today_results = @all_today_results.where.not(f_wechatencrypt:"")
