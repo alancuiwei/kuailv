@@ -4,7 +4,7 @@ class ActivitiesController < ApplicationController
   def index
 # => 所有的数据，昨天的数据，今天至此的记录
     @all_results = Activity.all
-    @all_useful_results = Activity.where("start_time > #{Time.now.strftime("%Y-%m-%d")}")
+    @all_useful_results = Activity.where(start_time: Time.now.midnight..'2015-12-31')
 
     @all_yesterday_results = Activity.where(created_at: (Time.now.midnight - 1.day)..Time.now.midnight)
     @all_today_results = Activity.where(created_at:Time.now.midnight..Time.now)
