@@ -17,7 +17,7 @@ class WeixinsController < ApplicationController
               render "rtn110", :formats => :xml
           when "V302"
 #              @travelevents = Activity.where(beauty:1).limit(5).order("RAND()")          
-              @travelevents = Activity.where(beauty:1).last(5)          
+              @travelevents = Activity.where(beauty:1).last(10)          
               render "rtn302", :formats => :xml
           when "V303"
               render "rtn303", :formats => :xml
@@ -67,13 +67,18 @@ class WeixinsController < ApplicationController
             l1_resultevents = Activity.find_by_sql("select * from `kuailv-production`.`activities` where `start_city` LIKE '%#{target_start_city}%' AND `end_city` LIKE '%#{target_end_city}%' AND `start_time` BETWEEN '#{target_start_time-7}' AND '#{target_start_time+7}'  limit 0,1000;")
 
             l2_resultevents = Activity.find_by_sql("select * from `kuailv-production`.`activities` where `end_city` LIKE '%#{target_end_city}%' AND `start_time` BETWEEN '#{target_start_time-7}' AND '#{target_start_time+7}'  limit 0,1000;")
+            
+            @resultactivities = l1_resultevents | l2_resultevents
 
-            if (l1_resultevents.count > 1)
+            if (@resultactivities.count > 1)
+              
+              @theactivity.update_attributes(:result => @resultactivities.count)
+#            if (l1_resultevents.count > 1)
 #              @resultactivities = l1_resultevents
-              @theactivity.update_attributes(:result=>1)
-            elsif (l2_resultevents.count > 1)
+#              @theactivity.update_attributes(:result=>1)
+#            elsif (l2_resultevents.count > 1)
 #              @resultactivities = l2_resultevents
-              @theactivity.update_attributes(:result=>2)
+#              @theactivity.update_attributes(:result=>2)
             else
               noresult = true  
               @theactivity.update_attributes(:result=>0)
@@ -82,8 +87,7 @@ class WeixinsController < ApplicationController
             if noresult
               render "rtn404", :format => :xml
             else
-              @resultactivities = l1_resultevents | l2_resultevents
-
+ 
               if (@resultactivities.count > 10)
                 @resultactivities = @resultactivities.first(10)
               end
