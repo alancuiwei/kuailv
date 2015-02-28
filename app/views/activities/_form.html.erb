@@ -15,7 +15,6 @@
 
     <%#= radio_button_tag :beauty, 1 %>
     <%#= label_tag(:beauty, "美女专区") %>
-    <h3><span class="label label-success">Phase_1_data</span></h3>
 
     <div class="field">
       <%#= f.label :beauty %><br>
@@ -51,17 +50,20 @@
       <%= f.label :回来日期 %><br>
       <%= f.date_select :end_time %>
     </div>
-
-    <div class="field">
-      <%= f.label :微博名称 %><br>
-      <%= f.text_field :f_weiboid %>
-    </div>
    
     <div class="field">
       <%= f.label :微博地址 %><br>
       <%= f.text_field :f_homepage %>
     </div>
+
+    <div class="actions">
+      <%= f.submit %>
+    </div>
   <!--
+    <div class="field">
+      <%= f.label :微博名称 %><br>
+      <%= f.text_field :f_weiboid %>
+    </div>
 
     <div class="field">
       <%= f.label :founder %><br>
@@ -81,12 +83,9 @@
       <%= f.label :mobile %><br>
       <%= f.text_field :mobile %>
     </div>
-  -->
-    <div class="actions">
-      <%= f.submit %>
-    </div>
 
---------------------------------------------
+
+
     <h3><span class="label label-warning">Phase_2_data</span></h3>
     <br \>
 
@@ -95,7 +94,6 @@
       <%= f.text_field :f_wechatid %>
     </div>
 
---------------------------------------------
     <h3><span class="label label-danger">Phase_3_data</span></h3>
     <br \>
     <div class="field">
@@ -103,5 +101,6 @@
       <%= f.text_field :f_wechatencrypt %>
     </div>
     <br \>
+-->
 <% end %>
 </div>

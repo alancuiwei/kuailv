@@ -1,23 +1,35 @@
 
 <p id="notice"><%= notice %></p>
 
-<p class="lead"><%= @all_num %> <%= @all_yesterday_results.count %></p>
+<p class="lead">A: <%= @all_results.count %> / <%= @all_useful_results.count %> </p>
+<p class="lead">Y: <%= @all_yesterday_results.count %></p>
+<ul>
+<li> x <%= @weixin_yesterday_results.count %> </li>
+<li> b <%= @weibo_yesterday_results.count %> </li>
+<li> a <%= @auto_yesterday_results.count %> </li>
+</ul>
 
-<p class="lead">新浪微博: 今日 <%= @today_results.count %></p>
+<p class="lead">T:</p>
+<ul>
+<li> x <%= @weixin_today_results.count %> </li>
+<li> b <%= @weibo_today_results.count %> </li>
+<li> a <%= @auto_today_results.count %> </li>
+</ul>
 
-
+<!--
 <dl>
-  <dt>触达 ¥<%= @weibo_yesterday_results.count * 0.5%></dt>
-  <dd> ¥0.5/条, Total: <%= @weibo_yesterday_results.count %></dd>
+  <dt>触达 ¥<%#= @weibo_yesterday_results.count * 0.5%></dt>
+  <dd> ¥0.5/条, Total: <%#= @weibo_yesterday_results.count %></dd>
 <br \>
-  <dt>关注 ¥<%= @weibo_yesterday_L2_results.count * 2%></dt>
-  <dd> ¥2/条, Total: <%= @weibo_yesterday_L2_results.count %></dd>
+  <dt>关注 ¥<%#= @weibo_yesterday_L2_results.count * 2%></dt>
+  <dd> ¥2/条, Total: <%#= @weibo_yesterday_L2_results.count %></dd>
 </dl>
 
-  <dt>交互 ¥<%= @weibo_yesterday_L3_results.count * 5%></dt>
-  <dd> ¥5/条, Total: <%= @weibo_yesterday_L3_results.count %></dd>
+  <dt>交互 ¥<%#= @weibo_yesterday_L3_results.count * 5%></dt>
+  <dd> ¥5/条, Total: <%#= @weibo_yesterday_L3_results.count %></dd>
 </dl>
 <br \>
+-->
 
 <table class="table">
 
@@ -33,7 +45,7 @@
   </thead>
 
   <tbody>
-  <% @weibo_yesterday_results.each do |activity| %>
+  <% @weibo_today_results.each do |activity| %>
     <tr>
       <td><%= activity.created_at.strftime("%Y年%m月%d日") %></td>   
       <td><%= link_to 'Edit', edit_activity_path(activity) %></td>

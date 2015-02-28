@@ -2,15 +2,21 @@ class ActivitiesController < ApplicationController
   before_action :set_activity, only: [:show, :edit, :update, :destroy]
 
   def index
+# => 所有的数据，昨天的数据，今天至此的记录
+    @all_results = Activity.all
+    @all_useful_results = Activity.where("start_time > #{Time.now.strftime("%Y-%m-%d")}")
+
     @all_yesterday_results = Activity.where(created_at: (Time.now.midnight - 1.day)..Time.now.midnight)
-
-    @all_num = Activity.count
-
-    @today_results = Activity.where(created_at:Time.now.midnight..Time.now, beauty:1)
+    @all_today_results = Activity.where(created_at:Time.now.midnight..Time.now)
 
     @weibo_yesterday_results = @all_yesterday_results.where(beauty:1)
-    @weibo_yesterday_L2_results = @weibo_yesterday_results.where.not(f_wechatid:"")
-    @weibo_yesterday_L3_results = @weibo_yesterday_L2_results.where.not(f_wechatencrypt:"")
+    @weixin_yesterday_results = @all_yesterday_results.where.not(f_wechatencrypt:"")
+    @auto_yesterday_results = @all_yesterday_results.where(beauty: 99..199)
+
+    @weibo_today_results = @all_today_results.where(beauty:1)
+    @weixin_today_results = @all_today_results.where.not(f_wechatencrypt:"")
+    @auto_today_results = @all_today_results.where(beauty: 99..199)
+
 
   end
 
