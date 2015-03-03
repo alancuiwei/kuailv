@@ -51,8 +51,8 @@ class WeixinsController < ApplicationController
               newrecord.save       
             end
             render "rtn120", :formats => :xml
-#        else
-#            render "rtn405", :formats => :xml
+        else
+            render "rtn405", :formats => :xml
         end
      
     end
