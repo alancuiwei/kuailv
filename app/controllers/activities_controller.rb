@@ -10,7 +10,7 @@ class ActivitiesController < ApplicationController
 
     @weibo_yesterday_results = @all_yesterday_results.where(beauty:1)
     @weixin_yesterday_results = @all_yesterday_results.where.not(f_wechatencrypt:"")
-    @qyer_yesterday_num = @all_yesterday_results.where(beauty:301).count    
+    @qyer_yesterday_num = @all_yesterday_results.where(beauty:301)    
 
     @auto_yesterday_results = @all_yesterday_results.where(beauty: 99..199)
     @auto_100_yesterday_num = @all_yesterday_results.where(beauty:100).count
@@ -20,12 +20,41 @@ class ActivitiesController < ApplicationController
     @auto_104_yesterday_num = @all_yesterday_results.where(beauty:104).count
     @auto_105_yesterday_num = @all_yesterday_results.where(beauty:105).count
 
-
-
     @weibo_today_results = @all_today_results.where(beauty:1)
     @weixin_today_results = @all_today_results.where.not(f_wechatencrypt:"")
     @qyer_today_results = @all_today_results.where(beauty:301)
     @auto_today_results = @all_today_results.where(beauty: 99..199)
+
+    datefilter = (Time.now.midnight - 1.day).strftime("%Y-%m-%d")
+
+    firsttoday = Statistic.where(recorddate:datefilter)
+
+    if firsttoday.empty?
+
+      @yesterdaydata = Statistic.new
+      @yesterdaydata.recorddate = Time.now.midnight - 1.day
+      @yesterdaydata.totalnum = @all_results.count
+      @yesterdaydata.weibonum = @weibo_yesterday_results.count
+      @yesterdaydata.weixinnum = @weixin_yesterday_results.count
+      @yesterdaydata.qyernum = @qyer_yesterday_num.count
+      @yesterdaydata.autonum = @auto_yesterday_results.count
+      @yesterdaydata.A100 = @auto_100_yesterday_num
+      @yesterdaydata.A101 = @auto_101_yesterday_num
+      @yesterdaydata.A102 = @auto_102_yesterday_num
+      @yesterdaydata.A103 = @auto_103_yesterday_num
+      @yesterdaydata.A104 = @auto_104_yesterday_num
+      @yesterdaydata.A105 = @auto_105_yesterday_num
+
+      beforedata = Statistic.where(recorddate:Time.now.midnight - 2.day)
+      if !beforedata.empty?
+        @yesterdaydata.deltanum = @all_results.count - beforedata.totalnum
+      end
+
+      @yesterdaydata.save    
+
+    end
+
+    @reportstatistics = Statistic.all
 
   end
 

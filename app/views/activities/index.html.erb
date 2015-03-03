@@ -1,90 +1,47 @@
 
 <p id="notice"><%= notice %></p>
 
-<p class="lead">A: <%= @all_results.count %> </p>
-
-<p class="lead">Y: <%= @all_yesterday_results.count %></p>
-
-<ul>
-<li> x: <%= @weixin_yesterday_results.count %> </li>
-<li> b: <%= @weibo_yesterday_results.count %> </li>
-<li> q: <%= @qyer_yesterday_num %> </li>
-<li> a: <%= @auto_yesterday_results.count %> </li>
-
-<li> a100: <%= @auto_100_yesterday_num %> </li>
-<li> a101: <%= @auto_101_yesterday_num %> </li>
-<li> a102: <%= @auto_102_yesterday_num %> </li>
-<li> a103: <%= @auto_103_yesterday_num %> </li>
-<li> a104: <%= @auto_104_yesterday_num %> </li>
-<li> a105: <%= @auto_105_yesterday_num %> </li>
-
-
-</ul>
-
-<p class="lead">T:</p>
-<ul>
-<li> x: <%= @weixin_today_results.count %> </li>
-<li> b: <%= @weibo_today_results.count %> </li>
-<li> q: <%= @qyer_today_results.count %> </li>
-<li> a: <%= @auto_today_results.count %> </li>
-</ul>
-
-<!--
-<dl>
-  <dt>触达 ¥<%#= @weibo_yesterday_results.count * 0.5%></dt>
-  <dd> ¥0.5/条, Total: <%#= @weibo_yesterday_results.count %></dd>
-<br \>
-  <dt>关注 ¥<%#= @weibo_yesterday_L2_results.count * 2%></dt>
-  <dd> ¥2/条, Total: <%#= @weibo_yesterday_L2_results.count %></dd>
-</dl>
-
-  <dt>交互 ¥<%#= @weibo_yesterday_L3_results.count * 5%></dt>
-  <dd> ¥5/条, Total: <%#= @weibo_yesterday_L3_results.count %></dd>
-</dl>
-<br \>
-
 <table class="table">
 
   <thead>
     <tr>
       <th>日期</th>
-      <th>更新</th>
-      <th>ID</th>
-      <th>微博ID</th>
-      <th>微信名</th>
-      <th>交互</th>
+      <th>T</th>
+      <th>D</th>
+      <th>X</th>
+      <th>B</th>
+      <th>Q</th>
+      <th>A</th>
+      <th>100</th>
+      <th>101</th>
+      <th>102</th>
+      <th>103</th>
+      <th>104</th>
+      <th>105</th>
     </tr>
   </thead>
 
   <tbody>
-  <% @weibo_today_results.each do |activity| %>
+  <% @reportstatistics.each do |statistic| %>
     <tr>
-      <td><%= activity.created_at.strftime("%Y年%m月%d日") %></td>   
-      <td><%= link_to 'Edit', edit_activity_path(activity) %></td>
-      <td><%= activity.id %></td>
-      <td><%= activity.f_homepage %></td>
-      <td>
-        <%# if (activity.f_wechatid.nil? || activity.f_wechatid.empty? ) %>
-        <% if (activity.f_wechatid.blank? ) %>
-          N
-        <% else %>
-          Y
-        <% end %>  
+      <td><%= statistic.recorddate %></td>   
+      <td><%= statistic.totalnum %></td>
+      <td><%= statistic.deltanum %></td>
+      <td><%= statistic.weixinnum %></td>      
+      <td><%= statistic.weibonum %></td>      
+      <td><%= statistic.qyernum %></td>      
+      <td><%= statistic.autonum %></td>   
+      <td><%= statistic.A100 %></td>   
+      <td><%= statistic.A101 %></td> 
+      <td><%= statistic.A102 %></td> 
+      <td><%= statistic.A103 %></td> 
+      <td><%= statistic.A104 %></td> 
+      <td><%= statistic.A105 %></td> 
 
-      </td>
-      <td>
-        <% if (activity.f_wechatencrypt.blank?) %>
-          N
-        <% else %>
-          Y
-        <% end %>  
-
-
-      </td>
     </tr>
   <% end %> 
 </table>
--->
+
 
 <br>
 

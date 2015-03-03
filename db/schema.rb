@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150225014348) do
+ActiveRecord::Schema.define(version: 20150303055200) do
 
   create_table "activities", force: :cascade do |t|
     t.string   "start_city",      limit: 255
@@ -34,5 +34,46 @@ ActiveRecord::Schema.define(version: 20150225014348) do
   end
 
   add_index "activities", ["f_homepage"], name: "homeidex", unique: true, using: :btree
+
+  create_table "activitiesbackup", id: false, force: :cascade do |t|
+    t.integer  "id",              limit: 4,     default: 0, null: false
+    t.string   "start_city",      limit: 255
+    t.string   "end_city",        limit: 255
+    t.date     "start_time"
+    t.date     "end_time"
+    t.string   "founder",         limit: 255
+    t.string   "f_homepage",      limit: 255
+    t.string   "f_wechatid",      limit: 255
+    t.text     "remarks",         limit: 65535
+    t.string   "f_weiboid",       limit: 255
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "avatar",          limit: 255
+    t.string   "mobile",          limit: 255
+    t.string   "qq",              limit: 255
+    t.integer  "beauty",          limit: 4
+    t.string   "f_wechatencrypt", limit: 255
+    t.integer  "result",          limit: 4
+  end
+
+  add_index "activitiesbackup", ["id"], name: "ad", unique: true, using: :btree
+
+  create_table "statistics", force: :cascade do |t|
+    t.date     "recorddate"
+    t.integer  "totalnum",   limit: 4
+    t.integer  "deltanum",   limit: 4
+    t.integer  "weibonum",   limit: 4
+    t.integer  "weixinnum",  limit: 4
+    t.integer  "qyernum",    limit: 4
+    t.integer  "autonum",    limit: 4
+    t.integer  "A100",       limit: 4
+    t.integer  "A101",       limit: 4
+    t.integer  "A102",       limit: 4
+    t.integer  "A103",       limit: 4
+    t.integer  "A104",       limit: 4
+    t.integer  "A105",       limit: 4
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+  end
 
 end
