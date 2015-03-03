@@ -2,143 +2,89 @@
 require 'nokogiri'
 require 'open-uri'
 require "mysql"  
-require 'faraday'
-require 'excon'
 
 
-def datacheck(title_content)
+dbh = Mysql.real_connect("localhost","root","zhongren#1234","kuailv-production",3306);  
+sql = "INSERT IGNORE INTO `activities` ( `f_homepage`, `start_city`, `end_city`, `start_time`, `end_time`, `created_at`,`beauty`) VALUES ( ?,?,?,?,?,?,?) "
 
-	titleana = title_content.split()
-
-	if titleana.count !=5
-#		puts "传入参数数目错误"
-		return false		
-	end	
-
-	if !(titleana[0].include?"出发")
-#		puts "出发城市格式不正确"
-		return false
-	end
-
-	if ((titleana[1].include?"-") || !(titleana[1].include?"月") || !(titleana[1].include?"日"))  
-#		puts "出发时间格式不正确 "
-		return false
-	end
-
-	if(titleana[1].length > 6)
-		return false
-	end
-
-	if (!titleana[3].include?"日") 
-#		puts "回来时间包含 － "
-		return false
-	end
-
-	return true
-end
-
-
-
-dbh = Mysql.real_connect("localhost","root","123456","kuailv-development",3306);  
-sql = "INSERT IGNORE INTO `activities` ( `f_homepage`, `start_city`, `end_city`, `start_time`, `end_time`, `remarks`,`created_at`,`beauty`) VALUES ( ?,?,?,?,?,?,?,?) "
 dbh.query("SET NAMES utf8")
 stmt=dbh.prepare(sql)  
 
-$getPageTimes = 0;
-#$num = 200;
 
+citys = [{name:"丽江",code:"lijiang"},{name:"西藏",code:"xizang"},{name:"北京",code:"beijing"},{name:"厦门",code:"xiamen"},{name:"三亚",code:"sanya"},
+{name:"上海",code:"shanghai"},{name:"大理",code:"dali"},{name:"泰国",code:"taiguo"},{name:"成都",code:"chengdu"},{name:"拉萨",code:"lasa"},
+{name:"杭州",code:"hangzhou"},{name:"香格里拉",code:"xianggelila"},{name:"凤凰",code:"fenghuang"},{name:"西安",code:"xian"},{name:"昆明",code:"kunming"},
+{name:"九寨沟",code:"jiuzhaigou"},{name:"哈尔滨",code:"haerbin"},{name:"香港",code:"xianggang"},{name:"桂林",code:"guilin"},{name:"重庆",code:"zhongqing"},
+{name:"青岛",code:"qingdao"},{name:"乌镇",code:"wuzhen"},{name:"张家界",code:"zhangjiajie"},{name:"黄山",code:"huangshan"},{name:"西塘",code:"xitang"},
+{name:"南京",code:"nanjing"},{name:"澳门",code:"aomen"},{name:"苏州",code:"suzhou"},{name:"深圳",code:"shenzhen"},{name:"西双版纳",code:"xishuangbanna"},
+{name:"阳朔",code:"yangshuo"},{name:"广州",code:"guangzhou"},{name:"鼓浪屿",code:"gulangyu"},{name:"台湾",code:"taiwan"},{name:"北海",code:"beihai"},
+{name:"大连",code:"dalian"},{name:"普吉岛",code:"pujidao"},{name:"越南",code:"yuenan"},{name:"泸沽湖",code:"luguhu"},{name:"长沙",code:"changsha"},
+{name:"武汉",code:"wuhan"},{name:"泰山",code:"taishan"},{name:"韩国",code:"hanguo"},{name:"天津",code:"tianjin"},{name:"凤凰",code:"fenghuanggucheng"},
+{name:"曼谷",code:"mangu"},{name:"稻城",code:"daocheng"},{name:"南宁",code:"nanning"},{name:"长白山",code:"changbaishan"},{name:"济南",code:"jinan"},
+{name:"舟山",code:"zhoushan"},{name:"尼泊尔",code:"niboer"},{name:"华山",code:"huashan"},{name:"美国",code:"meiguo"},{name:"马来西亚",code:"malaixiya"},
+{name:"腾冲",code:"tengchong"},{name:"青海湖",code:"qinghaihu"},{name:"千岛湖",code:"qiandaohu"},{name:"烟台",code:"yantai"},{name:"峨眉山",code:"emeishan"},
+{name:"日本",code:"riben"},{name:"漠河",code:"mohe"},{name:"玉龙雪山",code:"yulongxueshan"},{name:"首尔",code:"shouer"},{name:"马尔代夫",code:"maerdaifu"},
+{name:"新加坡",code:"xinjiapo"},{name:"敦煌",code:"dunhuang"},{name:"九华山",code:"jiuhuashan"},{name:"柬埔寨",code:"jianpuzhai"},{name:"南昌",code:"nanchang"},
+{name:"秦皇岛",code:"qinhuangdao"},{name:"吉林",code:"jilin"},{name:"呼伦贝尔",code:"hulunbeier"},{name:"西湖",code:"xihu"},{name:"黄龙",code:"huanglong"},
+{name:"巴厘岛",code:"balidao"},{name:"威海",code:"weihai"},{name:"沈阳",code:"shenyang"},{name:"宏村",code:"hongcun"},{name:"周庄",code:"zhouzhuang"},{name:"普陀山",code:"putuoshan"}]
 
-	conn = Faraday.new(:url => "http://jieban.auyou.cn/") do |faraday|
-  	faraday.request  :url_encoded             # form-encode POST params
-  	faraday.adapter  :excon  					# make requests with Net::HTTP
-  	faraday.options[:timeout] = 200
-  	faraday.options[:open_timeout] = 200
-	end
+citys.each do |city|
 
-begin
-	$getPageTimes +=1;
+	$cityname = city[:name];
+	$citycode = city[:code];
 
-		
-	puts "#{$getPageTimes} / 120"
+#	begin
 
-		response = conn.get "/lijiang"     # GET http://sushi.com/nigiri/sake.json
-#		response = conn.get do |req|
-#			req.url "/CommunitySite/Activity/Home/IndexList?page="+$getPageTimes.to_s+"&sorttab=eventstab_publish"
-#			req.options[:timeout] = 5
-#			req.options[:open_timeout] = 2
-#		end
+	puts $cityname
 
-		doc = Nokogiri::HTML(response.body)
+		html=open("http://jieban.auyou.cn/"+$citycode.to_s+"/").read
 
-		thevents = doc.css("#events_list_content > ul > li")
+		doc = Nokogiri::HTML.parse html
 
+		thevents = doc.css("#tabcontent1 > div.ly")
 		li_in_onepage = thevents.count
 
 		li_in_onepage.times do |lid|
 
-			thevent = doc.css("#events_list_content > ul > li")[lid]	
+			thevent = thevents[lid]	
 
-			thetitle = thevent.css("h2 a").text
+			thetitle = thevent.css("div.ly_r > p.lr1").text
+			thedate = thevent.css("div.ly_r > p.lr3").text
+			thelink = thevent.css("div.ly_r > p.lr1 > a")[0]["href"]
 
-			txt.puts(thetitle)
 
-			checkresult = datacheck(thetitle)
+			#出发城市处理
+			endposition_startcity = thetitle.index'到'
+			start_city = thetitle[3..endposition_startcity-1]
 
-			if (checkresult)
+			#目的城市处理
+			end_city = $cityname
 
-				anatitile = thetitle.split()
+			
+			#出发日期处理
+			endposition_startdate = thedate.index'出行'
+			start_time_str = thedate[3..endposition_startdate-1]
+			start_time = Date.strptime("{ #{start_time_str}}", "{ %Y年%m月%d日 }")
 
-				#出发城市处理
-				ana_startcity = anatitile[0]
-				endposition_startcity = ana_startcity.index'出发'
-				start_city = ana_startcity[0..endposition_startcity-1]
 
-				if start_city == '出发'
-					start_city = 'all'
-				end
+			#回来日期处理
+			endposition_enddate = thedate.index'天'
+			dateinterval = thedate[endposition_startdate+4..endposition_enddate-1]
+			end_time = start_time + dateinterval.to_i
 
-				#目的城市处理
-				end_city = anatitile[2]
-
-				#出发日期处理
-				ana_startdate = anatitile[1]
-				endposition_startmonth = ana_startdate.index'月'
-				endposition_startdate = ana_startdate.index'日'
-
-				startmonth = ana_startdate[0..endposition_startmonth-1]
-				startday = ana_startdate[endposition_startmonth+1..endposition_startdate-1]
-
-				start_time = Date.strptime("{ 2015-#{startmonth}-#{startday}}", "{ %Y-%m-%d }")
-
-				#回来日期处理
-				ana_enddate = anatitile[3]
-				endposition_enddate = ana_enddate.index'日'
-				dateinterval = ana_enddate[0..endposition_enddate-1]
-				end_time = start_time + dateinterval.to_i
-
-				homepage = "http://you.ctrip.com"+thevent.css("h2 a")[0]["href"]
-	#			puts homepage
-
-				comments = thevent.css("p").text
-
-				createdate = Time.now
-
-				beautytype = 100
-
-				stmt.execute(homepage.to_s,start_city.to_s,end_city.to_s,start_time.to_s,end_time.to_s,comments.to_s,createdate.to_s,beautytype.to_s)
-
-			end
+			homepage = "http://jieban.auyou.cn"+thelink
+					
+			createdate = Time.now				
+				
+			beautytype = 106			
+				
+			stmt.execute(homepage.to_s,start_city.to_s,end_city.to_s,start_time.to_s,end_time.to_s,createdate.to_s,beautytype.to_s)
 
 		end
+		
+	#end while $getPageTimes < $num
+	#end while li_in_onepage != 0
+end
 
-
-#	sleep 5
-
-#end while $getPageTimes < $num
-end while li_in_onepage != 0
-
-txt.close
 stmt.close if stmt
 dbh.close if dbh
-
-
