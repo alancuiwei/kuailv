@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150303055200) do
+ActiveRecord::Schema.define(version: 20150303074404) do
 
   create_table "activities", force: :cascade do |t|
     t.string   "start_city",      limit: 255
@@ -74,6 +74,20 @@ ActiveRecord::Schema.define(version: 20150303055200) do
     t.integer  "A105",       limit: 4
     t.datetime "created_at",           null: false
     t.datetime "updated_at",           null: false
+    t.integer  "tweibonum",  limit: 4
+    t.integer  "tweixinnum", limit: 4
+    t.integer  "tqyernum",   limit: 4
+    t.integer  "tautonum",   limit: 4
+    t.integer  "TA100",      limit: 4
+    t.integer  "TA101",      limit: 4
+    t.integer  "TA102",      limit: 4
+    t.integer  "TA103",      limit: 4
+    t.integer  "TA104",      limit: 4
+    t.integer  "TA105",      limit: 4
+    t.integer  "ytotalnum",  limit: 4
+    t.integer  "ydeltanum",  limit: 4
   end
+
+  add_index "statistics", ["recorddate"], name: "datediff", unique: true, using: :btree
 
 end

@@ -34,6 +34,20 @@ class ActivitiesController < ApplicationController
       @yesterdaydata = Statistic.new
       @yesterdaydata.recorddate = Time.now.midnight - 1.day
       @yesterdaydata.totalnum = @all_results.count
+      @yesterdaydata.tweibonum = @all_results.where(beauty:1).count
+
+      @yesterdaydata.tweixinnum = @all_results.where.not(f_wechatencrypt:"").count
+      @yesterdaydata.tqyernum = @all_results.where(beauty:301).count
+      @yesterdaydata.tautonum = @all_results.where(beauty: 99..199)
+
+      @yesterdaydata.TA100 = @all_results.where(beauty:100).count
+      @yesterdaydata.TA101 = @all_results.where(beauty:101).count
+      @yesterdaydata.TA102 = @all_results.where(beauty:102).count
+      @yesterdaydata.TA103 = @all_results.where(beauty:103).count
+      @yesterdaydata.TA104 = @all_results.where(beauty:104).count
+      @yesterdaydata.TA105 = @all_results.where(beauty:105).count
+
+      @yesterdaydata.ytotalnum = @all_yesterday_results.count
       @yesterdaydata.weibonum = @weibo_yesterday_results.count
       @yesterdaydata.weixinnum = @weixin_yesterday_results.count
       @yesterdaydata.qyernum = @qyer_yesterday_num.count
@@ -48,6 +62,7 @@ class ActivitiesController < ApplicationController
       beforedata = Statistic.where(recorddate:Time.now.midnight - 2.day)
       if !beforedata.empty?
         @yesterdaydata.deltanum = @all_results.count - beforedata.totalnum
+        @yesterdaydata.ydeltanum = @all_yesterday_results.count - beforedata.ytotalnum
       end
 
       @yesterdaydata.save    
