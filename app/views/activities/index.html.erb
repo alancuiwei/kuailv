@@ -1,6 +1,23 @@
 
 <p id="notice"><%= notice %></p>
 
+
+<button class="btn btn-danger" type="button">
+  TX <span class="badge"><%= @weixin_today_results %></span>
+</button>
+
+<button class="btn btn-warning" type="button">
+  TB <span class="badge"><%= @weibo_today_results %></span>
+</button>
+
+<button class="btn btn-info" type="button">
+  TQ <span class="badge"><%= @qyer_today_results %></span>
+</button>
+
+<button class="btn btn-success" type="button">
+  TA <span class="badge"><%= @auto_today_results %></span>
+</button>
+
 <table class="table">
 
   <thead>
