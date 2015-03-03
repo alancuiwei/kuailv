@@ -4,13 +4,14 @@ class ActivitiesController < ApplicationController
   def index
 # => 所有的数据，昨天的数据，今天至此的记录
     @all_results = Activity.all
-    @all_useful_results = Activity.where(start_time: Time.now.midnight..'2015-12-31')
 
     @all_yesterday_results = Activity.where(created_at: (Time.now.midnight - 1.day)..Time.now.midnight)
     @all_today_results = Activity.where(created_at:Time.now.midnight..Time.now)
 
     @weibo_yesterday_results = @all_yesterday_results.where(beauty:1)
     @weixin_yesterday_results = @all_yesterday_results.where.not(f_wechatencrypt:"")
+    @qyer_yesterday_num = @all_yesterday_results.where(beauty:301).count    
+
     @auto_yesterday_results = @all_yesterday_results.where(beauty: 99..199)
     @auto_100_yesterday_num = @all_yesterday_results.where(beauty:100).count
     @auto_101_yesterday_num = @all_yesterday_results.where(beauty:101).count
@@ -19,8 +20,11 @@ class ActivitiesController < ApplicationController
     @auto_104_yesterday_num = @all_yesterday_results.where(beauty:104).count
     @auto_105_yesterday_num = @all_yesterday_results.where(beauty:105).count
 
+
+
     @weibo_today_results = @all_today_results.where(beauty:1)
     @weixin_today_results = @all_today_results.where.not(f_wechatencrypt:"")
+    @qyer_today_results = @all_today_results.where(beauty:301)
     @auto_today_results = @all_today_results.where(beauty: 99..199)
 
   end
