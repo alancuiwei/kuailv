@@ -38,7 +38,7 @@ class ActivitiesController < ApplicationController
 
       @yesterdaydata.tweixinnum = @all_results.where.not(f_wechatencrypt:"").count
       @yesterdaydata.tqyernum = @all_results.where(beauty:301).count
-      @yesterdaydata.tautonum = @all_results.where(beauty: 99..199)
+      @yesterdaydata.tautonum = @all_results.where(beauty: 99..199).count
 
       @yesterdaydata.TA100 = @all_results.where(beauty:100).count
       @yesterdaydata.TA101 = @all_results.where(beauty:101).count
