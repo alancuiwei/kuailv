@@ -1,7 +1,7 @@
 <xml>
-     <ToUserName><![CDATA[<%#= params[:xml][:FromUserName] %>]]></ToUserName>
-     <FromUserName><![CDATA[<%#= params[:xml][:ToUserName] %>]]></FromUserName>
-     <CreateTime><%#= Time.now.to_i %></CreateTime>
+     <ToUserName><![CDATA[<%= params[:xml][:FromUserName] %>]]></ToUserName>
+     <FromUserName><![CDATA[<%= params[:xml][:ToUserName] %>]]></FromUserName>
+     <CreateTime><%= Time.now.to_i %></CreateTime>
      <MsgType><![CDATA[text]]></MsgType>
      <Content><![CDATA[快驴是全国最大的结伴游信息平台，最快的方式，找到驴友，一起去旅行。
 ]]></Content>
