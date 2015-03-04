@@ -27,7 +27,7 @@ class WeixinsController < ApplicationController
           when "V303"
               render "rtn303", :formats => :xml
           when "V304"
-              render "rtn304", :formats => :xml
+              render "subscribe", :formats => :xml
           when "V305"
               render "rtn305", :formats => :xml
 
