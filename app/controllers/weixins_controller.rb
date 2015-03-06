@@ -36,6 +36,9 @@ class WeixinsController < ApplicationController
 
     if params[:xml][:MsgType]=="text"
 
+      if ((params[:xml][:Content][0] == 'R') || (params[:xml][:Content][0] == 'R'))
+        render "referintro", :formats => :xml
+      else
         @userinfo = params[:xml][:Content].gsub('，',',').split(',')
 
         if (@userinfo.count == 4)
@@ -54,6 +57,7 @@ class WeixinsController < ApplicationController
         else
             render "rtn405", :formats => :xml
         end
+      end
      
     end
 
