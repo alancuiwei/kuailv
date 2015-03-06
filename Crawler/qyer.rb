@@ -23,7 +23,7 @@ conn = Faraday.new(:url => "http://bbs.qyer.com") do |faraday|
 	faraday.options[:open_timeout] = 200
 end
 
-#begin
+begin
 	$getPageTimes +=1;
 
 	response = conn.get "/forum-2-"+$getPageTimes.to_s+".html"     # GET http://sushi.com/nigiri/sake.json
@@ -42,20 +42,21 @@ end
 
 		thetitle = thevent.css("h3 a").text
 
+		#帖子的链接地址 
 		$thelink = thevent.css("h3 a")[0]["href"]
-		puts $thelink
+#		puts $thelink
 
 		sonresponse = conn.get $thelink.to_s
 
 		sondoc = Nokogiri::HTML(sonresponse.body)
 
-#		sonevents = sondoc.css("div.bbs_titboxs > div.bbs_titbox > h1").text
+		sonevents = sondoc.css("div.bbs_titboxs > div.bbs_titbox > h1").text
 
 #		sonevents = sondoc.css("#postlist > div.bbs_postview > div.bbs_txtbox > table > tbody > tr > td > p").text
 
-		sonevents = sondoc.css("#postmessage_10737126 > table > tbody > tr > td > p").text
+#		sonevents = sondoc.css("#postmessage_10737126 > table > tbody > tr > td > p").text
 
-		puts sonevents
+#		puts sonevents
 
 	#	sonli_in_onepage = sonevents.count
 
@@ -63,7 +64,7 @@ end
 
 	end
 
-#end while li_in_onepage != 0
+end while li_in_onepage != 0
 
 txt.close
 stmt.close if stmt
