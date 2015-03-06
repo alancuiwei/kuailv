@@ -24,12 +24,14 @@ class WeixinsController < ApplicationController
 #              @travelevents = Activity.where(beauty:1).limit(5).order("RAND()")          
               @travelevents = Activity.where(beauty:1).last(10)          
               render "rtn302", :formats => :xml
-          when "V303"
-              render "rtn303", :formats => :xml
-          when "V304"
-              render "rtn304", :formats => :xml
+#          when "V303"
+#              render "rtn303", :formats => :xml
+#          when "V304"
+#              render "rtn304", :formats => :xml
           when "V305"
               render "rtn305", :formats => :xml
+          when "V306"
+              render "rtn306", :formats => :xml
 
         end
     end

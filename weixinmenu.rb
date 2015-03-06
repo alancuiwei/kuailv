@@ -18,7 +18,7 @@ puts token
 # 设置菜单
 params = {"button"=>[
 
-{"name"=>"找驴友","sub_button"=>[{"type"=>"click","name"=>"精确搜驴","key"=>"V110"},{"type"=>"click","name"=>"看脸找驴","key"=>"V302"}]},{"name"=>"关于快驴","sub_button"=>[{"type"=>"click","name"=>"使用说明","key"=>"V305"},{"type"=>"click","name"=>"投资有利","key"=>"V303"},{"type"=>"click","name"=>"吐槽有奖","key"=>"V304"}]}]}
+{"name"=>"找驴友","sub_button"=>[{"type"=>"click","name"=>"精确搜驴","key"=>"V110"},{"type"=>"click","name"=>"看脸找驴","key"=>"V302"}]},{"name"=>"关于快驴","sub_button"=>[{"type"=>"click","name"=>"使用说明","key"=>"V305"},{"type"=>"click","name"=>"分享拿红包","key"=>"V306"}]}]}
 
 
 http = Net::HTTP.new("api.weixin.qq.com")
