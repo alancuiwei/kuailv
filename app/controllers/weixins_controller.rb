@@ -41,7 +41,7 @@ class WeixinsController < ApplicationController
           newinviter.inviteid = params[:xml][:Content]
           newinviter.wechatid = params[:xml][:FromUserName]
           newinviter.save
-          @owninviterid = "R#{newinviter.id + 100}"
+          @owninviterid = "R#{newinviter.id}"
         end
 
         render "referintro", :formats => :xml
