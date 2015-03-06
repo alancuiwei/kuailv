@@ -37,6 +37,13 @@ class WeixinsController < ApplicationController
     if params[:xml][:MsgType]=="text"
 
       if ((params[:xml][:Content][0] == 'R') || (params[:xml][:Content][0] == 'r'))
+        Invitetable.new do |newinviter|
+          newinviter.inviteid = params[:xml][:Content]
+          newinviter.wechatid = params[:xml][:FromUserName]
+          newinviter.save
+          @owninviterid = "R#{newinviter.id + 100}"
+        end
+
         render "referintro", :formats => :xml
       else
         @userinfo = params[:xml][:Content].gsub('，',',').split(',')

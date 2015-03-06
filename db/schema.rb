@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150303074404) do
+ActiveRecord::Schema.define(version: 20150306080843) do
 
   create_table "activities", force: :cascade do |t|
     t.string   "start_city",      limit: 255
@@ -57,6 +57,13 @@ ActiveRecord::Schema.define(version: 20150303074404) do
   end
 
   add_index "activitiesbackup", ["id"], name: "ad", unique: true, using: :btree
+
+  create_table "invitetables", force: :cascade do |t|
+    t.string   "inviteid",   limit: 255
+    t.string   "wechatid",   limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
 
   create_table "statistics", force: :cascade do |t|
     t.date     "recorddate"
