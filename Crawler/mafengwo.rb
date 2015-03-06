@@ -6,8 +6,8 @@ require 'faraday'
 require 'excon'
 
 
-txt = File.open("mafengwo.txt","w")
-txt.puts(Time.now)
+#txt = File.open("mafengwo.txt","w")
+#txt.puts(Time.now)
 
 def datacheck(title_content)
 
@@ -107,7 +107,7 @@ begin
 #end while li_in_onepage != 0
 end while $getPageTimes < $num
 
-txt.close
+#txt.close
 stmt.close if stmt
 dbh.close if dbh
 

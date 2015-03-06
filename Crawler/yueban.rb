@@ -4,8 +4,8 @@ require 'open-uri'
 require "mysql"  
 
 
-txt = File.open("yueban.txt","w")
-txt.puts(Time.now)
+#txt = File.open("yueban.txt","w")
+#txt.puts(Time.now)
 
 dbh = Mysql.real_connect("localhost","root","zhongren#1234","kuailv-production",3306);  
 sql = "INSERT IGNORE INTO `activities` ( `f_homepage`, `start_city`, `end_city`, `start_time`, `end_time`, `remarks`,`created_at`,`beauty`,`qq`) VALUES ( ?,?,?,?,?,?,?,?,?) "
@@ -32,11 +32,11 @@ begin
 
 		thetitle = thevent.css("div.media-body > div.section > div.section-header > a").text
 
-		txt.puts(thetitle)
+#		txt.puts(thetitle)
 
 		theothers = thevent.css("div.media-body > div.section > div.section-header > p > span").text
 
-		txt.puts(theothers)
+#		txt.puts(theothers)
 
 		anatitile = thetitle.split()
 
@@ -92,13 +92,13 @@ begin
 	end
 
 	$getPageTimes +=20;
-	txt.puts("#{$getPageTimes} / 1000")
+#	txt.puts("#{$getPageTimes} / 1000")
 #	puts "#{$getPageTimes} / 1000"
 
 #end while $getPageTimes < $num
 end while li_in_onepage != 0
 
 
-txt.close
+#txt.close
 stmt.close if stmt
 dbh.close if dbh

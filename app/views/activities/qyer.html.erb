@@ -20,10 +20,12 @@
       <%= f.hidden_field :beauty,value:301 %>
     </div>
 
+<!--
     <div class="field">
-      <%= f.label :论坛发布内容 %><br>
-      <%= f.text_area :remarks %>
+      <%#= f.label :论坛发布内容 %><br>
+      <%#= f.text_area :remarks %>
     </div>
+-->
 
     <div class="field">
       <%= f.label :出发城市 %><br>
@@ -41,13 +43,13 @@
       <%= f.label :回来日期 %><br>
       <%= f.date_select :end_time %>
     </div>
-   
+<!--   
     <div class="field">
       <%= f.label :穷游账号 %><br>
       <%= f.text_field :f_homepage %>
     </div>
 
-<!--
+
     <div class="field">
       <%= f.label :founder %><br>
       <%= f.text_field :founder %>
@@ -76,7 +78,9 @@
 -->
 
     <div class="actions">
-      <%= f.submit %>
+      <%#= f.submit %>
+      <input class="btn btn-danger" name="commit" type="submit" value="Create A Activity" />
+
     </div>
 
 

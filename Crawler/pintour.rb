@@ -6,8 +6,8 @@ require 'faraday'
 require 'excon'
 
 
-txt = File.open("pintour.txt","w")
-txt.puts(Time.now)
+#txt = File.open("pintour.txt","w")
+#txt.puts(Time.now)
 
 def datacheck(title_content)
 
@@ -69,7 +69,7 @@ begin
 
 			thetitle = thevent.css("div.mateCon div.timePlace p").text
 
-			txt.puts(thetitle)
+#			txt.puts(thetitle)
 
 			checkresult = datacheck(thetitle)
 
@@ -121,7 +121,7 @@ begin
 #end while li_in_onepage != 0
 end while $getPageTimes < $num
 
-txt.close
+#txt.close
 stmt.close if stmt
 dbh.close if dbh
 

@@ -20,7 +20,7 @@ class ActivitiesController < ApplicationController
     @auto_103_yesterday_num = @all_yesterday_results.where(beauty:103).count
     @auto_104_yesterday_num = @all_yesterday_results.where(beauty:104).count
     @auto_105_yesterday_num = @all_yesterday_results.where(beauty:105).count
-
+    @auto_106_yesterday_num = @all_yesterday_results.where(beauty:106).count
 
     @weibo_today_results = @all_today_results.where(beauty:1).count
     @weixin_today_results = @all_today_results.where.not(f_wechatencrypt:"").count
@@ -61,12 +61,13 @@ class ActivitiesController < ApplicationController
       @yesterdaydata.A104 = @auto_104_yesterday_num
       @yesterdaydata.A105 = @auto_105_yesterday_num
 
+=begin
       beforedata = Statistic.where(recorddate:Time.now.midnight - 2.day)
       if !beforedata.empty?
         @yesterdaydata.deltanum = @all_results.count - beforedata.totalnum
         @yesterdaydata.ydeltanum = @all_yesterday_results.count - beforedata.ytotalnum
       end
-
+=end
       @yesterdaydata.save    
 
     end

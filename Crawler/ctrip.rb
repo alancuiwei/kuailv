@@ -6,8 +6,8 @@ require 'faraday'
 require 'excon'
 
 
-txt = File.open("ctrip.txt","w")
-txt.puts(Time.now)
+#txt = File.open("ctrip.txt","w")
+#txt.puts(Time.now)
 
 
 def datacheck(title_content)
@@ -66,7 +66,7 @@ begin
 	$getPageTimes +=1;
 
 		
-	txt.puts("#{$getPageTimes} / 600")
+#	txt.puts("#{$getPageTimes} / 600")
 	puts "#{$getPageTimes} / 600"
 
 		response = conn.get "/CommunitySite/Activity/Home/IndexList?page="+$getPageTimes.to_s+"&sorttab=eventstab_publish"     # GET http://sushi.com/nigiri/sake.json
@@ -88,7 +88,7 @@ begin
 
 			thetitle = thevent.css("h2 a").text
 
-			txt.puts(thetitle)
+#			txt.puts(thetitle)
 
 			checkresult = datacheck(thetitle)
 
@@ -145,7 +145,7 @@ begin
 #end while $getPageTimes < $num
 end while li_in_onepage != 0
 
-txt.close
+#txt.close
 stmt.close if stmt
 dbh.close if dbh
 

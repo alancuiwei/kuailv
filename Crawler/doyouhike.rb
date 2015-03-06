@@ -3,8 +3,8 @@ require 'nokogiri'
 require 'open-uri'
 require "mysql"  
 
-txt = File.open("doyouhike.txt","w")
-txt.puts(Time.now)
+#txt = File.open("doyouhike.txt","w")
+#txt.puts(Time.now)
 
 dbh = Mysql.real_connect("localhost","root","zhongren#1234","kuailv-production",3306);  
 sql = "INSERT IGNORE INTO `activities` ( `f_homepage`, `start_city`, `end_city`, `start_time`, `end_time`, `remarks`,`created_at`,`beauty`) VALUES ( ?,?,?,?,?,?,?,?) "
@@ -26,7 +26,7 @@ citys.each do |city|
 		$getPageTimes +=1;
 
 #		puts "#{$getPageTimes} / 30"
-		txt.puts("#{$getPageTimes} / 30")
+#		txt.puts("#{$getPageTimes} / 30")
 
 		html=open("http://www.doyouhike.net/event/search?date=all&cid="+$citycode.to_s+"&page="+$getPageTimes.to_s).read
 
@@ -42,7 +42,7 @@ citys.each do |city|
 			thetitle = thevent.css("dd.des").text
 
 #			puts thetitle
-			txt.puts(thetitle)
+#			txt.puts(thetitle)
 
 			anatitile = thetitle.split()
 
@@ -81,7 +81,7 @@ citys.each do |city|
 	end while li_in_onepage != 0
 end
 
-txt.close
+#txt.close
 
 stmt.close if stmt
 dbh.close if dbh
