@@ -9,4 +9,7 @@ class Activity < ActiveRecord::Base
 #		fh.close #关闭文件流
 #	end 
 
+	  validates_uniqueness_of :qq
+	  validates_uniqueness_of :f_wechatid
+
 end
