@@ -48,6 +48,7 @@ class ActivitiesController < ApplicationController
       @yesterdaydata.TA103 = @all_results.where(beauty:103).count
       @yesterdaydata.TA104 = @all_results.where(beauty:104).count
       @yesterdaydata.TA105 = @all_results.where(beauty:105).count
+      @yesterdaydata.TA106 = @all_results.where(beauty:106).count
 
       @yesterdaydata.ytotalnum = @all_yesterday_results.count
       @yesterdaydata.weibonum = @weibo_yesterday_results.count
@@ -60,6 +61,7 @@ class ActivitiesController < ApplicationController
       @yesterdaydata.A103 = @auto_103_yesterday_num
       @yesterdaydata.A104 = @auto_104_yesterday_num
       @yesterdaydata.A105 = @auto_105_yesterday_num
+      @yesterdaydata.A106 = @auto_106_yesterday_num
 
       @yesterdaydata.save    
 
