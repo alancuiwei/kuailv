@@ -2,81 +2,170 @@
 <p id="notice"><%= notice %></p>
 
 
-<button class="btn btn-danger" type="button">
-  TX <span class="badge"><%= @weixin_today_results %></span>
-</button>
-
-<button class="btn btn-warning" type="button">
-  TB <span class="badge"><%= @weibo_today_results %></span>
-</button>
-
-<button class="btn btn-info" type="button">
-  TQ <span class="badge"><%= @qyer_today_results %></span>
-</button>
 
 
-<table class="table">
+<ul class="nav nav-tabs" role="tablist" id="myTab">
+  <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">RT</a></li>
+  <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">All</a></li>
+  <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Aut</a></li>
+  <li role="presentation"><a href="#man" aria-controls="man" role="tab" data-toggle="tab">Man</a></li>
+</ul>
 
-  <thead>
-    <tr>
-      <th>日期</th>
-      <th>T</th>      
-      <th>X</th>
-      <th>B</th>
-      <th>Q</th>
-      <th>A</th>
+<div class="tab-content">
+  <div role="tabpanel" class="tab-pane active" id="home">
 
-      <th>100</th>
-      <th>101</th>
-      <th>102</th>
-      <th>103</th>
-      <th>104</th>
-      <th>105</th>
-      <th>106</th>
-    </tr>
-  </thead>
+    <br \>
 
-  <tbody>
-  <% @reportstatistics.each do |statistic| %>
-    <tr>
-      <td> T - <%= statistic.recorddate %></td>   
-      <td><%= statistic.totalnum %></td>
+    <button class="btn btn-danger" type="button">
+      TX <span class="badge"><%= @weixin_today_results %></span>
+    </button>
 
-      <td><%= statistic.tweixinnum %></td>      
-      <td><%= statistic.tweibonum %></td>      
-      <td><%= statistic.tqyernum %></td>      
-      <td><%= statistic.tautonum %></td>  
-       
-      <td><%= statistic.TA100 %></td>   
-      <td><%= statistic.TA101 %></td> 
-      <td><%= statistic.TA102 %></td> 
-      <td><%= statistic.TA103 %></td> 
-      <td><%= statistic.TA104 %></td> 
-      <td><%= statistic.TA105 %></td> 
+    <button class="btn btn-warning" type="button">
+      TB <span class="badge"><%= @weibo_today_results %></span>
+    </button>
 
-    </tr>
-
-    <tr>
-      <td> Y - <%= statistic.recorddate %></td>   
-      <td><%= statistic.ytotalnum %> </td>
-      <td><%= statistic.weixinnum %></td>      
-      <td><%= statistic.weibonum %></td>      
-      <td><%= statistic.qyernum %></td>      
-      <td><%= statistic.autonum %></td>   
-      <td><%= statistic.A100 %></td>   
-      <td><%= statistic.A101 %></td> 
-      <td><%= statistic.A102 %></td> 
-      <td><%= statistic.A103 %></td> 
-      <td><%= statistic.A104 %></td> 
-      <td><%= statistic.A105 %></td> 
-      <td><%= @auto_106_yesterday_num %></td>
-
-    </tr>
+    <button class="btn btn-info" type="button">
+      TQ <span class="badge"><%= @qyer_today_results %></span>
+    </button>
 
 
-  <% end %> 
+  </div>
+  <div role="tabpanel" class="tab-pane" id="profile">
+    <br \>
 
-</table>
+    <table class="table">
+
+      <thead>
+        <tr>
+          <th>日期</th>
+          <th>T</th>      
+          <th>X</th>
+          <th>B</th>
+          <th>Q</th>
+          <th>A</th>
+        </tr>
+      </thead>
+
+      <tbody>
+      <% @reportstatistics.each do |statistic| %>
+        <tr>
+          <td> T - <%= statistic.recorddate %></td>   
+          <td><%= statistic.totalnum %></td>
+
+          <td><%= statistic.tweixinnum %></td>      
+          <td><%= statistic.tweibonum %></td>      
+          <td><%= statistic.tqyernum %></td>      
+          <td><%= statistic.tautonum %></td>  
+           
+        </tr>
+
+        <tr>
+          <td> Y - <%= statistic.recorddate %></td>   
+          <td><%= statistic.ytotalnum %> </td>
+          <td><%= statistic.weixinnum %></td>      
+          <td><%= statistic.weibonum %></td>      
+          <td><%= statistic.qyernum %></td>      
+          <td><%= statistic.autonum %></td>   
+
+        </tr>
+
+
+      <% end %> 
+    </tbody>
+
+    </table>
+
+  </div>
+
+  <div role="tabpanel" class="tab-pane" id="messages">
+    <br \>
+ 
+    <table class="table">
+
+      <thead>
+        <tr>
+          <th>日期</th>
+
+          <th>100</th>
+          <th>101</th>
+          <th>102</th>
+          <th>103</th>
+          <th>104</th>
+          <th>105</th>
+
+        </tr>
+      </thead>
+
+      <tbody>
+      <% @reportstatistics.each do |statistic| %>
+        <tr>
+          <td> T - <%= statistic.recorddate %></td>   
+           
+          <td><%= statistic.TA100 %></td>   
+          <td><%= statistic.TA101 %></td> 
+          <td><%= statistic.TA102 %></td> 
+          <td><%= statistic.TA103 %></td> 
+          <td><%= statistic.TA104 %></td> 
+          <td><%= statistic.TA105 %></td> 
+
+        </tr>
+
+        <tr>
+          <td> Y - <%= statistic.recorddate %></td>   
+
+          <td><%= statistic.A100 %></td>   
+          <td><%= statistic.A101 %></td> 
+          <td><%= statistic.A102 %></td> 
+          <td><%= statistic.A103 %></td> 
+          <td><%= statistic.A104 %></td> 
+          <td><%= statistic.A105 %></td> 
+
+
+        </tr>
+      <% end %> 
+    </tbody>
+
+    </table> 
+
+  </div>
+
+  <div role="tabpanel" class="tab-pane" id="man">
+
+    <table class="table">
+
+      <thead>
+        <tr>
+          <th>邀请码</th>
+
+          <th>Number</th>
+        </tr>
+      </thead>
+
+
+      <tbody>
+      <% @manualstatistics.each do |manualstatistic| %>
+        <tr>
+          <td><%= manualstatistic.inviteid%></td>
+          <td><%= Invitetable.all.where(inviteid: manualstatistic.inviteid).count %></td>
+        </tr>
+
+
+      <% end %> 
+
+    </table> 
 
 
 
+  </div>
+
+
+</div>
+
+
+
+
+<script>
+  $(function () {
+    $('#myTab a:last').tab('show')
+  })
+</script>

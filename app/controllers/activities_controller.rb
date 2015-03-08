@@ -61,18 +61,13 @@ class ActivitiesController < ApplicationController
       @yesterdaydata.A104 = @auto_104_yesterday_num
       @yesterdaydata.A105 = @auto_105_yesterday_num
 
-=begin
-      beforedata = Statistic.where(recorddate:Time.now.midnight - 2.day)
-      if !beforedata.empty?
-        @yesterdaydata.deltanum = @all_results.count - beforedata.totalnum
-        @yesterdaydata.ydeltanum = @all_yesterday_results.count - beforedata.ytotalnum
-      end
-=end
       @yesterdaydata.save    
 
     end
 
     @reportstatistics = Statistic.all
+
+    @manualstatistics = Invitetable.all
 
   end
 
