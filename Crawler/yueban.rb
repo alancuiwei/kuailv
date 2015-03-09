@@ -8,7 +8,7 @@ require "mysql"
 #txt.puts(Time.now)
 
 dbh = Mysql.real_connect("localhost","root","zhongren#1234","kuailv-production",3306);  
-sql = "INSERT IGNORE INTO `activities` ( `f_homepage`, `start_city`, `end_city`, `start_time`, `end_time`, `remarks`,`created_at`,`beauty`,`qq`) VALUES ( ?,?,?,?,?,?,?,?,?) "
+sql = "INSERT IGNORE INTO `activities` ( `f_homepage`, `start_city`, `end_city`, `start_time`, `end_time`, `remarks`,`created_at`,`beauty`) VALUES ( ?,?,?,?,?,?,?,?) "
 dbh.query("SET NAMES utf8")
 stmt=dbh.prepare(sql)  
 
@@ -71,10 +71,10 @@ begin
 			end
 
 
-			if theothers.include?"QQ"
-			endposition_qq = theothers.index'QQ'
-			qq = theothers[endposition_qq+3,theothers.length]
-			end
+#			if theothers.include?"QQ"
+#			endposition_qq = theothers.index'QQ'
+#			qq = theothers[endposition_qq+3,theothers.length]
+#			end
 
 
 			homepage = "http://yueban.com"+thevent.css("div.media-body > div.section > div.section-header > a")[0]["href"]
@@ -85,7 +85,7 @@ begin
 
 			beautytype = 102
 
-			stmt.execute(homepage.to_s,start_city.to_s,end_city.to_s,start_time.to_s,end_time.to_s,comments.to_s,createdate.to_s,beautytype.to_s,qq.to_s)
+			stmt.execute(homepage.to_s,start_city.to_s,end_city.to_s,start_time.to_s,end_time.to_s,comments.to_s,createdate.to_s,beautytype.to_s)
 
 		end
 
