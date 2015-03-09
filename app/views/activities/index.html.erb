@@ -136,22 +136,26 @@
         <tr>
           <th>邀请码</th>
 
-          <th>Number</th>
+          <th>Num</th>
+
+          <th>A-Num</th>
 
         </tr>
       </thead>
 
 
       <tbody>
-      <% @manualstatistics.each do |manualstatistic| %>
         <tr>
-          <td><%= manualstatistic.inviteid%></td>
-          <td><%= Invitetable.all.where(inviteid: manualstatistic.inviteid).count %></td>
+          <td>818</td>
+          <td><%= @selected818.count %></td>
+          <td><%= @s818wechatnum %></td>
 
         </tr>
-
-
-      <% end %> 
+        <tr>
+          <td>900</td>
+          <td><%= @selected900.count %></td>
+          <td><%= @s900wechatnum %></td>
+        </tr>
 
     </table> 
 

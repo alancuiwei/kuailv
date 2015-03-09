@@ -69,7 +69,26 @@ class ActivitiesController < ApplicationController
 
     @reportstatistics = Statistic.all
 
-    @manualstatistics = Invitetable.all
+    @selected818 = Invitetable.all.where(inviteid: "R818" || "r818")
+
+    @s818wechatnum = 0
+
+    @selected818.each do |s818|
+      if (!@all_results.where(f_wechatencrypt: s818.wechatid).empty?)
+        @s818wechatnum +=1
+      end
+    end
+
+    @selected900 = Invitetable.all.where(inviteid: "R900" || "r900")
+
+    @s900wechatnum = 0
+
+    @selected900.each do |s900|
+      if (!@all_results.where(f_wechatencrypt: s900.wechatid).empty?)
+        @s900wechatnum +=1
+      end
+    end
+
 
   end
 
