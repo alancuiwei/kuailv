@@ -106,10 +106,10 @@ class WeixinsController < ApplicationController
               render "rtn404", :format => :xml
             else
  
-              if (@resultactivities.count > 9)
-                @resultactivities = @resultactivities.first(9)
+              if (@resultactivities.count > 10)
+                @resultactivities = @resultactivities.first(10)
               end
-              @messagenum = @resultactivities.count + 1
+              @messagenum = @resultactivities.count
               render "rtn130", :formats => :xml
             end
 
