@@ -88,15 +88,8 @@ class WeixinsController < ApplicationController
             
             @resultactivities = l1_resultevents | l2_resultevents
 
-            if (@resultactivities.count > 1)
-              
+            if (@resultactivities.count > 1)              
               @theactivity.update_attributes(:result => @resultactivities.count)
-#            if (l1_resultevents.count > 1)
-#              @resultactivities = l1_resultevents
-#              @theactivity.update_attributes(:result=>1)
-#            elsif (l2_resultevents.count > 1)
-#              @resultactivities = l2_resultevents
-#              @theactivity.update_attributes(:result=>2)
             else
               noresult = true  
               @theactivity.update_attributes(:result=>0)
