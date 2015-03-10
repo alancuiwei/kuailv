@@ -7,7 +7,7 @@
  <ArticleCount><%= @resultactivities.count %></ArticleCount>
  <Articles>
 
-<% if ((resultactivity.end_city== "西藏") && (resultactivity.start_time.strftime("%Y-%m-%d") < "2015-03-16")) %>
+<% if ((@theactivity.end_city== "西藏") && (@theactivity.start_time.strftime("%Y-%m-%d") < "2015-03-16")) %>
 	<item>
 	<Title><![CDATA[欢迎加入西藏结伴游微信群]]></Title> 
 	<Description><![CDATA[3月16日前出发]]></Description>
