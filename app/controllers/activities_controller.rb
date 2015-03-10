@@ -105,6 +105,16 @@ class ActivitiesController < ApplicationController
     @l1_match_number = l1_resultevents.count - 1
     @l2_match_number = l2_resultevents.count
 
+    testresult = l1_resultevents.first
+
+    if (@activity.start_time.strftime("%Y-%m-%d") < "2015-03-06")
+      puts "$$$$$$"
+    else 
+      puts @activity.end_city
+      puts @activity.start_time
+      puts "^^^^^^"
+    end
+
   end
 
   # GET /activities/new
