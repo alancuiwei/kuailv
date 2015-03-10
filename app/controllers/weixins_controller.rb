@@ -109,6 +109,7 @@ class WeixinsController < ApplicationController
               if (@resultactivities.count > 9)
                 @resultactivities = @resultactivities.first(9)
               end
+              @messagenum = @resultactivities.count + 1
               render "rtn130", :formats => :xml
             end
 

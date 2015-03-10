@@ -4,7 +4,7 @@
  <FromUserName><![CDATA[<%= params[:xml][:ToUserName] %>]]></FromUserName>
  <CreateTime><%= Time.now.to_i %></CreateTime>
  <MsgType><![CDATA[news]]></MsgType>
- <ArticleCount><%= @resultactivities.count + 1 %></ArticleCount>
+ <ArticleCount><%= @messagenum %></ArticleCount>
  <Articles>
 
 <% if ((@theactivity.end_city== "西藏") && (@theactivity.start_time.strftime("%Y-%m-%d") < "2015-03-16")) %>
