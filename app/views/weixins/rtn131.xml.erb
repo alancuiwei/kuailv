@@ -1,0 +1,40 @@
+
+ <xml>
+ <ToUserName><![CDATA[<%= params[:xml][:FromUserName] %>]]></ToUserName>
+ <FromUserName><![CDATA[<%= params[:xml][:ToUserName] %>]]></FromUserName>
+ <CreateTime><%= Time.now.to_i %></CreateTime>
+ <MsgType><![CDATA[news]]></MsgType>
+ <ArticleCount><%= @messagenum %></ArticleCount>
+ <Articles>
+
+	<item>
+	<Title><![CDATA[欢迎加入西藏结伴游微信群]]></Title> 
+	<Description><![CDATA[3月16日前出发]]></Description>
+	<PicUrl><![CDATA[https://mmbiz.qlogo.cn/mmbiz/PepP9fYY41WrsQzgLcxPGm5db2QIm6pPVlYnHZh1g51p03tojtzuMbWYmGuSaULCX8MZM5Nbx03sSr68Dypx7g/0]]></PicUrl>
+	<Url><![CDATA[https://mmbiz.qlogo.cn/mmbiz/PepP9fYY41WrsQzgLcxPGm5db2QIm6pPVlYnHZh1g51p03tojtzuMbWYmGuSaULCX8MZM5Nbx03sSr68Dypx7g/0]]></Url>
+	</item>
+
+ <% @resultactivities.each do |resultactivity| %>
+ 	<% 
+		 if resultactivity.founder.nil?
+            resultpicurl = "https://mmbiz.qlogo.cn/mmbiz/5NNlNxENLIsAQ686s5sQm0mO0xgMZ2ZUAjJmKLEl4w2pTwOlX0pN4wgIyBuic4Ljx70wrrhpVOu8elukXkfQmAA/0"
+         else
+            resultpicurl = resultactivity.founder
+         end
+
+            resulturl = resultactivity.f_homepage
+
+ 	%>
+
+		 <item>
+		 <Title><![CDATA[我也去<%= resultactivity.end_city %>,<%= resultactivity.start_time.month %>月<%= resultactivity.start_time.day %>号出发 <%=resultactivity.qq %>  ]]></Title> 
+		 <Description><![CDATA[<%= resultactivity.remarks %>]]></Description>
+		 <PicUrl><![CDATA[<%= resultpicurl %>]]></PicUrl>
+		 <Url><![CDATA[<%= resulturl %>]]></Url>
+		 </item>
+	 <%# end %>
+
+ <% end %>
+
+ </Articles>
+ </xml>
