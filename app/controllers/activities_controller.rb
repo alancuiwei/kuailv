@@ -5,23 +5,8 @@ class ActivitiesController < ApplicationController
 # => 所有的数据，昨天的数据，今天至此的记录
     @all_results = Activity.all
 
-#    @all_yesterday_results = Activity.where(created_at: (Time.now.midnight - 1.day)..Time.now.midnight)
     @all_today_results = Activity.where(created_at:Time.now.midnight..Time.now)
 
-#    @weibo_yesterday_results = @all_yesterday_results.where(beauty:1)
-#    @weixin_yesterday_results = @all_yesterday_results.where.not(f_wechatencrypt:"")
-#    @qyer_yesterday_num = @all_yesterday_results.where(beauty:301)    
-
-=begin
-    @auto_yesterday_results = @all_yesterday_results.where(beauty: 99..199)
-    @auto_100_yesterday_num = @all_yesterday_results.where(beauty:100).count
-    @auto_101_yesterday_num = @all_yesterday_results.where(beauty:101).count
-    @auto_102_yesterday_num = @all_yesterday_results.where(beauty:102).count
-    @auto_103_yesterday_num = @all_yesterday_results.where(beauty:103).count
-    @auto_104_yesterday_num = @all_yesterday_results.where(beauty:104).count
-    @auto_105_yesterday_num = @all_yesterday_results.where(beauty:105).count
-    @auto_106_yesterday_num = @all_yesterday_results.where(beauty:106).count
-=end
 
     @weibo_today_results = @all_today_results.where(beauty:1).count
     @weixin_today_results = @all_today_results.where.not(f_wechatencrypt:"").count
@@ -52,21 +37,6 @@ class ActivitiesController < ApplicationController
       @datedata.TA104 = @all_results.where(beauty:104).count
       @datedata.TA105 = @all_results.where(beauty:105).count
       @datedata.TA106 = @all_results.where(beauty:106).count
-
-=begin
-      @datedata.ytotalnum = @all_yesterday_results.count
-      @datedata.weibonum = @weibo_yesterday_results.count
-      @datedata.weixinnum = @weixin_yesterday_results.count
-      @datedata.qyernum = @qyer_yesterday_num.count
-      @datedata.autonum = @auto_yesterday_results.count
-      @datedata.A100 = @auto_100_yesterday_num
-      @datedata.A101 = @auto_101_yesterday_num
-      @datedata.A102 = @auto_102_yesterday_num
-      @datedata.A103 = @auto_103_yesterday_num
-      @datedata.A104 = @auto_104_yesterday_num
-      @datedata.A105 = @auto_105_yesterday_num
-      @datedata.A106 = @auto_106_yesterday_num
-=end
 
       @datedata.save    
 
