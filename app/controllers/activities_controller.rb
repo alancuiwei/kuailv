@@ -74,6 +74,21 @@ class ActivitiesController < ApplicationController
 
     @reportstatistics = Statistic.all
 
+    @pres801num = @all_results.where(beauty:801).count
+    @pres802num = @all_results.where(beauty:802).count
+    @pres803num = @all_results.where(beauty:803).count
+    @pres804num = @all_results.where(beauty:804).count
+    @pres805num = @all_results.where(beauty:805).count
+    @pres806num = @all_results.where(beauty:806).count
+    @pres807num = @all_results.where(beauty:807).count
+    @pres808num = @all_results.where(beauty:808).count
+    @pres809num = @all_results.where(beauty:809).count
+    @pres810num = @all_results.where(beauty:810).count
+    @pres811num = @all_results.where(beauty:811).count
+    @pres812num = @all_results.where(beauty:812).count
+    @pres818num = @all_results.where(beauty:818).count
+    @pres900num = @all_results.where(beauty:900).count
+
     @selected818 = Invitetable.all.where(inviteid: "R818" || "r818")
 
     @s818wechatnum = 0
