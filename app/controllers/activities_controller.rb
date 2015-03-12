@@ -15,7 +15,9 @@ class ActivitiesController < ApplicationController
 
     @auto_today_results = @all_today_results.where(beauty: 99..199).count
 
-    @nanjingnum = @all_results.where("end_city LIKE '%南京%'").count + @all_results.where("end_city LIKE '%上海%'").count + @all_results.where("end_city LIKE '%杭州%'").count + @all_results.where("end_city LIKE '%苏州%'").count + @all_results.where("end_city LIKE '%无锡%'").count
+    @nanjingevents = @all_results.where("end_city LIKE '%南京%' OR end_city LIKE '%上海%' OR end_city LIKE '%杭州%' OR end_city LIKE '%苏州%' OR end_city LIKE '%无锡%'")
+    @nanjingnum = @nanjingevents.count
+    @nanjing7num = @nanjingevents.where(start_time:Time.now..Time.now+30.days).count
     @lijiangnum = @all_results.where("end_city LIKE '%丽江%'").count
     @lasanum = @all_results.where("end_city LIKE '%拉萨%'").count
     @sanyanum = @all_results.where("end_city LIKE '%三亚%'").count
