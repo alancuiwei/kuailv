@@ -15,9 +15,10 @@ class ActivitiesController < ApplicationController
 
     @auto_today_results = @all_today_results.where(beauty: 99..199).count
 
-    @nanjingnum = @all_results.where(end_city:"南京").count
+    @nanjingnum = @all_results.where(end_city:"南京" || "上海" ||"杭州" || "苏州" ||"无锡").count
     @lijiangnum = @all_results.where(end_city:"丽江").count
     @lasanum = @all_results.where(end_city:"拉萨").count
+    @sanyanum = @all_results.where(end_city:"三亚").count
 
     datefilter = (Time.now.midnight - 1.day).strftime("%Y-%m-%d")
 
