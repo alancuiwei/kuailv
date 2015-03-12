@@ -25,7 +25,9 @@ class ActivitiesController < ApplicationController
 
     @weibo_today_results = @all_today_results.where(beauty:1).count
     @weixin_today_results = @all_today_results.where.not(f_wechatencrypt:"").count
-    @qyer_today_results = @all_today_results.where(beauty:301).count
+
+    @luntan_today_results = @all_today_results.where(beauty: 799..1000).count
+
     @auto_today_results = @all_today_results.where(beauty: 99..199).count
 
     datefilter = (Time.now.midnight - 1.day).strftime("%Y-%m-%d")
@@ -83,15 +85,108 @@ class ActivitiesController < ApplicationController
     end
 
     @selected900 = Invitetable.all.where(inviteid: "R900" || "r900")
-
     @s900wechatnum = 0
-
     @selected900.each do |s900|
       if (!@all_results.where(f_wechatencrypt: s900.wechatid).empty?)
         @s900wechatnum +=1
       end
     end
 
+    @selected801 = Invitetable.all.where(inviteid: "R801" || "r801")
+    @s801wechatnum = 0
+    @selected801.each do |s801|
+      if (!@all_results.where(f_wechatencrypt: s801.wechatid).empty?)
+        @s801wechatnum +=1
+      end
+    end
+
+    @selected802 = Invitetable.all.where(inviteid: "R802" || "r802")
+    @s802wechatnum = 0
+    @selected802.each do |s802|
+      if (!@all_results.where(f_wechatencrypt: s802.wechatid).empty?)
+        @s802wechatnum +=1
+      end
+    end
+
+    @selected803 = Invitetable.all.where(inviteid: "R803" || "r803")
+    @s803wechatnum = 0
+    @selected803.each do |s803|
+      if (!@all_results.where(f_wechatencrypt: s803.wechatid).empty?)
+        @s803wechatnum +=1
+      end
+    end
+
+    @selected804 = Invitetable.all.where(inviteid: "R804" || "r804")
+    @s804wechatnum = 0
+    @selected804.each do |s804|
+      if (!@all_results.where(f_wechatencrypt: s804.wechatid).empty?)
+        @s804wechatnum +=1
+      end
+    end
+
+    @selected805 = Invitetable.all.where(inviteid: "R805" || "r805")
+    @s805wechatnum = 0
+    @selected805.each do |s805|
+      if (!@all_results.where(f_wechatencrypt: s805.wechatid).empty?)
+        @s805wechatnum +=1
+      end
+    end
+
+    @selected806 = Invitetable.all.where(inviteid: "R806" || "r806")
+    @s806wechatnum = 0
+    @selected806.each do |s806|
+      if (!@all_results.where(f_wechatencrypt: s806.wechatid).empty?)
+        @s806wechatnum +=1
+      end
+    end
+
+    @selected807 = Invitetable.all.where(inviteid: "R807" || "r807")
+    @s807wechatnum = 0
+    @selected807.each do |s807|
+      if (!@all_results.where(f_wechatencrypt: s807.wechatid).empty?)
+        @s807wechatnum +=1
+      end
+    end
+
+    @selected808 = Invitetable.all.where(inviteid: "R808" || "r808")
+    @s808wechatnum = 0
+    @selected808.each do |s808|
+      if (!@all_results.where(f_wechatencrypt: s808.wechatid).empty?)
+        @s808wechatnum +=1
+      end
+    end
+
+    @selected809 = Invitetable.all.where(inviteid: "R809" || "r809")
+    @s809wechatnum = 0
+    @selected809.each do |s809|
+      if (!@all_results.where(f_wechatencrypt: s809.wechatid).empty?)
+        @s809wechatnum +=1
+      end
+    end
+
+    @selected810 = Invitetable.all.where(inviteid: "R810" || "r810")
+    @s810wechatnum = 0
+    @selected810.each do |s810|
+      if (!@all_results.where(f_wechatencrypt: s810.wechatid).empty?)
+        @s810wechatnum +=1
+      end
+    end
+
+    @selected811 = Invitetable.all.where(inviteid: "R811" || "r811")
+    @s811wechatnum = 0
+    @selected811.each do |s811|
+      if (!@all_results.where(f_wechatencrypt: s811.wechatid).empty?)
+        @s811wechatnum +=1
+      end
+    end
+
+    @selected812 = Invitetable.all.where(inviteid: "R812" || "r812")
+    @s812wechatnum = 0
+    @selected812.each do |s812|
+      if (!@all_results.where(f_wechatencrypt: s812.wechatid).empty?)
+        @s812wechatnum +=1
+      end
+    end
 
   end
 
@@ -107,16 +202,6 @@ class ActivitiesController < ApplicationController
 
     @l1_match_number = l1_resultevents.count - 1
     @l2_match_number = l2_resultevents.count
-
-    testresult = l1_resultevents.first
-
-    if (@activity.start_time.strftime("%Y-%m-%d") < "2015-03-06")
-      puts "$$$$$$"
-    else 
-      puts @activity.end_city
-      puts @activity.start_time
-      puts "^^^^^^"
-    end
 
   end
 
@@ -201,4 +286,5 @@ class ActivitiesController < ApplicationController
 # => employee manual input
 
 #   301: qyer manual input
+#   800 - 820: shaoli manual input
 end
