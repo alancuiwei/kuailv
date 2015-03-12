@@ -14,6 +14,8 @@ begin
     lijiang = 0
     lasa = 0
     nanjing = 0
+    sanya = 0
+    chengdu = 0
 
     events.each_hash do |event|
 
@@ -29,11 +31,21 @@ begin
             nanjing +=1
         end
 
+        if (event['end_city'].force_encoding("utf-8").include?"三亚")
+            sanya +=1
+        end
+
+        if (event['end_city'].force_encoding("utf-8").include?"成都")
+            chengdu +=1
+        end
+
     end
 
     puts "丽江 ＝ #{lijiang}"
     puts "拉萨 ＝ #{lasa}"
     puts "南京 ＝ #{nanjing}"
+    puts "三亚 ＝ #{sanya}"
+    puts "成都 ＝ #{chengdu}"
 
 
         

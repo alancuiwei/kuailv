@@ -13,18 +13,35 @@
 
     <br \>
 
-    <button class="btn btn-danger" type="button">
-      TX <span class="badge"><%= @weixin_today_results %></span>
-    </button>
+    <div class = "container">
 
-    <button class="btn btn-warning" type="button">
-      TB <span class="badge"><%= @weibo_today_results %></span>
-    </button>
+      <button class="btn btn-danger" type="button">
+        TX <span class="badge"><%= @weixin_today_results %></span>
+      </button>
 
-    <button class="btn btn-info" type="button">
-      TQ <span class="badge"><%= @luntan_today_results %></span>
-    </button>
+      <button class="btn btn-warning" type="button">
+        TB <span class="badge"><%= @weibo_today_results %></span>
+      </button>
 
+      <button class="btn btn-info" type="button">
+        TQ <span class="badge"><%= @luntan_today_results %></span>
+      </button>
+
+      <br \>
+      <br \>
+
+      <button class="btn btn-default" type="button">
+        NJ <span class="badge"><%= @nanjingnum %></span>
+      </button>
+
+      <button class="btn btn-default" type="button">
+        LJ <span class="badge"><%= @lijiangnum %></span>
+      </button>
+
+      <button class="btn btn-default" type="button">
+        LS <span class="badge"><%= @lasanum %></span>
+      </button>
+    </div>
 
   </div>
   <div role="tabpanel" class="tab-pane" id="profile">
