@@ -1,5 +1,6 @@
 class ActivitiesController < ApplicationController
   before_action :set_activity, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate, only: [:nanjing]
 
   def index
 # => 所有的数据，昨天的数据，今天至此的记录
@@ -206,6 +207,15 @@ class ActivitiesController < ApplicationController
     @activity = Activity.new
   end
 
+  def nanjing
+
+    @all_results = Activity.all
+
+    @nanjings = @all_results.where("end_city LIKE '%南京%' OR end_city LIKE '%上海%' OR end_city LIKE '%杭州%' OR end_city LIKE '%苏州%' OR end_city LIKE '%无锡%'")
+    @nanjings30 = @nanjings.where(start_time:Time.now..Time.now+30.days).count
+
+  end
+
   # GET /activities/1/edit
   def edit
   end
@@ -261,6 +271,12 @@ class ActivitiesController < ApplicationController
     def activity_params
       params.require(:activity).permit(:result,:f_homepage, :avatar,:avatar_cache, :beauty, :f_wechatencrypt, :qq, :mobile, :start_city, :end_city, :start_time, :end_time, :founder, :f_wechatid, :remarks, :f_weiboid)
     end
+
+    def authenticate
+     authenticate_or_request_with_http_basic do |username, password|
+       username == "ziren" && password == "Faith#7915"
+     end
+    end    
 
 #   1: weibo input
 
