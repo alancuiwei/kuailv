@@ -97,7 +97,7 @@ class WeixinsController < ApplicationController
   
             if noresult
               render "rtn404", :format => :xml
-            elsif ((@theactivity.end_city== "西藏") && (@theactivity.start_time.strftime("%Y-%m-%d") < "2015-03-16"))
+            elsif ((@theactivity.end_city== "南京") && (@theactivity.start_time.strftime("%Y-%m-%d") < "2015-05-10"))
  
               if (@resultactivities.count > 9)
                 @resultactivities = @resultactivities.first(9)
