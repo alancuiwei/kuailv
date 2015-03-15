@@ -1,0 +1,29 @@
+<div class="container">
+
+  <%= form_for @activity, :html => {:multipart => true } do |f| %>
+    <% if @activity.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@activity.errors.count, "error") %> prohibited this activity from being saved:</h2>
+
+        <ul>
+        <% @activity.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+
+
+    <div class="field">
+      <%= f.label :联系方式 %><br>
+      <%= f.text_field :lianxi %>
+    </div>
+
+    <div class="actions">
+      <%#= f.submit %>
+      <input class="btn btn-danger" name="commit" type="submit" value="添加联系方式" />
+    </div>
+
+<% end %>
+</div>
