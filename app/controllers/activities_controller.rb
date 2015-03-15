@@ -211,7 +211,8 @@ class ActivitiesController < ApplicationController
 
     @all_results = Activity.all
 
-    @nanjings = @all_results.where("end_city LIKE '%南京%' OR end_city LIKE '%上海%' OR end_city LIKE '%杭州%' OR end_city LIKE '%苏州%' OR end_city LIKE '%无锡%'")
+#    @nanjings = @all_results.where("end_city LIKE '%南京%' OR end_city LIKE '%上海%' OR end_city LIKE '%杭州%' OR end_city LIKE '%苏州%' OR end_city LIKE '%无锡%'")
+    @nanjings = @all_results.where("end_city LIKE '%南京%'")
     @nanjings30 = @nanjings.where(start_time:Time.now..Time.now+7.days)
 
   end
