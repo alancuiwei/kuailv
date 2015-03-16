@@ -65,6 +65,8 @@ class ActivitiesController < ApplicationController
     @pres811num = @all_results.where(beauty:811).count
     @pres812num = @all_results.where(beauty:812).count
     @pres818num = @all_results.where(beauty:818).count
+    @pres817num = @all_results.where(beauty:817).count
+    @pres819num = @all_results.where(beauty:819).count
     @pres900num = @all_results.where(beauty:900).count
 
     @selected818 = Invitetable.all.where(inviteid: "R818" || "r818")
@@ -180,6 +182,23 @@ class ActivitiesController < ApplicationController
         @s812wechatnum +=1
       end
     end
+
+    @selected817 = Invitetable.all.where(inviteid: "R817" || "r817")
+    @s817wechatnum = 0
+    @selected817.each do |s817|
+      if (!@all_results.where(f_wechatencrypt: s817.wechatid).empty?)
+        @s817wechatnum +=1
+      end
+    end
+
+    @selected819 = Invitetable.all.where(inviteid: "R819" || "r819")
+    @s819wechatnum = 0
+    @selected819.each do |s819|
+      if (!@all_results.where(f_wechatencrypt: s819.wechatid).empty?)
+        @s819wechatnum +=1
+      end
+    end
+
 
   end
 
