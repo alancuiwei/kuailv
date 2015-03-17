@@ -3,14 +3,14 @@
  <p> for weibo </p>
   <p>我们冒昧的把您找驴友的信息（<%= @activity.start_time %>，<%= @activity.start_city %>到<%= @activity.end_city %>）,登记在快驴平台上（微信公众号：快驴，或kuailv-club），我们找到<%= @l1_match_number %>个<%= @activity.start_city %>同去<%= @activity.end_city %>，出发时间相隔几天的驴友，还找到<%= @l2_match_number %>个<%= @activity.start_time %>在<%= @activity.end_city %>愿意结伴的驴友。你可以在快驴微信服务号上和他们取得联系。</p>
   <p>for bbs </p>
-  <p>你好，请不要误会，我们几个朋友自己做了个结伴旅游查询的微信号，根据你<%= @activity.start_time %>，<%= @activity.start_city %>到<%= @activity.end_city %>的计划，我们<%= @l1_match_number %>个<%= @activity.start_city %>同去，出发时间相隔几天的驴友，还找到<%= @l2_match_number %>个<%= @activity.start_time %>在<%= @activity.end_city %>愿意当地结伴的驴友。</p>
+  <p>你好，请不要误会，我们几个朋友自己做了个结伴旅游查询的微信号，根据<%= @activity.start_time %>，<%= @activity.start_city %>到<%= @activity.end_city %>的计划，我们平台上有<%= @l1_match_number %>个<%= @activity.start_city %>同去，出发时间相隔几天的驴友，还找到<%= @l2_match_number %>个当日在<%= @activity.end_city %>愿意当地结伴的驴友。</p>
 
 <% elsif @l2_match_number > 0 %>
   <p>for weibo </p>
   <p>我们冒昧的把您找驴友的信息（<%= @activity.start_time %>，<%= @activity.start_city %>到<%= @activity.end_city %>）,登记在快驴平台上（微信公众号：快驴，或kuailv-club），我们找到<%= @l2_match_number %>个<%= @activity.start_time %>在<%= @activity.end_city %>愿意结伴的驴友。你可以在快驴微信服务号上和他们取得联系。</p>
 
   <p>for bbs </p>
-  <p>你好，请不要误会，我们几个朋友自己做了个结伴旅游查询的微信号，根据你<%= @activity.start_time %>，<%= @activity.start_city %>到<%= @activity.end_city %>的计划，我们找到<%= @l2_match_number %>个<%= @activity.start_time %>在<%= @activity.end_city %>愿意当地结伴的驴友。</p>
+  <p>你好，请不要误会，我们几个朋友自己做了个结伴旅游查询的微信号，根据<%= @activity.start_time %>，<%= @activity.start_city %>到<%= @activity.end_city %>的计划，我们找到<%= @l2_match_number %>个<%= @activity.start_time %>在<%= @activity.end_city %>愿意当地结伴的驴友。</p>
 
 <% else %>
   <p>您好，我们冒昧的帮你，把找结伴驴友的信息（<%= @activity.start_time %>，从<%= @activity.start_city %>出发去<%= @activity.end_city %>）,登记在微信平台上（公众号：快驴，或 kuailv-club）上，你可以在微信上，最快的方式，找到小伙伴，一起去旅行。如果您不愿意的话，请回复我们，立刻删除掉，多谢！</p>
