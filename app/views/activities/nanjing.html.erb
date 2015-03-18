@@ -35,7 +35,7 @@
           <td><%= nanjing.end_city %></td>
           <td><%= nanjing.lianxi %></td>
           <td><%= nanjing.result %></td>
-          <td><%= link_to '修改', edit_activity_path(nanjing) %></td>
+          <td><%= link_to '修改', edit_activity_path(nanjing) %> <%= link_to '删除', nanjing, method: :delete, data: { confirm: 'Are you sure?' } %></td>
           <td><a href="<%= nanjing.f_homepage %>" target="_blank">点击查看</a></td>
 
         </tr>
