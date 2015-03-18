@@ -1,9 +1,14 @@
 
 <p id="notice"><%= notice %></p>
 
-    <button class="btn btn-danger" type="button">
-        NJ7 <span class="badge"><%= @nanjings30.count %></span>
-    </button>
+
+<p>总数<%= @nanjings30.count %></p>
+<p>已收集信息<%= @nanjings30.where.not(lianxi:"").count %></p>
+<p>已发送邀请<%= @nanjings30.where(result: 0..100).count %></p>
+<p>已认证通过<%= @nanjings30.where(result: 1..100).count %></p>
+<p>已关注微信<%= @nanjings30.where(result: 2..100).count %></p>
+<p>已交互<%= @nanjings30.where(result: 3..100).count %></p>
+<p>已群聊<%= @nanjings30.where(result: 4..100).count %></p>
 
     <br \>
 
@@ -39,3 +44,4 @@
     </tbody>
 
     </table>
+
