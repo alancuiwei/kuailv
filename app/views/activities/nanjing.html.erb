@@ -43,8 +43,8 @@ l7 = @nanjings30.where(result: 4..100).count
       <tbody>
       <% @nanjings30.each do |nanjing| %>
       <% if (nanjing.lianxi == "无")%>
-        <tr class="active">
-        <% elsif ((nanjing.lianxi == "") || (nanjing.result == "")) %>
+        <tr class="danger">
+        <% elsif (nanjing.result.nil?) %>
           <tr>
         <% else %>
           <tr class="success">
