@@ -56,7 +56,7 @@ class ActivitiesController < ApplicationController
 
 #    @pres900num = @all_results.where(beauty:900).count
 
-    @selected800 = Invitetable.all.where(inviteid: "R802" || "r802" ||"R803" || "r803" ||"R817" || "r817" ||"R819" || "r819")
+#    @selected800 = Invitetable.all.where(inviteid: "R802" || "r802" ||"R803" || "r803" ||"R817" || "r817" ||"R819" || "r819")
 
 #    @selected900 = Invitetable.all.where(inviteid: "R900" || "r900")
 
