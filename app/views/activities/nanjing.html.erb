@@ -13,15 +13,16 @@ l7 = @nanjings30.where(result: 4..100).count
 
 %>
 
-<p>总数 <%= l1 %></p>
-<p>有效数目 <%= l15 %> / <%= number_to_percentage(l15.to_f/l1*100, precision: 0) %></p>
+<p>总数 <%= l1 %>条，有效数目 <%= l15 %>条，占<%= number_to_percentage(l15.to_f/l1*100, precision: 0) %>。</p>
 
-<p>已收集信息 <%= l2 %> / <%= number_to_percentage(l2.to_f/l1*100, precision: 0) %></p>
+
+<p>群聊数目<%= l7 %> / <%= number_to_percentage(l7.to_f/l15*100, precision: 0) %></p>
+
+<!--  <p>已收集信息 <%#= l2 %> / <%#= number_to_percentage(l2.to_f/l1*100, precision: 0) %></p>  -->
 <p>已发送邀请<%= l3 %> / <%= number_to_percentage(l3.to_f/l1*100, precision: 0) %></p>
 <p>已认证通过<%= l4 %> / <%= number_to_percentage(l4.to_f/l15*100, precision: 0) %></p>
-<p>已关注微信<%= l5 %> / <%= number_to_percentage(l5.to_f/l15*100, precision: 0) %></p>
+<p>已关注快驴<%= l5 %> / <%= number_to_percentage(l5.to_f/l15*100, precision: 0) %></p>
 <p>已交互<%= l6 %> / <%= number_to_percentage(l6.to_f/l15*100, precision: 0) %></p>
-<p>已群聊<%= l7 %> / <%= number_to_percentage(l7.to_f/l15*100, precision: 0) %></p>
 
     <br \>
 
