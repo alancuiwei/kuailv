@@ -52,153 +52,20 @@ class ActivitiesController < ApplicationController
 
     @reportstatistics = Statistic.all
 
-    @pres801num = @all_results.where(beauty:801).count
-    @pres802num = @all_results.where(beauty:802).count
-    @pres803num = @all_results.where(beauty:803).count
-    @pres804num = @all_results.where(beauty:804).count
-    @pres805num = @all_results.where(beauty:805).count
-    @pres806num = @all_results.where(beauty:806).count
-    @pres807num = @all_results.where(beauty:807).count
-    @pres808num = @all_results.where(beauty:808).count
-    @pres809num = @all_results.where(beauty:809).count
-    @pres810num = @all_results.where(beauty:810).count
-    @pres811num = @all_results.where(beauty:811).count
-    @pres812num = @all_results.where(beauty:812).count
-    @pres818num = @all_results.where(beauty:818).count
-    @pres817num = @all_results.where(beauty:817).count
-    @pres819num = @all_results.where(beauty:819).count
-    @pres900num = @all_results.where(beauty:900).count
+#    @pres800num = @all_results.where(beauty:801..820).count
 
-    @selected818 = Invitetable.all.where(inviteid: "R818" || "r818")
+#    @pres900num = @all_results.where(beauty:900).count
 
-    @s818wechatnum = 0
+    @selected800 = Invitetable.all.where(inviteid: "R802" || "r802" ||"R803" || "r803" ||"R817" || "r817" ||"R819" || "r819")
 
-    @selected818.each do |s818|
-      if (!@all_results.where(f_wechatencrypt: s818.wechatid).empty?)
-        @s818wechatnum +=1
-      end
-    end
+#    @selected900 = Invitetable.all.where(inviteid: "R900" || "r900")
 
-    @selected900 = Invitetable.all.where(inviteid: "R900" || "r900")
-    @s900wechatnum = 0
-    @selected900.each do |s900|
-      if (!@all_results.where(f_wechatencrypt: s900.wechatid).empty?)
-        @s900wechatnum +=1
-      end
-    end
-
-    @selected801 = Invitetable.all.where(inviteid: "R801" || "r801")
-    @s801wechatnum = 0
-    @selected801.each do |s801|
-      if (!@all_results.where(f_wechatencrypt: s801.wechatid).empty?)
-        @s801wechatnum +=1
-      end
-    end
-
-    @selected802 = Invitetable.all.where(inviteid: "R802" || "r802")
-    @s802wechatnum = 0
-    @selected802.each do |s802|
-      if (!@all_results.where(f_wechatencrypt: s802.wechatid).empty?)
-        @s802wechatnum +=1
-      end
-    end
-
-    @selected803 = Invitetable.all.where(inviteid: "R803" || "r803")
-    @s803wechatnum = 0
-    @selected803.each do |s803|
-      if (!@all_results.where(f_wechatencrypt: s803.wechatid).empty?)
-        @s803wechatnum +=1
-      end
-    end
-
-    @selected804 = Invitetable.all.where(inviteid: "R804" || "r804")
-    @s804wechatnum = 0
-    @selected804.each do |s804|
-      if (!@all_results.where(f_wechatencrypt: s804.wechatid).empty?)
-        @s804wechatnum +=1
-      end
-    end
-
-    @selected805 = Invitetable.all.where(inviteid: "R805" || "r805")
-    @s805wechatnum = 0
-    @selected805.each do |s805|
-      if (!@all_results.where(f_wechatencrypt: s805.wechatid).empty?)
-        @s805wechatnum +=1
-      end
-    end
-
-    @selected806 = Invitetable.all.where(inviteid: "R806" || "r806")
-    @s806wechatnum = 0
-    @selected806.each do |s806|
-      if (!@all_results.where(f_wechatencrypt: s806.wechatid).empty?)
-        @s806wechatnum +=1
-      end
-    end
-
-    @selected807 = Invitetable.all.where(inviteid: "R807" || "r807")
-    @s807wechatnum = 0
-    @selected807.each do |s807|
-      if (!@all_results.where(f_wechatencrypt: s807.wechatid).empty?)
-        @s807wechatnum +=1
-      end
-    end
-
-    @selected808 = Invitetable.all.where(inviteid: "R808" || "r808")
-    @s808wechatnum = 0
-    @selected808.each do |s808|
-      if (!@all_results.where(f_wechatencrypt: s808.wechatid).empty?)
-        @s808wechatnum +=1
-      end
-    end
-
-    @selected809 = Invitetable.all.where(inviteid: "R809" || "r809")
-    @s809wechatnum = 0
-    @selected809.each do |s809|
-      if (!@all_results.where(f_wechatencrypt: s809.wechatid).empty?)
-        @s809wechatnum +=1
-      end
-    end
-
-    @selected810 = Invitetable.all.where(inviteid: "R810" || "r810")
-    @s810wechatnum = 0
-    @selected810.each do |s810|
-      if (!@all_results.where(f_wechatencrypt: s810.wechatid).empty?)
-        @s810wechatnum +=1
-      end
-    end
-
-    @selected811 = Invitetable.all.where(inviteid: "R811" || "r811")
-    @s811wechatnum = 0
-    @selected811.each do |s811|
-      if (!@all_results.where(f_wechatencrypt: s811.wechatid).empty?)
-        @s811wechatnum +=1
-      end
-    end
-
-    @selected812 = Invitetable.all.where(inviteid: "R812" || "r812")
-    @s812wechatnum = 0
-    @selected812.each do |s812|
-      if (!@all_results.where(f_wechatencrypt: s812.wechatid).empty?)
-        @s812wechatnum +=1
-      end
-    end
-
-    @selected817 = Invitetable.all.where(inviteid: "R817" || "r817")
-    @s817wechatnum = 0
-    @selected817.each do |s817|
-      if (!@all_results.where(f_wechatencrypt: s817.wechatid).empty?)
-        @s817wechatnum +=1
-      end
-    end
-
-    @selected819 = Invitetable.all.where(inviteid: "R819" || "r819")
-    @s819wechatnum = 0
-    @selected819.each do |s819|
-      if (!@all_results.where(f_wechatencrypt: s819.wechatid).empty?)
-        @s819wechatnum +=1
-      end
-    end
-
+#    @s900wechatnum = 0
+#    @selected900.each do |s900|
+#      if (!@all_results.where(f_wechatencrypt: s900.wechatid).empty?)
+#        @s900wechatnum +=1
+#      end
+#    end
 
   end
 
