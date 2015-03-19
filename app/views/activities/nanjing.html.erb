@@ -14,7 +14,7 @@ l7 = @nanjings30.where(result: 4..100).count
 %>
 
 <p>总数 <%= l1 %></p>
-<p>有效数目 <%= l15 %></p>
+<p>有效数目 <%= l15 %> / <%= number_to_percentage(l15.to_f/l1*100, precision: 0) %></p>
 
 <p>已收集信息 <%= l2 %> / <%= number_to_percentage(l2.to_f/l1*100, precision: 0) %></p>
 <p>已发送邀请<%= l3 %> / <%= number_to_percentage(l3.to_f/l1*100, precision: 0) %></p>
@@ -42,7 +42,18 @@ l7 = @nanjings30.where(result: 4..100).count
 
       <tbody>
       <% @nanjings30.each do |nanjing| %>
-        <tr>
+      <% if (nanjing.lianxi == "无")%>
+        <tr class="active">
+        <% elsif (nanjing.lianxi == "") %>
+          <tr>
+        <% else %>
+          <% if (nanjing.result >= 0) %>
+              <tr class="success">
+          <% else %>
+              <tr class="warning">
+          <% end %>
+
+      <% end %>
           <td><%= nanjing.start_time %></td>
           <td><%= nanjing.start_city %></td>
           <td><%= nanjing.end_city %></td>
