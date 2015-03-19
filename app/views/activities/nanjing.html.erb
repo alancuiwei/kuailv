@@ -44,16 +44,12 @@ l7 = @nanjings30.where(result: 4..100).count
       <% @nanjings30.each do |nanjing| %>
       <% if (nanjing.lianxi == "无")%>
         <tr class="active">
-        <% elsif (nanjing.lianxi == "") %>
+        <% elsif ((nanjing.lianxi == "") || (nanjing.result == "")) %>
           <tr>
         <% else %>
-          <% if (nanjing.result >= 0) %>
-              <tr class="success">
-          <% else %>
-              <tr class="warning">
-          <% end %>
+          <tr class="success">
+        <% end %>
 
-      <% end %>
           <td><%= nanjing.start_time %></td>
           <td><%= nanjing.start_city %></td>
           <td><%= nanjing.end_city %></td>
