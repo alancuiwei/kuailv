@@ -75,12 +75,12 @@ class ActivitiesController < ApplicationController
     target_end_city   = @activity.end_city
     target_start_time = @activity.start_time
 
-    l1_resultevents = Activity.find_by_sql("select * from `kuailv-production`.`activities` where `start_city` LIKE '%#{target_start_city}%' AND `end_city` LIKE '%#{target_end_city}%' AND `start_time` BETWEEN '#{target_start_time-7}' AND '#{target_start_time+7}'  limit 0,1000;")
+    @l1_resultevents = Activity.find_by_sql("select * from `kuailv-production`.`activities` where `start_city` LIKE '%#{target_start_city}%' AND `end_city` LIKE '%#{target_end_city}%' AND `start_time` BETWEEN '#{target_start_time-7}' AND '#{target_start_time+7}'  limit 0,1000;")
 
-    l2_resultevents = Activity.find_by_sql("select * from `kuailv-production`.`activities` where `end_city` LIKE '%#{target_end_city}%' AND `start_time` BETWEEN '#{target_start_time-7}' AND '#{target_start_time+7}'  limit 0,1000;")
+    @l2_resultevents = Activity.find_by_sql("select * from `kuailv-production`.`activities` where `end_city` LIKE '%#{target_end_city}%' AND `start_time` BETWEEN '#{target_start_time-7}' AND '#{target_start_time+7}'  limit 0,1000;")
 
-    @l1_match_number = l1_resultevents.count - 1
-    @l2_match_number = l2_resultevents.count
+    @l1_match_number = @l1_resultevents.count - 1
+    @l2_match_number = @l2_resultevents.count
 
   end
 
@@ -114,8 +114,11 @@ class ActivitiesController < ApplicationController
 
     respond_to do |format|
       if @activity.save
-        format.html { redirect_to @activity, notice: 'Activity was successfully created.' }
-        format.json { render :show, status: :created, location: @activity }
+
+          format.html { redirect_to @activity, notice: 'Activity was successfully created.' }
+          format.json { render :show, status: :created, location: @activity }
+      
+
       else
         format.html { render :new }
         format.json { render json: @activity.errors, status: :unprocessable_entity }

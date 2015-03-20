@@ -13,8 +13,7 @@
       </div>
     <% end %>
 
-    <%#= radio_button_tag :beauty, 1 %>
-    <%#= label_tag(:beauty, "美女专区") %>
+
 
     <div class="field">
       <%#= f.label :beauty %><br>
@@ -54,6 +53,11 @@
     <div class="field">
       <%= f.label :微博地址 %><br>
       <%= f.text_field :f_homepage %>
+    </div>
+
+    <div class="field">
+      <%#= f.label :qq %><br>
+      <%= f.hidden_field :qq,value:0 %>
     </div>
 
     <div class="actions">

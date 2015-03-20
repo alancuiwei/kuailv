@@ -1,11 +1,78 @@
+<% if @activity.beauty == 1 %>
 
-<% if @l1_match_number > 0 %>
-  <p>我们冒昧的把您找驴友的信息（<%= @activity.start_time %>，<%= @activity.start_city %>到<%= @activity.end_city %>）,登记在快驴平台上（微信公众号：快驴，或kuailv-club），我们找到<%= @l1_match_number %>个<%= @activity.start_city %>同去<%= @activity.end_city %>，出发时间相隔几天的驴友，还找到<%= @l2_match_number %>个<%= @activity.start_time %>在<%= @activity.end_city %>愿意结伴的驴友。你可以在快驴微信服务号上和他们取得联系。</p>
+	<% if @l1_match_number > 0 %>
+	  <p>我们冒昧的把您找驴友的信息（<%= @activity.start_time %>，<%= @activity.start_city %>到<%= @activity.end_city %>）,登记在快驴平台上（微信公众号：快驴，或kuailv-club），我们找到<%= @l1_match_number %>个<%= @activity.start_city %>同去<%= @activity.end_city %>，出发时间相隔几天的驴友，还找到<%= @l2_match_number %>个<%= @activity.start_time %>在<%= @activity.end_city %>愿意结伴的驴友。你可以在快驴微信服务号上和他们取得联系。</p>
 
-<% elsif @l2_match_number > 0 %>
-  <p>我们冒昧的把您找驴友的信息（<%= @activity.start_time %>，<%= @activity.start_city %>到<%= @activity.end_city %>）,登记在快驴平台上（微信公众号：快驴，或kuailv-club），我们找到<%= @l2_match_number %>个<%= @activity.start_time %>在<%= @activity.end_city %>愿意结伴的驴友。你可以在快驴微信服务号上和他们取得联系。</p>
+	<% elsif @l2_match_number > 0 %>
+	  <p>我们冒昧的把您找驴友的信息（<%= @activity.start_time %>，<%= @activity.start_city %>到<%= @activity.end_city %>）,登记在快驴平台上（微信公众号：快驴，或kuailv-club），我们找到<%= @l2_match_number %>个<%= @activity.start_time %>在<%= @activity.end_city %>愿意结伴的驴友。你可以在快驴微信服务号上和他们取得联系。</p>
+
+	<% else %>
+	  <p>您好，我们冒昧的帮你，把找结伴驴友的信息（<%= @activity.start_time %>，从<%= @activity.start_city %>出发去<%= @activity.end_city %>）,登记在微信平台上（公众号：快驴，或 kuailv-club）上，你可以在微信上，最快的方式，找到小伙伴，一起去旅行。如果您不愿意的话，请回复我们，立刻删除掉，多谢！</p>
+
+	<% end %>  
 
 <% else %>
-  <p>您好，我们冒昧的帮你，把找结伴驴友的信息（<%= @activity.start_time %>，从<%= @activity.start_city %>出发去<%= @activity.end_city %>）,登记在微信平台上（公众号：快驴，或 kuailv-club）上，你可以在微信上，最快的方式，找到小伙伴，一起去旅行。如果您不愿意的话，请回复我们，立刻删除掉，多谢！</p>
 
-<% end %>  
+	<h2>一起出发一起玩(同城出发，同地旅游)</h2>
+
+	    <table class="table">
+
+	      <thead>
+	        <tr>
+	          <th>出发日期</th>
+	          <th>出发城市</th>
+	          <th>目的城市</th>
+	          <th>驴友说</th>	          
+	          <th>详情</th>     
+
+	        </tr>
+	      </thead>
+
+	      <tbody>
+	      <% @l1_resultevents.each do |tcty| %>
+
+	          <td><%= tcty.start_time %></td>
+	          <td><%= tcty.start_city %></td>
+	          <td><%= tcty.end_city %></td>
+	          <td><%= tcty.remarks %></td>
+	          <td><a href="<%= tcty.f_homepage %>">查看详情</a></td>
+
+	        </tr>
+
+	      <% end %> 
+	    </tbody>
+
+	    </table>
+
+
+	<h2>我在这里等你来一起玩(异地出发，同地旅游)</h2>
+	    <table class="table">
+
+	      <thead>
+	        <tr>
+	          <th>出发日期</th>
+	          <th>出发城市</th>
+	          <th>目的城市</th>
+	          <th>驴友说</th>
+	          <th>详情</th>     
+
+	        </tr>
+	      </thead>
+
+	      <tbody>
+	      <% @l2_resultevents.each do |ycty| %>
+
+	          <td><%= ycty.start_time %></td>
+	          <td><%= ycty.start_city %></td>
+	          <td><%= ycty.end_city %></td>
+	          <td><%= tcty.remarks %></td>	          
+	          <td><a href="<%= ycty.f_homepage %>">详情查看</a></td>
+	          
+	        </tr>
+
+	      <% end %> 
+	    </tbody>
+
+	    </table>	
+
+<% end %>

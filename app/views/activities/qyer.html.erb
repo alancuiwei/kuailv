@@ -1,4 +1,4 @@
-<h1>New Activity</h1>
+<h1>快驴</h1>
 
 <div class="container">
 
@@ -16,16 +16,10 @@
     <% end %>
 
     <div class="field">
-      <%= f.label :beauty %><br>
-      <%= f.number_field :beauty %>
+      <%#= f.label :beauty %>
+      <%#= f.number_field :beauty %>
+      <%= f.hidden_field :beauty,value:200 %>
     </div>
-
-<!--
-    <div class="field">
-      <%#= f.label :论坛发布内容 %><br>
-      <%#= f.text_area :remarks %>
-    </div>
--->
 
     <div class="field">
       <%= f.label :出发城市 %><br>
@@ -45,46 +39,14 @@
     </div>
 
     <div class="field">
-      <%= f.label :qq %><br>
+      <%= f.label :"联系方式 (QQ或微信)" %><br>
       <%= f.text_field :qq %>
     </div>    
 
-    <div class="field">
-      <%= f.label :f_wechatid %><br>
-      <%= f.text_field :f_wechatid %>
-    </div>
-
-<!--   
-    <div class="field">
-      <%= f.label :穷游账号 %><br>
-      <%= f.text_field :f_homepage %>
-    </div>
-
-
-    <div class="field">
-      <%= f.label :founder %><br>
-      <%= f.text_field :founder %>
-    </div>
-
-
-
-
-    <div class="field">
-      <%= f.label :mobile %><br>
-      <%= f.text_field :mobile %>
-    </div>
-
-    <div class="field">
-      <%= f.label :wechat_encrypt %><br>
-      <%= f.text_field :f_wechatencrypt %>
-    </div>
-
-
--->
 
     <div class="actions">
       <%#= f.submit %>
-      <input class="btn btn-danger" name="commit" type="submit" value="Create A Activity" />
+      <input class="btn btn-danger" name="commit" type="submit" value="快驴找驴友" />
 
     </div>
 
