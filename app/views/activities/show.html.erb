@@ -12,7 +12,11 @@
 	<% end %>  
 
 <% else %>
+<%= @l1_match_number %>
 
+<%= @l2_match_number %>
+
+	<% if (@l1_match_number > 0) %>	
 	<h2>一起出发一起玩(同城出发，同地旅游)</h2>
 
 	    <table class="table">
@@ -43,8 +47,9 @@
 	    </tbody>
 
 	    </table>
+	<% end %>    
 
-
+	<% if (@l2_match_number > 0) %>	
 	<h2>我在这里等你来一起玩(异地出发，同地旅游)</h2>
 	    <table class="table">
 
@@ -73,6 +78,7 @@
 	      <% end %> 
 	    </tbody>
 
-	    </table>	
+	    </table>
+	<% end %>	
 
 <% end %>
