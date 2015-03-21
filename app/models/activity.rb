@@ -2,7 +2,7 @@ class Activity < ActiveRecord::Base
 
 	mount_uploader :avatar, AvatarUploader
 
-	validates_presence_of :start_city, :end_city, :start_time, :end_time, :qq	
+	validates_presence_of :start_city, :end_city, :start_time, :qq	
 #	validates :qq, 
 #	:presence => true,
 #	:allow_nil => true,
