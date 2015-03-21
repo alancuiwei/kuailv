@@ -94,22 +94,14 @@ class WeixinsController < ApplicationController
               noresult = true  
               @theactivity.update_attributes(:result=>0)
             end
+
+            if (@resultactivities.count > 10)
+              @resultactivities = @resultactivities.first(10)
+            end
   
             if noresult
               render "rtn404", :format => :xml
-            elsif ((@theactivity.end_city== "南京") && (@theactivity.start_time.strftime("%Y-%m-%d") < "2015-05-10"))
- 
-              if (@resultactivities.count > 9)
-                @resultactivities = @resultactivities.first(9)
-              end
-              @messagenum = @resultactivities.count + 1
-
-              render "rtn131", :formats => :xml
-            else
- 
-              if (@resultactivities.count > 10)
-                @resultactivities = @resultactivities.first(10)
-              end
+            else 
               @messagenum = @resultactivities.count
               render "rtn130", :formats => :xml
             end
