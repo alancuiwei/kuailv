@@ -38,16 +38,16 @@ class WeixinsController < ApplicationController
 
     if params[:xml][:MsgType]=="text"
 
-      if ((params[:xml][:Content][0] == 'R') || (params[:xml][:Content][0] == 'r'))
-        Invitetable.new do |newinviter|
-          newinviter.inviteid = params[:xml][:Content]
-          newinviter.wechatid = params[:xml][:FromUserName]
-          newinviter.save
-          @owninviterid = "R#{newinviter.id}"
-        end
+#      if ((params[:xml][:Content][0] == 'R') || (params[:xml][:Content][0] == 'r'))
+#        Invitetable.new do |newinviter|
+#          newinviter.inviteid = params[:xml][:Content]
+#          newinviter.wechatid = params[:xml][:FromUserName]
+#          newinviter.save
+#          @owninviterid = "R#{newinviter.id}"
+#        end
 
-        render "referintro", :formats => :xml
-      else
+#        render "referintro", :formats => :xml
+#      else
         @userinfo = params[:xml][:Content].gsub('，',',').split(',')
 
         if (@userinfo.count == 4)
@@ -66,9 +66,9 @@ class WeixinsController < ApplicationController
         else
             render "rtn405", :formats => :xml
         end
-      end
-     
     end
+     
+#    end
 
     if params[:xml][:MsgType]=="image"
 
