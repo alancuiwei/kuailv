@@ -25,6 +25,11 @@
       <%= f.number_field :result %>
     </div>
 
+    <div class="field">
+      <%#= f.label :qq %><br>
+      <%= f.hidden_field :qq,value:0 %>
+    </div>
+
     <div class="actions">
       <%#= f.submit %>
       <input class="btn btn-danger" name="commit" type="submit" value="添加联系方式" />

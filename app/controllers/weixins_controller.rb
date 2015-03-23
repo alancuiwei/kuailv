@@ -7,9 +7,6 @@ class WeixinsController < ApplicationController
   end
 
   def create
-#    if params[:xml][:MsgType] == "text"
-#      render "echo", :formats => :xml
-#    end
 
     if params[:xml][:Event] == "subscribe"
         render "subscribe", :formats => :xml
@@ -21,13 +18,8 @@ class WeixinsController < ApplicationController
           when "V110"
               render "rtn110", :formats => :xml
           when "V302"
-#              @travelevents = Activity.where(beauty:1).limit(5).order("RAND()")          
               @travelevents = Activity.where(beauty:1).last(10)          
               render "rtn302", :formats => :xml
-#          when "V303"
-#              render "rtn303", :formats => :xml
-#          when "V304"
-#              render "rtn304", :formats => :xml
           when "V305"
               render "rtn305", :formats => :xml
           when "V306"
@@ -38,16 +30,6 @@ class WeixinsController < ApplicationController
 
     if params[:xml][:MsgType]=="text"
 
-#      if ((params[:xml][:Content][0] == 'R') || (params[:xml][:Content][0] == 'r'))
-#        Invitetable.new do |newinviter|
-#          newinviter.inviteid = params[:xml][:Content]
-#          newinviter.wechatid = params[:xml][:FromUserName]
-#          newinviter.save
-#          @owninviterid = "R#{newinviter.id}"
-#        end
-
-#        render "referintro", :formats => :xml
-#      else
         @userinfo = params[:xml][:Content].gsub('，',',').split(',')
 
         if (@userinfo.count == 4)
