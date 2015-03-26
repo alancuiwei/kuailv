@@ -23,16 +23,16 @@
       <ul>
         <li style="margin-top:0px">
           <div class="new1">
-            <dd>始发地<%= f.text_field :start_city, placeholder:"点击输入地标城市" %></dd>
+            <dd style="background-position: 4px -310px;">始发地<%= f.text_field :start_city, placeholder:"点击输入地标城市" %></dd>
           </div>
           <div class="new1">
             <dd>目的地<%= f.text_field :end_city, placeholder:"点击输入目的城市" %></dd>
           </div>
           <div class="new1">
-            <dd style="background-position: 4px -54px;">出发日期<%= f.date_select :start_time %></dd>
+            <dd style="background-position: 4px -54px;">出发日期<%#= f.date_select :start_time %><input id="start_time" name="start_time" type="date"  /></dd>
           </div>
           <div class="new1">
-            <dd style="background-position: 4px -134px; border-bottom:none">返回日期<%= f.date_select :end_time %></dd>
+            <dd style="background-position: 4px -134px; border-bottom:none">返回日期<%#= f.date_select :end_time %><input id="end_time" name="end_time" type="date"  /></dd>
           </div>
         </li>
         
