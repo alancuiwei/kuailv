@@ -13,7 +13,45 @@
 
 <% else %>
 
+<article>
+	<nav><a href="qyer"></a>一起去<%= @activity.end_city %>玩</nav>
+	<div class="list-table">
+		<ul>
+			<% if (@l1_match_number > 0) %>	
+				<li onclick="javascript:window.location.href='#'">
+				<div class="a">同城出发</div>
+				<% @l1_resultevents.each do |tcty| %>
+					<div class="b">
+					<h1><%= tcty.remarks %></h1>
+					<h2><span><%= tcty.start_city %>-<%= tcty.end_city %></span><%= tcty.start_time %></h2>
+					</div>
+				<% end %>
+				</li>
 
+			<% end %>
+			
+			<% if (@l2_match_number > 0) %>	
+				<li onclick="javascript:window.location.href='#'">
+				<div class="a" style="background-position: 20px -141px; ">异地出发</div>
+				<% @l2_resultevents.each do |ycty| %>
+					<div class="b">
+					<h1><%= ycty.remarks %></h1>
+					<h2><span><%= ycty.start_city %>-<%= ycty.end_city %></span><%= ycty.start_time %></h2>
+					</div>
+				<% end %>
+			<% end %>
+			</li>
+			
+		</ul>
+	</div>
+
+
+	<footer>
+				<%= image_tag "b1.png", size: "640x85"%></footer>
+
+</article>
+
+<!--
 	<% if (@l1_match_number > 0) %>	
 	<h2>一起出发一起玩(同城出发，同地旅游)</h2>
 
@@ -78,5 +116,6 @@
 
 	    </table>
 	<% end %>	
+-->
 
 <% end %>
