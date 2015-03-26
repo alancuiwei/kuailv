@@ -1,3 +1,67 @@
+
+<body>
+<article>
+  <nav><a href="#"></a>快驴找驴友</nav>
+
+  <%= form_for @activity, :html => {:multipart => true } do |f| %>
+    <% if @activity.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@activity.errors.count, "error") %> prohibited this activity from being saved:</h2>
+
+        <ul>
+        <% @activity.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <%= f.hidden_field :beauty,value:200 %>
+
+    <div class="list-table">
+
+      <ul>
+        <li style="margin-top:0px">
+          <div class="new1">
+            <dd>始发地<%= f.text_field :start_city, placeholder:"点击输入地标城市" %></dd>
+          </div>
+          <div class="new1">
+            <dd>目的地<%= f.text_field :end_city, placeholder:"点击输入目的城市" %></dd>
+          </div>
+          <div class="new1">
+            <dd style="background-position: 4px -54px;">出发日期<%= f.date_select :start_time %></dd>
+          </div>
+          <div class="new1">
+            <dd style="background-position: 4px -134px; border-bottom:none">返回日期<%= f.date_select :end_time %></dd>
+          </div>
+        </li>
+        
+        <li style="background-position: 20px -75px; ">
+                <div class="new1" style=" background-image:none">
+            <dd class="aaa" style="background-position: 4px -215px; border-bottom:none">联系方式
+                    <%= f.text_field :qq, placeholder:"输入QQ或微信号" %></dd>
+          </div>
+        </li>
+        
+      </ul>
+    </div>
+
+
+    <footer>
+
+
+    <div class="tja"><input class="rjj" name="commit" type="submit" value="开始找" /></div>
+    <div style="text-align:center; padding-bottom:10px"><%= image_tag "xx.png"%></div>      
+
+    </footer>
+
+  <% end %>
+
+</article>
+</body>
+
+
+<!--
 <h1>快驴</h1>
 
 <div class="container">
@@ -16,8 +80,6 @@
     <% end %>
 
     <div class="field">
-      <%#= f.label :beauty %>
-      <%#= f.number_field :beauty %>
       <%= f.hidden_field :beauty,value:200 %>
     </div>
 
@@ -45,13 +107,11 @@
 
 
     <div class="actions">
-      <%#= f.submit %>
+
       <input class="btn btn-danger" name="commit" type="submit" value="快驴找驴友" />
 
     </div>
 
-
-
 <% end %>
 </div>
-
+-->
