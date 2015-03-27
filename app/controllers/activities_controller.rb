@@ -82,13 +82,13 @@ class ActivitiesController < ApplicationController
     @l1_match_number = @l1_resultevents.count
     @l2_match_number = @l2_resultevents.count
 
-    if (@l1_match_number > 9)
-        @l1_resultevents = @l1_resultevents.first(10)
-    end
+#    if (@l1_match_number > 9)
+#        @l1_resultevents = @l1_resultevents.first(10)
+#    end
 
-    if (@l2_match_number > 9)
-        @l2_resultevents = @l2_resultevents.first(10)
-    end
+#    if (@l2_match_number > 9)
+#        @l2_resultevents = @l2_resultevents.first(10)
+#    end
   end
 
   # GET /activities/new
