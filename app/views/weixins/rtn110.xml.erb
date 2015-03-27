@@ -1,10 +1,19 @@
-<xml>
-     <ToUserName><![CDATA[<%= params[:xml][:FromUserName] %>]]></ToUserName>
-     <FromUserName><![CDATA[<%= params[:xml][:ToUserName] %>]]></FromUserName>
-     <CreateTime><%= Time.now.to_i %></CreateTime>
-     <MsgType><![CDATA[text]]></MsgType>
-     <Content><![CDATA[输入举例：南京,三亚,0227,QQ7654321
-指的是：南京去三亚玩，2月27号出发，我的QQ联系是7654321
-]]></Content>
-     <FuncFlag>0</FuncFlag>
+ <xml>
+ <ToUserName><![CDATA[<%= params[:xml][:FromUserName] %>]]></ToUserName>
+ <FromUserName><![CDATA[<%= params[:xml][:ToUserName] %>]]></FromUserName>
+ <CreateTime><%= Time.now.to_i %></CreateTime>
+ <MsgType><![CDATA[news]]></MsgType>
+ <ArticleCount>1</ArticleCount>
+ <Articles>
+
+ <item>
+ <Title><![CDATA[快驴找驴友]]></Title> 
+ <Description><![CDATA[快驴是全国最大的驴友约伴平台]]></Description>
+ <PicUrl><![CDATA[https://mmbiz.qlogo.cn/mmbiz/PepP9fYY41VgrH6ufZ9vHXWqhsBAqCNapHgHfJaibg3KaZTjXVEcQdF75YHVZjOBF5uZXDJ3cwSc3tFZCOcJgHg/0]]></PicUrl>
+ <Url><![CDATA[http://www.lvdazi.com/activities/qyer]]></Url>
+ </item>
+
+
+ </Articles>
+ <FuncFlag>1</FuncFlag>
  </xml>

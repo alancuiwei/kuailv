@@ -15,19 +15,22 @@ class WeixinsController < ApplicationController
 
     if params[:xml][:Event] == "CLICK"
         case params[:xml][:EventKey]
+          # 找驴友
           when "V110"
               render "rtn110", :formats => :xml
+          # 看驴友 微博    
           when "V302"
               @travelevents = Activity.where(beauty:1).last(10)          
               render "rtn302", :formats => :xml
+          # 发红包    
           when "V305"
               render "rtn305", :formats => :xml
-          when "V306"
-              render "rtn306", :formats => :xml
+#          when "V306"
+#              render "rtn306", :formats => :xml
 
         end
     end
-
+=begin
     if params[:xml][:MsgType]=="text"
 
         @userinfo = params[:xml][:Content].gsub('，',',').split(',')
@@ -49,9 +52,10 @@ class WeixinsController < ApplicationController
             render "rtn405", :formats => :xml
         end
     end
-     
+=end     
 #    end
 
+=begin
     if params[:xml][:MsgType]=="image"
 
             noresult = false
@@ -89,6 +93,7 @@ class WeixinsController < ApplicationController
             end
 
     end
+=end    
 
   end
 
