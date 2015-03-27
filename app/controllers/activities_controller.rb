@@ -127,7 +127,8 @@ class ActivitiesController < ApplicationController
       
 
       else
-        format.html { render :new }
+#        format.html { render :new }
+        format.html { redirect_to "/activities/qyer", notice: @activity.errors }
         format.json { render json: @activity.errors, status: :unprocessable_entity }
       end
     end
