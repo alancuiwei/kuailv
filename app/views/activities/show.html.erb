@@ -18,10 +18,10 @@
 	<div class="list-table">
 		<ul>
 			<% if (@l1_match_number > 0) %>	
-				<li onclick="javascript:window.location.href='#'">
+				<li>
 				<div class="a">同城出发</div>
 				<% @l1_resultevents.each do |tcty| %>
-					<div class="b">
+					<div class="b" onclick="javascript:window.location.href='<%= tcty.f_homepage %>'">
 					<h1><%= tcty.remarks %></h1>
 					<h2><span><%= tcty.start_city %>-<%= tcty.end_city %></span><%= tcty.start_time %></h2>
 					</div>
@@ -31,10 +31,10 @@
 			<% end %>
 			
 			<% if (@l2_match_number > 0) %>	
-				<li onclick="javascript:window.location.href='#'">
+				<li>
 				<div class="a" style="background-position: 20px -141px; ">异地出发</div>
 				<% @l2_resultevents.each do |ycty| %>
-					<div class="b">
+					<div class="b" onclick="javascript:window.location.href='<%= ycty.f_homepage %>'">
 					<h1><%= ycty.remarks %></h1>
 					<h2><span><%= ycty.start_city %>-<%= ycty.end_city %></span><%= ycty.start_time %></h2>
 					</div>
