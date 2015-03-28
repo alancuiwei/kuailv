@@ -30,8 +30,11 @@ class WeixinsController < ApplicationController
 
         end
     end
-=begin
+          # 文本反馈         
     if params[:xml][:MsgType]=="text"
+            render "rtn405", :formats => :xml
+    end
+=begin
 
         @userinfo = params[:xml][:Content].gsub('，',',').split(',')
 
