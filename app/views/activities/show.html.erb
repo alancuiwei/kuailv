@@ -21,7 +21,7 @@
 				<li>
 				<div class="a">同城出发</div>
 				<% @l1_resultevents.each do |tcty| %>
-					<% if tcty.f_homepage.empty? %>
+					<% if (tcty.beauty == 200) %>
 
 						<div class="b" onclick="javascript:window.location.href='<%= tcty.founder %>'">
 						<h1><%= tcty.remarks %>, 联系方式<%= tcty.qq %></h1>
