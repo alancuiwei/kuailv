@@ -19,9 +19,9 @@ class WeixinsController < ApplicationController
           when "V110"
               render "rtn110", :formats => :xml
           # 看驴友 微博    
-          when "V302"
-              @travelevents = Activity.where(beauty:1).last(10)          
-              render "rtn302", :formats => :xml
+#          when "V302"
+#              @travelevents = Activity.where(beauty:1).last(10)          
+#              render "rtn302", :formats => :xml
           # 发红包    
           when "V305"
               render "rtn305", :formats => :xml
