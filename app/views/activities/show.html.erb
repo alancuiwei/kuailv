@@ -25,7 +25,7 @@
 						<% if (tcty.beauty == 200) %>
 
 							<div class="b" onclick="javascript:window.location.href='<%= tcty.founder %>'">
-							<h1><%= tcty.remarks %> 联系方式<%= tcty.qq %></h1>
+							<h1><%= tcty.remarks %> QQ/微信联系方式<%= tcty.qq %></h1>
 							<h2><span><%= tcty.start_city %>-<%= tcty.end_city %></span><%= tcty.start_time %></h2>
 							</div>
 
@@ -46,10 +46,12 @@
 				<li>
 				<div class="a" style="background-position: 20px -141px; ">异地出发</div>
 				<% @l2_resultevents.each do |ycty| %>
-					<div class="b" onclick="javascript:window.location.href='<%= ycty.f_homepage %>'">
-					<h1><%= ycty.remarks %></h1>
-					<h2><span><%= ycty.start_city %>-<%= ycty.end_city %></span><%= ycty.start_time %></h2>
-					</div>
+					<% if !(ycty.id == @activity.id) %>
+						<div class="b" onclick="javascript:window.location.href='<%= ycty.f_homepage %>'">
+						<h1><%= ycty.remarks %></h1>
+						<h2><span><%= ycty.start_city %>-<%= ycty.end_city %></span><%= ycty.start_time %></h2>
+						</div>
+					<% end %>
 				<% end %>
 			<% end %>
 			</li>
