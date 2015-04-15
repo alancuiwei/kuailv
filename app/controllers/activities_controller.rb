@@ -1,6 +1,6 @@
 class ActivitiesController < ApplicationController
   before_action :set_activity, only: [:show, :edit, :update, :destroy]
-  before_action :authenticate, only: [:nanjing]
+  before_action :authenticate, only: [:nanjing, :nanjingstart]
 
   def index
 # => 所有的数据，昨天的数据，今天至此的记录
@@ -109,7 +109,14 @@ class ActivitiesController < ApplicationController
 
 #    @nanjings = @all_results.where("end_city LIKE '%南京%' OR end_city LIKE '%上海%' OR end_city LIKE '%杭州%' OR end_city LIKE '%苏州%' OR end_city LIKE '%无锡%'")
     @nanjings = @all_results.where("end_city LIKE '%南京%'")
-    @nanjings30 = @nanjings.where(start_time:"2015-03-01"..Time.now+30.days).where(beauty: 99..199)
+    @nanjings30 = @nanjings.where(start_time:"2015-03-01"..Time.now+90.days).where(beauty: 99..199)
+
+  end
+
+  def nanjingstart
+    @all_results = Activity.all.order(start_time: :desc)
+    @nanjingstarts = @all_results.where("start_city LIKE '%南京%'")
+    @nanjingstarts30 = @nanjingstarts.where(start_time:Time.now..Time.now+90.days).where(beauty: 99..199)
 
   end
 
@@ -176,7 +183,7 @@ class ActivitiesController < ApplicationController
 
     def authenticate
      authenticate_or_request_with_http_basic do |username, password|
-       username == "ziren" && password == "Faith#7915"
+       username == "kuailv" && password == "kuailv2015"
      end
     end    
 

@@ -6,6 +6,7 @@ Rails.application.routes.draw do
 
   get 'activities/qyer'
   get 'activities/nanjing'
+  get 'activities/nanjingstart'
 
   resources :activities
   resources :weixins
