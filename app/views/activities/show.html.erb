@@ -15,7 +15,6 @@
 
 	<article>
 		<nav><a href="qyer"></a>一起去<%= @activity.end_city %>玩</nav>
-
 		<div class="list-table">
 			<ul>
 				<% if (@l1_match_number > 0) %>	
@@ -42,14 +41,22 @@
 					</li>
 
 				<% end %>
-				
-	<% if (@activity.start_city == "南京" )%>
 
-		<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css">
 
-			<a class="btn btn-lg btn-danger col-xs-12 col-md-12" href="http://eqxiu.com/s/u9SRL4oZ" role="button">人太多太麻烦了，一键精选！</a>
-	  
-	<% end %>
+				<% if (@activity.start_city == "南京" )%>
+					<li>
+					<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
+					<a class="btn btn-lg btn-danger col-xs-12 col-md-12" href="http://eqxiu.com/s/u9SRL4oZ" role="button" style="
+					    height: 90px;
+					    padding-top: 30px;
+					    font-size: 28px;
+					">人太多太麻烦了，一键精选！</a>
+	  				</li>
+				<% end %>
+
+
+				</li>
 
 				<% if (@l2_match_number > 0) %>	
 					<li>
