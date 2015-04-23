@@ -13,123 +13,63 @@
 
 <% else %>
 
-<article>
-	<nav><a href="qyer"></a>一起去<%= @activity.end_city %>玩</nav>
-	<div class="list-table">
-		<ul>
-			<% if (@l1_match_number > 0) %>	
-				<li>
-				<div class="a">同城出发</div>
-				<% @l1_resultevents.each do |tcty| %>
-					<% if !(tcty.id == @activity.id) %>
-						<% if (tcty.beauty == 200) %>
+	<article>
+		<nav><a href="qyer"></a>一起去<%= @activity.end_city %>玩</nav>
+		<div class="list-table">
+			<ul>
+				<% if (@l1_match_number > 0) %>	
+					<li>
+					<div class="a">同城出发</div>
+					<% @l1_resultevents.each do |tcty| %>
+						<% if !(tcty.id == @activity.id) %>
+							<% if (tcty.beauty == 200) %>
 
-							<div class="b" onclick="javascript:window.location.href='<%= tcty.founder %>'">
-							<h1><%= tcty.remarks %> QQ/微信联系方式<%= tcty.qq %></h1>
-							<h2><span><%= tcty.start_city %>-<%= tcty.end_city %></span><%= tcty.start_time %></h2>
-							</div>
+								<div class="b" onclick="javascript:window.location.href='<%= tcty.founder %>'">
+								<h1><%= tcty.remarks %> QQ/微信联系方式<%= tcty.qq %></h1>
+								<h2><span><%= tcty.start_city %>-<%= tcty.end_city %></span><%= tcty.start_time %></h2>
+								</div>
 
-						<% else %>
-							<div class="b" onclick="javascript:window.location.href='<%= tcty.f_homepage %>'">
-							<h1><%= tcty.remarks %></h1>
-							<h2><span><%= tcty.start_city %>-<%= tcty.end_city %></span><%= tcty.start_time %></h2>
+							<% else %>
+								<div class="b" onclick="javascript:window.location.href='<%= tcty.f_homepage %>'">
+								<h1><%= tcty.remarks %></h1>
+								<h2><span><%= tcty.start_city %>-<%= tcty.end_city %></span><%= tcty.start_time %></h2>
+								</div>
+								
+							<% end %>
+						<% end %>
+					<% end %>
+					</li>
+
+				<% end %>
+				
+				<% if (@l2_match_number > 0) %>	
+					<li>
+					<div class="a" style="background-position: 20px -141px; ">异地出发</div>
+					<% @l2_resultevents.each do |ycty| %>
+						<% if !(ycty.id == @activity.id) %>
+							<div class="b" onclick="javascript:window.location.href='<%= ycty.f_homepage %>'">
+							<h1><%= ycty.remarks %></h1>
+							<h2><span><%= ycty.start_city %>-<%= ycty.end_city %></span><%= ycty.start_time %></h2>
 							</div>
-							
 						<% end %>
 					<% end %>
 				<% end %>
 				</li>
-
-			<% end %>
-			
-			<% if (@l2_match_number > 0) %>	
-				<li>
-				<div class="a" style="background-position: 20px -141px; ">异地出发</div>
-				<% @l2_resultevents.each do |ycty| %>
-					<% if !(ycty.id == @activity.id) %>
-						<div class="b" onclick="javascript:window.location.href='<%= ycty.f_homepage %>'">
-						<h1><%= ycty.remarks %></h1>
-						<h2><span><%= ycty.start_city %>-<%= ycty.end_city %></span><%= ycty.start_time %></h2>
-						</div>
-					<% end %>
-				<% end %>
-			<% end %>
-			</li>
-			
-		</ul>
-	</div>
+				
+			</ul>
+		</div>
 
 
-	<footer>
-				<%= image_tag "b1.png", size: "640x85"%></footer>
+		<footer><%= image_tag "b1.png", size: "640x85"%></footer>
 
-</article>
+	</article>
 
-<!--
-	<% if (@l1_match_number > 0) %>	
-	<h2>一起出发一起玩(同城出发，同地旅游)</h2>
+	<% if (@activity.start_city == "南京" )%>
 
-	    <table class="table">
+		<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css">
+			<nav class="navbar navbar-default navbar-fixed-bottom">
+					<a class="btn btn-lg btn-danger btn-block" href="http://eqxiu.com/s/u9SRL4oZ" role="button" data-toggle="modal">一个个联系，太麻烦了？<a>
+			</nav>
 
-	      <thead>
-	        <tr>
-	          <th>出发日期</th>
-	          <th>出发城市</th>
-	          <th>目的城市</th>
-	          <th>驴友说</th>	          
-	          <th>详情</th>     
-
-	        </tr>
-	      </thead>
-
-	      <tbody>
-	      <% @l1_resultevents.each do |tcty| %>
-
-	          <td><%= tcty.start_time %></td>
-	          <td><%= tcty.start_city %></td>
-	          <td><%= tcty.end_city %></td>
-	          <td><%= tcty.remarks %></td>
-	          <td><a href="<%= tcty.f_homepage %>">查看详情</a></td>
-
-	        </tr>
-
-	      <% end %> 
-	    </tbody>
-
-	    </table>
-	<% end %>    
-
-	<% if (@l2_match_number > 0) %>	
-	<h2>我在这里等你来一起玩(异地出发，同地旅游)</h2>
-	    <table class="table">
-
-	      <thead>
-	        <tr>
-	          <th>出发日期</th>
-	          <th>出发城市</th>
-	          <th>目的城市</th>
-	          <th>驴友说</th>
-	          <th>详情</th>     
-
-	        </tr>
-	      </thead>
-
-	      <tbody>
-	      <% @l2_resultevents.each do |ycty| %>
-
-	          <td><%= ycty.start_time %></td>
-	          <td><%= ycty.start_city %></td>
-	          <td><%= ycty.end_city %></td>
-	          <td><%= ycty.remarks %></td>	          
-	          <td><a href="<%= ycty.f_homepage %>">详情查看</a></td>
-	          
-	        </tr>
-
-	      <% end %> 
-	    </tbody>
-
-	    </table>
-	<% end %>	
--->
-
+	<% end %>
 <% end %>
