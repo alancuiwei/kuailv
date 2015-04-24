@@ -19,7 +19,7 @@ puts token
 params = {"button"=>[
 
 #{"name"=>"找驴友","sub_button"=>[{"type"=>"click","name"=>"找驴友","key"=>"V110"},{"type"=>"click","name"=>"看驴友","key"=>"V302"}]},{"type"=>"click","name"=>"奖红包","key"=>"V305"}]}
-{"type"=>"click","name"=>"找驴友","key"=>"V110"},{"type"=>"click","name"=>"奖红包","key"=>"V305"}]}
+{"type"=>"click","name"=>"找人玩","key"=>"V110"},{"type"=>"click","name"=>"南京结伴","key"=>"V305"}]}
 
 
 http = Net::HTTP.new("api.weixin.qq.com")
