@@ -108,14 +108,14 @@ class ActivitiesController < ApplicationController
     @all_results = Activity.all.order(start_time: :desc)
 
 #    @nanjings = @all_results.where("end_city LIKE '%南京%' OR end_city LIKE '%上海%' OR end_city LIKE '%杭州%' OR end_city LIKE '%苏州%' OR end_city LIKE '%无锡%'")
-    @nanjings = @all_results.where("end_city LIKE '%南京%'")
+    @nanjings = @all_results.where("end_city LIKE '%南京%' OR end_city LIKE '%上海%'")
     @nanjings30 = @nanjings.where(start_time:"2015-03-01"..Time.now+90.days).where(beauty: 99..199)
 
   end
 
   def nanjingstart
     @all_results = Activity.all.order(start_time: :desc)
-    @nanjingstarts = @all_results.where("start_city LIKE '%南京%'")
+    @nanjingstarts = @all_results.where("start_city LIKE '%南京%' OR start_city LIKE '%上海%'")
     @nanjingstarts30 = @nanjingstarts.where(start_time:Time.now..Time.now+90.days).where(beauty: 99..199)
 
   end
