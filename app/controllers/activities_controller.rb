@@ -150,7 +150,7 @@ class ActivitiesController < ApplicationController
     respond_to do |format|
       if @activity.update(activity_params)
 #        format.html { redirect_to @activity, notice: 'Activity was successfully updated.' }
-        format.html { redirect_to "/activities/nanjing", notice: 'Activity was successfully updated.' }
+        format.html { redirect_to "/activities/nanjingstart", notice: 'Activity was successfully updated.' }
         format.json { render :show, status: :ok, location: @activity }
       else
         format.html { render :edit }
