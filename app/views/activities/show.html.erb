@@ -64,7 +64,7 @@
 					<% @l2_resultevents.each do |ycty| %>
 						<% if !(ycty.id == @activity.id) %>
 							<div class="b" onclick="javascript:window.location.href='<%= ycty.f_homepage %>'">
-							<h1><%= ycty.remarks %></h1>
+							<h1><%= ycty.lianxi %> <%= ycty.remarks %></h1>
 							<h2><span><%= ycty.start_city %>-<%= ycty.end_city %></span><%= ycty.start_time %></h2>
 							</div>
 						<% end %>
