@@ -25,13 +25,13 @@
 							<% if (tcty.beauty == 200) %>
 
 								<div class="b" onclick="javascript:window.location.href='<%= tcty.founder %>'">
-								<h1><%= tcty.remarks %> QQ/微信联系方式<%= tcty.qq %></h1>
+								<h1><%= tcty.remarks %> QQ/微信:<%= tcty.qq %></h1>
 								<h2><span><%= tcty.start_city %>-<%= tcty.end_city %></span><%= tcty.start_time %></h2>
 								</div>
 
 							<% else %>
 								<div class="b" onclick="javascript:window.location.href='<%= tcty.f_homepage %>'">
-								<h1><%= tcty.remarks %></h1>
+								<h1><%=tcty.lianxi %> <%= tcty.remarks %></h1>
 								<h2><span><%= tcty.start_city %>-<%= tcty.end_city %></span><%= tcty.start_time %></h2>
 								</div>
 								
