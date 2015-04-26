@@ -26,8 +26,8 @@ all_process_num = info_avail_num + talkable_num + card_sent_num + lianxi_error_n
 <p>总数 <%= totalnum %>条 </p>
 <p>已处理人数：<%= all_process_num%></p>
 <p>无效联系人数： <%= lianxi_error_num %>，百分比:<%= number_to_percentage(lianxi_error_num.to_f/all_process_num*100, precision: 0) %>  </p>
-<p>有联系方式： <%= info_avail_num %>，百分比: <%= number_to_percentage((info_avail_num+talkable_num+card_sent_num).to_f/all_process_num*100, precision: 0) %>  </p>
-<p>通过认证人数：<%= talkable_num %>, 百分比: <%= number_to_percentage((talkable_num+card_sent_num).to_f/all_process_num*100, precision: 0) %>  </p>
+<p>有联系方式： <%= info_avail_num+talkable_num+card_sent_num %>，百分比: <%= number_to_percentage((info_avail_num+talkable_num+card_sent_num).to_f/all_process_num*100, precision: 0) %>  </p>
+<p>通过认证人数：<%= talkable_num+card_sent_num %>, 百分比: <%= number_to_percentage((talkable_num+card_sent_num).to_f/all_process_num*100, precision: 0) %>  </p>
 <p>已发名片人数：<%= card_sent_num %>, 百分比: <%= number_to_percentage(card_sent_num.to_f/all_process_num*100, precision: 0) %> </p>
 
 <!--
