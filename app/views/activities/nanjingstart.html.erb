@@ -2,7 +2,7 @@
 
 <p id="notice"><%= notice %></p>
 
-<%
+<%#
 l1 = @nanjingstarts30.count
 l15 = l1 - @nanjingstarts30.where(lianxi:"无").count
 l2 = @nanjingstarts30.where.not(lianxi:"").count
@@ -14,10 +14,27 @@ l7 = @nanjingstarts30.where(result: 4..100).count
 
 %>
 
-<p>总数 <%= l1 %>条，有效数目 <%= l15 %>条，占<%= number_to_percentage(l15.to_f/l1*100, precision: 0) %>。</p>
-<p>已发送邀请<%= l3 %> / <%= number_to_percentage(l3.to_f/l15*100, precision: 0) %></p>
-<p>可沟通<%= l4 %> / <%= number_to_percentage(l4.to_f/l15*100, precision: 0) %></p>
-<p>已发名片<%= l5 %> / <%= number_to_percentage(l5.to_f/l15*100, precision: 0) %></p>
+<%
+totalnum = @nanjingstarts30.count
+lianxi_error_num = @nanjingstarts30.where(lianxi:"无").count
+info_avail_num = @nanjingstarts30.where(result: 0).count
+talkable_num = @nanjingstarts30.where(result: 1).count
+card_sent_num = @nanjingstarts30.where(result: 2).count
+%>
+
+<p>总数 <%= totalnum %>条 </p>
+<p>已处理人数：<%= lianxi_error_num+info_avail_num+talkable_num+card_sent_num%></p>
+<p>无效联系人数： <%= lianxi_error_num %> </p>
+<p>有联系方式： <%= info_avail_num %>  </p>
+<p>通过认证人数：<%= talkable_num %></p>
+<p>已发名片人数：<%= card_sent_num %></p>
+
+<!--
+<p>总数 <%#= l1 %>条，有效数目 <%#= l15 %>条，占<%#= number_to_percentage(l15.to_f/l1*100, precision: 0) %>。</p>
+<p>已发送邀请<%#= l3 %> / <%#= number_to_percentage(l3.to_f/l15*100, precision: 0) %></p>
+<p>可沟通<%#= l4 %> / <%#= number_to_percentage(l4.to_f/l15*100, precision: 0) %></p>
+<p>已发名片<%#= l5 %> / <%#= number_to_percentage(l5.to_f/l15*100, precision: 0) %></p>
+-->
 
     <table class="table">
 
