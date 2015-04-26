@@ -24,10 +24,10 @@ card_sent_num = @nanjingstarts30.where(result: 2).count
 
 <p>总数 <%= totalnum %>条 </p>
 <p>已处理人数：<%= lianxi_error_num+info_avail_num+talkable_num+card_sent_num%></p>
-<p>无效联系人数： <%= lianxi_error_num %> </p>
-<p>有联系方式： <%= info_avail_num %>  </p>
-<p>通过认证人数：<%= talkable_num %></p>
-<p>已发名片人数：<%= card_sent_num %></p>
+<p>无效联系人数： <%= lianxi_error_num %>，百分比:<%= number_to_percentage(lianxi_error_num.to_f/(lianxi_error_num+info_avail_num+talkable_num+card_sent_num%)*100, precision: 0) %>  </p>
+<p>有联系方式： <%= info_avail_num %>，百分比: <%= number_to_percentage(info_avail_num.to_f/(lianxi_error_num+info_avail_num+talkable_num+card_sent_num%)*100, precision: 0) %>  </p>
+<p>通过认证人数：<%= talkable_num %>, 百分比: <%= number_to_percentage(talkable_num.to_f/(lianxi_error_num+info_avail_num+talkable_num+card_sent_num%)*100, precision: 0) %>  </p>
+<p>已发名片人数：<%= card_sent_num %>, 百分比: <%= number_to_percentage(card_sent_num.to_f/(lianxi_error_num+info_avail_num+talkable_num+card_sent_num%)*100, precision: 0) %> </p>
 
 <!--
 <p>总数 <%#= l1 %>条，有效数目 <%#= l15 %>条，占<%#= number_to_percentage(l15.to_f/l1*100, precision: 0) %>。</p>
