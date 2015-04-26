@@ -17,8 +17,8 @@ l7 = @nanjingstarts30.where(result: 4..100).count
 <%
 totalnum = @nanjingstarts30.count
 lianxi_error_num = @nanjingstarts30.where(lianxi:"无").count
-info_avail_num = @nanjingstarts30.where(result: 0).count
-talkable_num = @nanjingstarts30.where(result: 1).count
+info_avail_num = @nanjingstarts30.where(result: 0..2).count
+talkable_num = @nanjingstarts30.where(result: 1..2).count
 card_sent_num = @nanjingstarts30.where(result: 2).count
 %>
 
