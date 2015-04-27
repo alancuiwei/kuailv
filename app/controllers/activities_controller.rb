@@ -114,7 +114,7 @@ class ActivitiesController < ApplicationController
   end
 
   def nanjingstart
-    @all_results = Activity.all.order(start_time: :desc)
+    @all_results = Activity.all.order(start_time: :asc)
     @nanjingstarts = @all_results.where("start_city LIKE '%南京%' OR start_city LIKE '%上海%'")
     @nanjingstarts30 = @nanjingstarts.where(start_time:Time.now..Time.now+90.days).where(beauty: 99..199)
 
