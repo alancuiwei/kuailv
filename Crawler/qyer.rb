@@ -416,7 +416,7 @@ def isValidCity(cityName)
     end
 end
 
- f= File.new("detail.txt", "w")  #创建一个可写文件流 
+f= File.new("detail.txt", "w")  #创建一个可写文件流 
 txt = File.open("qyer.txt","w")
 
 txt.puts(Time.now)
