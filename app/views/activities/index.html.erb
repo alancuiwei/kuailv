@@ -48,7 +48,10 @@
           <th>回来日期</th>
           <th>出发城市</th>
           <th>目的城市</th>
-          <th>联系方式</th>   
+          <th>联系方式</th>
+          <th>要求</th>   
+          <th>L1_num</th>
+          <th>L2_num</th>
           <th>操作 </th>
 
         </tr>
@@ -65,6 +68,9 @@
           <td><%= weixintoday.end_city %></td>
           <td><%= weixintoday.qq %></td>
           <td><%= weixintoday.remarks %></td>
+          <td><%= weixintoday.result %></td>
+          <td><%= weixintoday.lianxi %></td>
+
           <td><%= link_to '修改', edit_activity_path(weixintoday) %> <%= link_to '删除', weixintoday, method: :delete, data: { confirm: 'Are you sure?' } %></td>
 
         </tr>

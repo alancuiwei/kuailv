@@ -85,8 +85,8 @@ class ActivitiesController < ApplicationController
     @l1_match_number = @l1_resultevents.count
     @l2_match_number = @l2_resultevents.count
 
-    @activity.result = @l1_match_number
-    @activity.lianxi = @l2_match_number
+    @activity.result = @l1_match_number-1
+    @activity.lianxi = @l2_match_number-1
     @activity.save
 
 #    if (@l1_match_number > 9)
