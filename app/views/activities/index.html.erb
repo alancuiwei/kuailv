@@ -63,9 +63,9 @@
 
           <td><%= weixintoday.start_city %></td>
           <td><%= weixintoday.end_city %></td>
-          <td><%= nanjing.qq %></td>
-          <td><%= nanjing.remarks %></td>
-          <td><%= link_to '修改', edit_activity_path(weixintoday) %> <%= link_to '删除', nanjing, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          <td><%= weixintoday.qq %></td>
+          <td><%= weixintoday.remarks %></td>
+          <td><%= link_to '修改', edit_activity_path(weixintoday) %> <%= link_to '删除', weixintoday, method: :delete, data: { confirm: 'Are you sure?' } %></td>
 
         </tr>
 
