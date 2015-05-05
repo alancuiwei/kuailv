@@ -10,7 +10,7 @@ class ActivitiesController < ApplicationController
 
 
     @weibo_today_results = @all_today_results.where(beauty:1).count
-    @weixin_today_results = @all_today_results.where(beauty:200).count
+    @weixin_today_results = @all_today_results.where(beauty:200)
 #    @weixin_today_results = @all_today_results.where.not(f_wechatencrypt:"").count
 
     @luntan_today_results = @all_today_results.where(beauty: 799..1000).count

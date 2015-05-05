@@ -17,19 +17,17 @@
     <div class = "container">
 
       <button class="btn btn-danger" type="button">
-        TX <span class="badge"><%= @weixin_today_results %></span>
+        TX <span class="badge"><%= @weixin_today_results.count %></span>
       </button>
-
+<!--
       <button class="btn btn-warning" type="button">
-        TB <span class="badge"><%= @weibo_today_results %></span>
+        TB <span class="badge"><%#= @weibo_today_results %></span>
       </button>
 
       <button class="btn btn-info" type="button">
-        TQ <span class="badge"><%= @luntan_today_results %></span>
+        TQ <span class="badge"><%#= @luntan_today_results %></span>
       </button>
-
-      <br \>
-      <br \>
+-->
 
       <button class="btn btn-default" type="button">
         NJ <span class="badge"><%= @nanjingnum %></span>
@@ -39,18 +37,57 @@
         NJ30 <span class="badge"><%= @nanjing7num %></span>
       </button>
 
+      <br \>
+      <br \>
+
+    <table class="table">
+
+      <thead>
+        <tr>
+          <th>出发日期</th>
+          <th>回来日期</th>
+          <th>出发城市</th>
+          <th>目的城市</th>
+          <th>联系方式</th>   
+          <th>操作 </th>
+
+        </tr>
+      </thead>
+
+      <tbody>
+      <% @weixin_today_results.each do |weixintoday| %>
+        <tr>
+
+          <td><%= weixintoday.start_time %></td>
+          <td><%= weixintoday.end_time %></td>
+
+          <td><%= weixintoday.start_city %></td>
+          <td><%= weixintoday.end_city %></td>
+          <td><%= nanjing.qq %></td>
+          <td><%= nanjing.remarks %></td>
+          <td><%= link_to '修改', edit_activity_path(weixintoday) %> <%= link_to '删除', nanjing, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+
+        </tr>
+
+      <% end %> 
+    </tbody>
+
+    </table>
+
+
+<!--
       <button class="btn btn-default" type="button">
-        LJ <span class="badge"><%= @lijiangnum %></span>
+        LJ <span class="badge"><%#= @lijiangnum %></span>
       </button>
 
       <button class="btn btn-default" type="button">
-        LS <span class="badge"><%= @lasanum %></span>
+        LS <span class="badge"><%#= @lasanum %></span>
       </button>
 
       <button class="btn btn-default" type="button">
-        SY <span class="badge"><%= @sanyanum %></span>
+        SY <span class="badge"><%#= @sanyanum %></span>
       </button>
-
+-->
     </div>
 
   </div>

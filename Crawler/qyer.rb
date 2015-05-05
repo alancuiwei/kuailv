@@ -4,6 +4,8 @@ require 'open-uri'
 #require "mysql"
 require 'faraday'
 require 'excon'
+
+=begin
 class Contact
       def initialize(person,wechat, tel, qq)
         @person=person #
@@ -30,12 +32,12 @@ class Contact
 end
 
 
-=begin
 dbh = Mysql.real_connect("localhost","root","123456","kuailv-development",3306);
 dbh.query("SET NAMES utf8")
 sql = "select * from  `citylist` where continent=? and city=?"
 stmt=dbh.prepare(sql)
-=end
+
+
 
 
 def get_next_of(a)
@@ -48,6 +50,8 @@ def pos_value(pos)
   end
   return pos
 end
+
+
 
 def getTravel(content)
       city_nums_set=Set.new
@@ -195,6 +199,8 @@ def getContact(range)
   #return Contact.new(person,wechat,qq, tel);
 end
 
+=end
+
 #getContact("最近可好 ？我也是西安80后女女 微信：mengbao0320")
 
 #getContact("如五一有兴趣的，可以联系我。Wechat:hewei710")
@@ -223,6 +229,7 @@ class KeyWords
     txt.puts "keyWrods=#@keyWords,locationType=#@locationType,cityType=#@cityType"
   end
 end
+#end of KeyWords
 
 class TravelLine
   def initialize(startCity, targetCity)
@@ -242,6 +249,10 @@ class TravelLineService
     txt = File.open("parseCity.txt","w")
     txt.puts(Time.now)
     startKeys = Array.new();
+
+    #位于目标城市的前面还是后面，1表示前面，2表示后面
+    #出发城市还是目的城市，1出发城市，3目的城市
+
     startKeys[startKeys.size] = KeyWords.new("从", 1, 1);
     startKeys[startKeys.size] = KeyWords.new("坐标", 1, 1)
     startKeys[startKeys.size] = KeyWords.new("在", 1, 1)
@@ -289,9 +300,13 @@ class TravelLineService
           if (startCityLoc!=nil)
             txt.puts "找到关键字位置在：#{startCityLoc}";
             startCityName = remarks[startCityLoc+key.length, 2]
+#            puts "位于目标城市的前面："
+#            puts startCityName
             txt.puts startCityName;
+
             holeName = isValidCity(startCityName);
             if (!isExist(cityArr, startCityName) && holeName != nil)
+#              puts "城市名称解析成功：#{holeName}"
               txt.puts "解析到的城市名称：#{holeName}"
               cityArr[cityArr.size] = holeName
             end
@@ -302,6 +317,10 @@ class TravelLineService
           if (startCityLoc!=nil)
             txt.puts "找到关键字位置在：#{startCityLoc}";
             startCityName = remarks[startCityLoc-2, 2]
+
+#            puts "位于目标城市的后面："
+#            puts startCityName
+
             holeName = isValidCity(startCityName);
             if (!isExist(cityArr, startCityName) && holeName != nil)
               txt.puts "解析到的城市名称：#{holeName}"
@@ -329,6 +348,8 @@ def isExist(cityArr, cityName)
 #get all lcitylist & countylist from db,then just check is it in it.
 #the contenient(have)--->the nations--->the citys
 #这个方法需要改为从数据库中去检索 判断根据关键字检索到的城市名称是否合法
+
+=begin
 def isValidCity(cityName,continent)
        #sql = "select * from  `citylist` where continent=%#{continent}% and city=%#{cityName}%"
        #puts sql;  
@@ -344,6 +365,7 @@ def isValidCity(cityName,continent)
               return nil
        end
 end
+
 #最好采用预加载方式，先从数据库中读出来，然后在数组中查询
 def isValidCountry(countryName,continent)
       sql = "select * from  `citylist` where continent=? and country=?"
@@ -359,6 +381,7 @@ def isValidCountry(countryName,continent)
               return nil
        end
 end
+=end
 
 def isValidCity(cityName)
       if(nil == cityName || cityName == "")
@@ -372,6 +395,7 @@ def isValidCity(cityName)
       cityArr[cityArr.size] ="乌鲁木齐";
       cityArr[cityArr.size] ="土耳其";
       cityArr[cityArr.size] ="北京";
+      cityArr[cityArr.size] ="新疆";
       cityArr[cityArr.size] ="西藏";
       cityArr[cityArr.size] ="上海";
       cityArr[cityArr.size] ="南京";
@@ -401,12 +425,15 @@ def isValidCity(cityName)
       cityArr[cityArr.size] ="成都";
       cityArr[cityArr.size] ="林芝";
       cityArr[cityArr.size] ="帕劳";  
-
       cityArr[cityArr.size] ="稻城亚丁";
       cityArr[cityArr.size] ="武汉";
       cityArr[cityArr.size] ="澳大利亚";
       cityArr[cityArr.size] ="俄罗斯";
       cityArr[cityArr.size] ="冰岛";
+      cityArr[cityArr.size] ="斯里兰卡";
+      cityArr[cityArr.size] ="济南";
+
+
       cityArr.each do |i|
         if (i.include? cityName)
           return i
@@ -446,11 +473,16 @@ begin
        li_in_onepage.times do |lid|
       thevent = thevents[lid] 
       thetitle = thevent.css("h3 a").text
+      puts "=========================================="
+      puts "帖子标题："
+      puts thetitle
+
       #帖子的链接地址 
       thelink = thevent.css("h3 a")[0]["href"]
+
               #moderate > ul > li:nth-child(13) > div > p:nth-child(2) > a
               nation = thevent.css("div > p:nth-child(2) > a").text
-              p nation
+#              p nation
               #无目的地征同游  大陆港澳台征同游  欧洲征同游 美洲征同游 非洲征同游 亚洲征同游 大洋洲征同游  
               nation = nation[0..(nation.index("征同游")-1)]
               #txt.puts "nation:#{nation}"
@@ -470,14 +502,15 @@ begin
               #txt.puts "page_nums:#{page_nums}"
               #txt.puts "post_nums:#{post_nums}"
               txt.puts   "link ：#{thelink}"
+#              puts thelink
+
               #arilpan:改成单独页面获取
               post_count=-1
               page_i=1
               first_floor=1
               contact_num=0
-              while post_count.to_i < post_nums.to_i do
-                  #link ：thread-1063097-1.html
-                  #link ：thread-1063097-2.html
+              #while post_count.to_i < post_nums.to_i do
+=begin                    
                     if(post_count == -1)
                           post_count=1
                     end
@@ -485,15 +518,16 @@ begin
                           thelink.delete(".html").delete((page_i-1).to_s)
                           thelink = thelink+page_i.to_s+".html"
                     end
+=end              
                     son_response = conn.get thelink.to_s
                     #get content author -->analysice
 
                     sondoc = Nokogiri::HTML(son_response.body)
                     sonevents = sondoc.css("div.bbs_titboxs > div.bbs_titbox > h1").text
                     #author=sondoc.css("#viewthread > div.bbs_titboxs > div > div > div > a.ml10").text
-                     if(post_count == 1)
+#                     if(post_count == 1)
                           txt.puts "title:#{nation}----#{sonevents.to_s}"
-                    end
+#                    end
                    
                     #sonevents2= sondoc.css("#viewthread > div.bbs_titboxs > div > h1").text           
                     #txt.puts "1.title2=:#{sonevents2}"
@@ -501,6 +535,9 @@ begin
                     tl1 = TravelLineService.new()
                     #remarks ="有木有想去土耳其自由行的小伙伴，本人坐标北京，最好是单身女青年，一起结伴游玩、拍照。年龄25+。出游时间4、5月。"
                     #arilpan检索城市
+
+#                    sonevents = "有木有想去土耳其自由行的小伙伴，本人坐标北京，最好是单身女青年，一起结伴游玩、拍照。年龄25+。出游时间4、5月。"
+
                     startCityArr = tl1.parseCity(sonevents, 1);
                     targetCityArr = tl1.parseCity(sonevents, 3)
                     if(startCityArr.size > 0)
@@ -509,10 +546,12 @@ begin
                                      targetCityArr.each do |j|
                                               if (!i.eql? j)
                                                 txt.puts "城市：#{i}-#{j}"
+                                                puts "出发&目的城市：#{i}-#{j}"
                                               end
                                     end
                                     else
                                       txt.puts "城市：#{i}-"
+                                      puts "出发&目的城市：：#{i}- NULL "
                                     end
                             end
                             end
@@ -522,45 +561,53 @@ begin
                                                         startCityArr.each do |j|
                                                                   if (!i.eql? j)
                                                                     txt.puts "城市：#{i}-#{j}"
+                                                                    puts "出发&目的城市：#{i}-#{j}"
                                                                   end
                                                         end
                                                 else
                                                   txt.puts "地点分析：-#{i}"
+                                                  puts "出发&目的城市：NULL -#{i}"
                                       end
                               end
                     end
 
                  
-                    list = sondoc.css("#postlist");
-                    contents= list.css("div div div:nth-child(2) td")
-                    persons= list.css("div div div:nth-child(1) div.userinfo a")
-                    f.puts contents.length
-                    times=0
-                    f.puts persons
+#                    list = sondoc.css("#postlist");
+#                    contents= list.css("div div div:nth-child(2) td")
+#                    contents = list.css("div.bbs_postview div.bbs_txtbox table tr td")
+
+#                    persons= list.css("div div div:nth-child(1) div.userinfo a")
+
+#                    puts contents[0].text 
+
+#                    f.puts contents.length
+#                    times=0
+#                    f.puts persons
                     #arilpan:nil error
-                    if persons!=nil
-=begin
-                            if persons[0]!=nil
-                                  author=persons[0].text
-                            end
-                               author=persons[0].text
-=end
+#                    if persons!=nil
 
                             #先拆分，然后根据楼层和用户名判断是谁说的话，提取联系方式
-                           while times< contents.length  do
-                                  content = contents[times].text.lstrip.rstrip
-                                  person = persons[times].text
+#                           while times< contents.length  do
+#                                  content = contents[times].text.lstrip.rstrip
+#                                  content = contents[0].text.lstrip.rstrip
+#                                  puts content
+#                                  person = persons[times].text
+
+#                                  content_info = getTravel(content)
+#                                  puts content_info
                                  
-                                  if(author == person)
+#                                  if(author == person)
                                         #city time & wechat
-                                        p getTravel(content);
-                                  end
-                                  getContact(content)
+#                                        p getTravel(content);
+#                                  end
+#                                  getContact(content)
                                   #contact_info=getContact(person,content)
                                   #contact_num=contact_num+contact_info[0,1].to_i
                                  # contact_info=contact_info[1,contact_info.length-1]
-                                  f.puts person
-                                  f.puts content
+#                                  f.puts person
+#                                  f.puts content
+
+=begin
                                    if(first_floor==1)
                                                   txt.puts "发帖内容：#{content}"
                                                   first_floor=0
@@ -570,10 +617,11 @@ begin
                                                   txt.puts content_info[1,content_info.length-1]
 
                                   end
-                             
-                                  times=times+1
-                          end
-                    end
+=end
+
+#                                  times=times+1
+#                          end
+#                    end
                     title = sonevents;
                     #各种节假日 年月日正则匹配！！！
                     
@@ -633,44 +681,21 @@ begin
                     if(post_count ==  1)
                             #txt.puts "日期分析：#{startDtStr}到#{endDtStr}-";
                             txt.puts "日期分析："+data_set_string 
+                            puts "日期：#{data_set_string}"
                     end
+
                     post_count=post_count+15
                     page_i=page_i+1 
-            end 
-    #sonresponse = conn.get thelink.to_s
-              #获取具体回帖页面
-              #analisize the contact info
-              #verify the start-end time and city
-         #sonevents = sondoc.css("#postlist > div.bbs_postview > div.bbs_txtbox > table > tbody > tr > td > p").text
-    
-              #不同楼层
-              #post_10818944
-              #postlist
-=begin
-               postlist=sondoc.css("#postlist")
-              postauthors =postlist.css("div > div.userinfo > a").text
-              txt.puts "postauthor:#{postauthors}"
+              #end 
 
-              postcontents=postlist.css("table > tbody> tr > td")
-              txt.puts "postcontents:#{postcontents}   "
-              #article:#postmessage_8985861 > table > tbody > tr > td
-              #    #pid10787368 > div.userinfo > a
-              #   thelink = thevent.css("h3 a")[0]["href"]
-              ##moderate > ul > li:nth-child(13) > div > p:nth-child(2) > a
-                  # sonevents = sondoc.css("#postmessage_10737126 > table > tbody > tr > td > p").text
-              #txt.puts sonevents
-                     # firstReply = "";
-              #sonli_in_onepage = sonevents.count
-              #txt.puts sonli_in_onepage
-=end
               records_num=post_nums.to_i+1
               data_num=data_set.length
-              txt.puts "一共分析了#{records_num}个记录，日期成功分析#{data_num}个，地点成功分析#{city_nums}个，联系方式成功分析#{contact_num}个。"
+#              txt.puts "一共分析了#{records_num}个记录，日期成功分析#{data_num}个，地点成功分析#{city_nums}个，联系方式成功分析#{contact_num}个。"
               txt.puts "-----------------------------------------------------------------------------------------------"
       end 
  
 #end while li_in_onepage >=3
-end while $getPageTimes <3
+end while $getPageTimes <1
 
 
 
