@@ -1,11 +1,19 @@
-<xml>
-     <ToUserName><![CDATA[<%= params[:xml][:FromUserName] %>]]></ToUserName>
-     <FromUserName><![CDATA[<%= params[:xml][:ToUserName] %>]]></FromUserName>
-     <CreateTime><%= Time.now.to_i %></CreateTime>
-     <MsgType><![CDATA[text]]></MsgType>
-     <Content><![CDATA[快驴，为您策划一场说走就走的旅行。
+ <xml>
+ <ToUserName><![CDATA[<%= params[:xml][:FromUserName] %>]]></ToUserName>
+ <FromUserName><![CDATA[<%= params[:xml][:ToUserName] %>]]></FromUserName>
+ <CreateTime><%= Time.now.to_i %></CreateTime>
+ <MsgType><![CDATA[news]]></MsgType>
+ <ArticleCount>1</ArticleCount>
+ <Articles>
 
-和新朋友一起，拼吃拼房拼车，玩的好还省钱，说走就走，再也不担心跟团被宰。
-]]></Content>
-     <FuncFlag>0</FuncFlag>
- </xml>
+ <item>
+ <Title><![CDATA[点击查看快驴使用说明]]></Title> 
+ <Description><![CDATA[快驴，为您策划一场说走就走的旅行。和新朋友一起，拼吃拼房拼车，玩的好还省钱，说走就走，再也不担心跟团被宰。]]></Description>
+ <PicUrl><![CDATA[https://mmbiz.qlogo.cn/mmbiz/PepP9fYY41VgrH6ufZ9vHXWqhsBAqCNaXKBhzqySd0zuY2vDjRxb71lYibGJooqo12CVR11iajCIIVrJiavb8H1qw/0]]></PicUrl>
+ <Url><![CDATA[http://mp.weixin.qq.com/s?__biz=MzAwNjIzMjQ4NA==&mid=214966419&idx=1&sn=9a6112961341fe7e719e79b94faaadc5&key=1936e2bc22c2ceb5b03854b7ad4ca443fa19d2572d221768827acfae423b993b0838df99b97db03454ae4eddc3cfcdfb&ascene=0&uin=Njg3MjA0MTYw&devicetype=iMac+MacBookPro10%2C1+OSX+OSX+10.10.3+build(14D136)&version=11020012&pass_ticket=LZvUxKEc3ssMXqAzjXkHIPPzvQBc%2FzhLU%2BZJdPQdWUCdekyzMLMQMv7lUBQ%2FaPJw]]></Url>
+ </item>
+
+
+ </Articles>
+ <FuncFlag>1</FuncFlag>
+ </xml> 

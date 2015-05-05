@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   post 'weixin' => 'weixins#create'
 
   get 'activities/qyer'
-  get 'activities/nanjing'
+#  get 'activities/nanjing'
   get 'activities/nanjingstart'
 
   resources :activities

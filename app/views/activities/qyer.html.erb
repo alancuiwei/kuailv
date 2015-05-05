@@ -29,11 +29,9 @@
             <dd>目的地<%= f.text_field :end_city, placeholder:"点击输入" %></dd>
           </div>
           <div class="new1">
-<!--            <dd style="background-position: 4px -54px;">出发日期<%#= f.date_field :start_time %></dd> -->
             <dd class="date" style="background-position: 4px -54px;">出发日期<input value="2015-05-01" type="date" name="activity[start_time]" id="activity_start_time"></dd>           
           </div>
           <div class="new1">
-<!--            <dd style="background-position: 4px -134px; border-bottom:none">返回日期<%#= f.date_field :end_time %></dd>  -->
             <dd class="date" style="background-position: 4px -54px;">返回日期<input value="2015-05-03" type="date" name="activity[end_time]" id="activity_end_time"></dd>
           </div>
         </li>
@@ -64,58 +62,3 @@
 </article>
 </body>
 
-
-<!--
-<h1>快驴</h1>
-
-<div class="container">
-
-  <%= form_for @activity, :html => {:multipart => true } do |f| %>
-    <% if @activity.errors.any? %>
-      <div id="error_explanation">
-        <h2><%= pluralize(@activity.errors.count, "error") %> prohibited this activity from being saved:</h2>
-
-        <ul>
-        <% @activity.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-        </ul>
-      </div>
-    <% end %>
-
-    <div class="field">
-      <%= f.hidden_field :beauty,value:200 %>
-    </div>
-
-    <div class="field">
-      <%= f.label :出发城市 %><br>
-      <%= f.text_field :start_city %>
-    </div>
-    <div class="field">
-      <%= f.label :目标城市 %><br>
-      <%= f.text_field :end_city %>
-    </div>
-    <div class="field">
-      <%= f.label :出发日期 %><br>
-      <%= f.date_select :start_time %>
-    </div>
-    <div class="field">
-      <%= f.label :回来日期 %><br>
-      <%= f.date_select :end_time %>
-    </div>
-
-    <div class="field">
-      <%= f.label :"联系方式 (QQ或微信)" %><br>
-      <%= f.text_field :qq %>
-    </div>    
-
-
-    <div class="actions">
-
-      <input class="btn btn-danger" name="commit" type="submit" value="快驴找驴友" />
-
-    </div>
-
-<% end %>
-</div>
--->
