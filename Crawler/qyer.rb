@@ -1,706 +1,588 @@
-# encoding : utf-8
+#encoding : utf-8
+require 'net/http'
+require 'json'
 require 'nokogiri'
-require 'open-uri'
-#require "mysql"
-require 'faraday'
-require 'excon'
+require 'sqlite3'
+require 'mysql'
 
-=begin
-class Contact
-      def initialize(person,wechat, tel, qq)
-        @person=person #
-        @wechat=wechat #
-        @tel=tel # 
-        @qq=qq # 
-      end
+# Database setting, please set pattern db path
+$pattern_db = "pattern.dat"
 
-        def getQQ()
-          return @qq
-        end
+# saved file
+$txt = File.open("qyer.log", "w")
+$ins = File.open("qyer_insert.sql", "w")
 
-        def getTel()
-          return @tel
-        end
+# mysql handle
+#$dbh = nil
+#$dbh = Mysql.real_connect("localhost", "root", "zhongren#1234", "kuailv-production", 3306);
+$dbh = Mysql.real_connect("localhost", "root", "123456", "kuailv-development", 3306);
 
-        def getWechat()
-          return @wechat
-        end
-
-        def toString()
-          txt.puts "qq=#@qq,wechat=#@wechat,tel=#@tel"
-        end
+# write insert sql as a file
+def gen_insert_file(a1, a2, a3, a4, a5, a6)
+  t = get_cur_time
+  $ins.puts "INSERT IGNORE INTO activities (f_homepage,start_city,end_city,start_time,end_time,remarks,created_at,beauty) VALUES ('%s','%s','%s','%s','%s','%s','%s',107);" % [a1, a2, a3, a4, a5, a6, t]
 end
 
-
-dbh = Mysql.real_connect("localhost","root","123456","kuailv-development",3306);
-dbh.query("SET NAMES utf8")
-sql = "select * from  `citylist` where continent=? and city=?"
-stmt=dbh.prepare(sql)
-
-
-
-
-def get_next_of(a)
-     return self[self.index(a)+1]
+# insert database directly
+def exec_insert_sql(a1, a2, a3, a4, a5, a6)
+  t = get_cur_time
+  $dbh.query("SET NAMES utf8")
+  sql = "INSERT IGNORE INTO activities (f_homepage,start_city,end_city,start_time,end_time,remarks,created_at,beauty) VALUES ('%s','%s','%s','%s','%s','%s','%s',107);" % [a1, a2, a3, a4, a5, a6, t]
+  $dbh.query(sql)
 end
 
-def pos_value(pos)
-  if(pos==-1)
-    return 0
+# pattern map and list
+$num_map ={}
+$holiday_map ={}
+$general_map = {}
+$position_list =[]
+$contact_map = {}
+$date_map = {}
+$position_map = {}
+$cur_year = nil
+
+def get_num_map
+  db=SQLite3::Database.new($pattern_db)
+  db.execute("select name,value from tb_num_map;") do |row|
+    $num_map[row[0]] = row[1]
   end
-  return pos
+  db.close
 end
 
-
-
-def getTravel(content)
-      city_nums_set=Set.new
-      citys_info="地点分析："
-      tl1 = TravelLineService.new()
-      startCityArr = tl1.parseCity(content, 1);
-      targetCityArr = tl1.parseCity(content, 3)
-      if(startCityArr.size > 0)
-              startCityArr.each do |i|
-              if(targetCityArr.size > 0)
-                       targetCityArr.each do |j|
-                                if (!i.eql? j)
-                                  #txt.puts "城市：#{i}-#{j}"
-                                  citys_info=citys_info+"城市：#{i}-#{j}"
-                                  city_nums_set.add(i)
-                                  city_nums_set.add(j)
-                                end
-                      end
-                      else
-                        #txt.puts "城市：#{i}-"
-                         citys_info=citys_info+ "城市：#{i}-"
-                         city_nums_set.add(i)
-                      end
-              end
-              end
-              if(targetCityArr.size > 0)
-                        targetCityArr.each do |i|
-                                  if(startCityArr.size > 0)
-                                          startCityArr.each do |j|
-                                                    if (!i.eql? j)
-                                                            #txt.puts "城市：#{i}-#{j}"
-                                                            citys_info=citys_info+ "城市：#{i}-#{j}"
-                                                            city_nums_set.add(i)
-                                                            city_nums_set.add(j)
-                                                    end
-                                          end
-                                  else
-                                   # txt.puts "地点分析：-#{i}"
-                                      citys_info=citys_info+ "-#{i}"
-                                      city_nums_set.add(i)
-                        end
-                end
-      end
-
-      return city_nums_set.length.to_s+citys_info
+def get_holiday_map
+  db=SQLite3::Database.new($pattern_db)
+  db.execute("select name,startv,endv from tb_holiday_map;") do |row|
+    $holiday_map[row[0]] = [row[1], row[2]]
+  end
+  db.close
 end
 
-def getContact(range)
-    write_position=range.index("编辑")
-    if(write_position!=nil)
-        if(range.length>5)
-             if(range[0,5]=="本帖最后由")
-                range = range[write_position+2,range.length-write_position]
-            end
-        end     
-    end
-    if(range!=nil)
-      if(range.length>2)
-        if(range[0,2]=="回复")
-            if(range!=nil&&range.length>2)
-              position =range.index(" ")
-               if(position!=nil)
-                  range=range[position+1,range.length]
-                end
-            end
-           if(range!=nil&&range.length>2)
-              position =range.index(" ")
-               if(position!=nil)
-                range=range[position+1,range.length]
-              end
-            end
-            if(range!=nil&&range.length>2)
-              position =range.index("\n")
-              if(position!=nil)
-                range=range[position+1,range.length]
-              end
-            end
-        end
-      end
-    end
-    wechat=""
-    tel=""
-    qq=""
-    f = File.open("qq.txt","a")
-  f.puts "start find:"
-  f.puts range
-  qqreg2 = /([a-z0-9]*[-_.]?[a-z0-9]+)+@([a-z0-9]*[-_]?[a-z0-9]+)+[\.][a-z]{2,3}([\.][a-z]{2})?$/i
-  qqreg1 = /[1-9][0-9]{5,10}/
-  #qqreg3-->same with tel
-  #6-20个字母数字下划线减号,需要字母开头--->now can all be numbers
-  wechatreg=/[a-zA-Z]+[[a-zA-Z0-9]*[-_]?]{5,19}/
-  telreg1=/[+]?[86]?[1]+[0-9]{10}/      #电话11位
-  telreg2=/[0]+[\d]{2,3}[- ]?[\d]{7,8}/
-
-  #find the number in the range
-  #起始位置，正则匹配后，保存下来
-  tels = telreg1.match(range)
-  if (tels !=nil)  
-     tel = tels[0]
-     f.puts "tel:"+tel  
-  else
-    tels = telreg2.match(range);
-    if(tels != nil)
-          tel = tels[0]
-          f.puts "tel:"+tel  
-    end
-    
+def get_general_map
+  db=SQLite3::Database.new($pattern_db)
+  db.execute("select name,startv,endv from tb_general_day_map;") do |row|
+    $general_map[row[0]] = [row[1], row[2]]
   end
-  qqs=qqreg1.match(range)
-  if (qqs !=nil)
-         qq = qqs[0]
-          f.puts "qq:"+qq  
-  else
-    qqs = qqreg2.match(range);
-    if(qqs != nil)
-         qq = qqs[0]
-          f.puts "qq:"+qq  
-    end
-  end
+  db.close
+end
 
-  wxs=wechatreg.match(range)
-  if (wxs !=nil)
-    wx = wxs[0]
-    # p wx
-    if(wx.downcase=="wechat"||wx.downcase=="weixin")
-                  wx_pos=range.index(wx)
-                  range=range[wx_pos+6,range.length]
-                 #  p range
-      wxs=wechatreg.match(range)
-      if(wxs!=nil)
-        wx = wxs[0]
-        f.puts "wx:"+wx  
-      else
-        range=range[0,wx_pos]
-        wxs=wechatreg.match(range)
-        if(wxs!=nil)
-          wx = wxs[0]
-          f.puts "wx:"+wx  
-        end
-      end
-      else
-              f.puts "wx:"+wx  
+def get_position_list
+  db=SQLite3::Database.new($pattern_db)
+  db.execute("select name from tb_position_list;") do |row|
+    $position_list << row[0]
+  end
+  db.close
+end
+
+def get_contact_map
+  db=SQLite3::Database.new($pattern_db)
+  db.execute("select id,pattern from tb_contact_pattern;") do |row|
+    $contact_map[row[0]] = row[1]
+  end
+  db.close
+end
+
+def get_date_map
+  db=SQLite3::Database.new($pattern_db)
+  db.execute("select id,pattern from tb_date_pattern;") do |row|
+    $date_map[row[0]] = row[1]
+  end
+  db.close
+end
+
+def get_position_map
+  db=SQLite3::Database.new($pattern_db)
+  db.execute("select id,pattern from tb_position_pattern;") do |row|
+    $position_map[row[0]] = row[1]
+  end
+  db.close
+end
+
+def get_cur_year
+  today = Time.new
+  $cur_year = today.strftime("%Y")
+end
+
+def get_cur_time
+  today = Time.new
+  cur_time = today.strftime('%Y-%m-%d %H:%M:%S').to_s
+  return cur_time
+end
+
+# filter functions
+##################################################################################
+# match position by pattern
+def position_filter(arg)
+  spos = epos = nil
+  sflag = eflag = 0
+  $position_map.each do |k, v|
+    re = Regexp.new(v)
+    ####################################
+    if ((sflag==0) && (k==1))
+      if (arg =~ re)
+        mh = $1
+        $position_list.each do |p|
+          if mh.include? p
+            spos = p
+            sflag = 1
+            arg.gsub!(mh, "")
+            break
           end
-  end
-  #return Contact.new(person,wechat,qq, tel);
-end
-
-=end
-
-#getContact("最近可好 ？我也是西安80后女女 微信：mengbao0320")
-
-#getContact("如五一有兴趣的，可以联系我。Wechat:hewei710")
-
-
-class KeyWords
-  def initialize(keyword, loc, city)
-    @keyWords=keyword #关键字
-    @locationType=loc #位于目标城市的前面还是后面，1表示前面，2表示后面
-    @cityType=city #出发城市还是目的城市，1出发城市，3目的城市
-  end
-
-  def getKeyWords()
-    return @keyWords
-  end
-
-  def getLocation()
-    return @locationType
-  end
-
-  def getCityType()
-    return @cityType
-  end
-
-  def toString()
-    txt.puts "keyWrods=#@keyWords,locationType=#@locationType,cityType=#@cityType"
-  end
-end
-#end of KeyWords
-
-class TravelLine
-  def initialize(startCity, targetCity)
-    @startCity=startCity
-    @targetCity=targetCity
-  end
-
-  def toString()
-    txt.puts "startCity=#@startCity,targetCity=#@targetCity"
-  end
-
-end
- 
-class TravelLineService
-
-  def parseCity(remarks, flag)
-    txt = File.open("parseCity.txt","w")
-    txt.puts(Time.now)
-    startKeys = Array.new();
-
-    #位于目标城市的前面还是后面，1表示前面，2表示后面
-    #出发城市还是目的城市，1出发城市，3目的城市
-
-    startKeys[startKeys.size] = KeyWords.new("从", 1, 1);
-    startKeys[startKeys.size] = KeyWords.new("坐标", 1, 1)
-    startKeys[startKeys.size] = KeyWords.new("在", 1, 1)
-    startKeys[startKeys.size] = KeyWords.new("出发", 2, 1)
-    startKeys[startKeys.size] = KeyWords.new("-", 2, 1)
-    startKeys[startKeys.size] = KeyWords.new("往返", 1, 1)
-    startKeys[startKeys.size] = KeyWords.new("往返", 2, 1)
-    startKeys[startKeys.size] = KeyWords.new("到", 1, 3)
-    startKeys[startKeys.size] = KeyWords.new("到", 2, 1)#add by arilpan
-    startKeys[startKeys.size] = KeyWords.new("-", 1, 3)
-    startKeys[startKeys.size]= KeyWords.new("目的地", 1, 3)
-    startKeys[startKeys.size]= KeyWords.new("去", 1, 3)
-    startKeys[startKeys.size]= KeyWords.new("目的地：", 1, 3)
-    startKeys[startKeys.size]= KeyWords.new("游", 1, 3)
-    startKeys[startKeys.size]= KeyWords.new("游玩", 1, 3)
-    startKeys[startKeys.size]= KeyWords.new("游", 2, 3)
-    startKeys[startKeys.size]= KeyWords.new("游玩", 2, 3)
-    startKeys[startKeys.size]= KeyWords.new("同游", 2, 3)
-     
-    startKeys[startKeys.size]= KeyWords.new("玩起", 1, 3)
-    startKeys[startKeys.size]= KeyWords.new("集合", 1, 1)#2-1:start_city 1-1:before集合 
-    startKeys[startKeys.size]= KeyWords.new(" ", 1, 3)
-    startKeys[startKeys.size]= KeyWords.new(" ", 2, 3)
-    startKeys[startKeys.size]= KeyWords.new("结伴", 2, 3)
-    startKeys[startKeys.size]= KeyWords.new("结伴", 1, 3)
-    startKeys[startKeys.size]= KeyWords.new("往返", 1, 3)
-    startKeys[startKeys.size]= KeyWords.new("往返", 2, 3)
-    startKeys[startKeys.size]= KeyWords.new("自由行", 2, 3)
-    startKeys[startKeys.size]= KeyWords.new("启程", 1, 3)
-    startKeys[startKeys.size]= KeyWords.new("飞", 2, 1)
-    startKeys[startKeys.size]= KeyWords.new("飞", 1, 3)
-    #txt.puts startKeys.size #自增
-    cityArr = Array.new();
-    startKeys.each do |i|
-      #i.toString()
-      key = i.getKeyWords
-      loc = i.getLocation
-      type = i.getCityType
-
-
-      startCityLoc = remarks.index(key)
-
-      if (type == flag)
-        if (loc==1)
-          if (startCityLoc!=nil)
-            txt.puts "找到关键字位置在：#{startCityLoc}";
-            startCityName = remarks[startCityLoc+key.length, 2]
-#            puts "位于目标城市的前面："
-#            puts startCityName
-            txt.puts startCityName;
-
-            holeName = isValidCity(startCityName);
-            if (!isExist(cityArr, startCityName) && holeName != nil)
-#              puts "城市名称解析成功：#{holeName}"
-              txt.puts "解析到的城市名称：#{holeName}"
-              cityArr[cityArr.size] = holeName
-            end
-          else
-            txt.puts "没有找到关键字"
+        end
+      end
+    end
+    ####################################
+    if ((eflag==0) && (k==2))
+      if (arg =~ re)
+        mh = $1
+        $position_list.each do |p|
+          if mh.include? p
+            epos = p
+            eflag = 1
+            arg.gsub!(mh, "")
+            break
           end
+        end
+      end
+    end
+  end
+  #################################### 
+  if (eflag==0)
+    $position_list.each do |p|
+      if arg.include? p
+        epos = p
+        eflag = 1
+        break
+      end
+    end
+  end
+  puts "position_filter>spos #{spos} epos #{epos}"
+  return [spos, epos]
+end
+
+# match contact by pattern
+def contact_filter(arg)
+  ph = wx = qq = nil
+  $contact_map.each do |k, v|
+    re = Regexp.new(v)
+    ####################################
+    if (k==1)
+      if (arg =~ re)
+        k0 = $1
+        k1 = $2
+        k2 = $3
+        arg.gsub!(k0, "")
+        if (k1 && k1.size > 4)
+          ph = k1
+          arg.gsub!(k1, "")
+        end
+        if (k2 && k2.size > 4)
+          ph = k2
+          arg.gsub!(k2, "")
+        end
+      end
+    end
+    ####################################
+    if (k==2)
+      if (arg =~ re)
+        k0 = $1
+        k1 = $2
+        k2 = $3
+        arg.gsub!(k0, "")
+        if (k1 && k1.size > 4)
+          qq = k1
+          arg.gsub!(k1, "")
+        end
+        if (k2 && k2.size > 4)
+          qq = k2
+          arg.gsub!(k2, "")
+        end
+      end
+    end
+    ####################################
+    if (k==3)
+      if (arg =~ re)
+        k0 = $1
+        k1 = $2
+        k2 = $3
+        arg.gsub!(k0, "")
+        if (k1 && k1.size > 4)
+          wx = k1
+          arg.gsub!(k1, "")
+        end
+        if (k2 && k2.size > 4)
+          wx = k2
+          arg.gsub!(k2, "")
+        end
+      end
+    end
+    ####################################
+  end
+  puts "contact_filter>ph #{ph} wx #{wx} qq #{qq}"
+  return [ph, wx, qq]
+end
+
+# match date by pattern
+def date_filter(arg)
+  sdate = edate = nil
+  sflag = eflag = 0
+  sm = sd = em = ey = nil
+  sy = ey = $cur_year
+  $date_map.each do |k, v|
+    re = Regexp.new(v)
+    ####################################
+    if ((sflag==0) && (eflag==0) &&(k==1))
+      if (arg =~ re)
+        mh1 = $1
+        sdate = $holiday_map[mh1][0].to_s
+        edate = $holiday_map[mh1][1].to_s
+        sflag = eflag = 1
+      end
+    end
+    ####################################
+    if ((sflag==0) && (eflag==0) &&(k==2))
+      if (arg =~ re)
+        mh1 = $1
+        mh2 = $2
+        sm = em = $num_map.has_key?(mh1) ? $num_map[mh1] : mh1
+        sd = $general_map.has_key?(mh2) ? $general_map[mh2][0] : '01'
+        ed = $general_map.has_key?(mh2) ? $general_map[mh2][1] : '01'
+        sdate = sy.to_s + "-" + sm + "-" + sd
+        edate = ey.to_s + "-" + em + "-" + ed
+        sflag = eflag = 1
+      end
+    end
+    ####################################
+    if ((sflag==0) && (eflag==0) &&(k==3))
+      if (arg =~ re)
+        mh1 = $1
+        mh2 = $3
+        mh3 = $5
+        sm = em = $num_map.has_key?(mh1) ? $num_map[mh1] : mh1
+        sd = $num_map.has_key?(mh2) ? $day_hash[mh2] : mh2
+        ed = $num_map.has_key?(mh3) ? $day_hash[mh3] : mh3
+        sdate = sy.to_s + "-" + sm + "-" + sd
+        edate = ey.to_s + "-" + em + "-" + ed
+        sflag = eflag = 1
+      end
+    end
+    ####################################
+    if ((sflag==0) && (eflag==0) &&(k==4))
+      if (arg =~ re)
+        k1 = $1
+        k2 = $3
+        k3 = $5
+        k4 = $6
+        k5 = $7
+        k6 = $8
+        sm = $num_map.has_key?(k1) ? $num_map[k1] : k1
+        sd = $num_map.has_key?(k2) ? $num_map[k2] : k2
+        if (k3 =~ /-|~|\u6708|\u53F7/)
+          em = $num_map.has_key?(k4) ? $num_map[k4] : k4
+          ed = $num_map.has_key?(k6) ? $num_map[k6] : k6
         else
-          if (startCityLoc!=nil)
-            txt.puts "找到关键字位置在：#{startCityLoc}";
-            startCityName = remarks[startCityLoc-2, 2]
-
-#            puts "位于目标城市的后面："
-#            puts startCityName
-
-            holeName = isValidCity(startCityName);
-            if (!isExist(cityArr, startCityName) && holeName != nil)
-              txt.puts "解析到的城市名称：#{holeName}"
-              cityArr[cityArr.size] = holeName
-            end
-          else
-            #txt.puts "没有找到关键字"
-          end
+          em = $num_map.has_key?(k3) ? $num_map[k3] : k3
+          ed = $num_map.has_key?(k5) ? $num_map[k5] : k5
         end
+        sdate = sy.to_s + "-" + sm + "-" + sd
+        edate = ey.to_s + "-" + em + "-" + ed
+        sflag = eflag = 1
       end
     end
-    return cityArr;
+    ####################################
+    if ((sflag==0) && (eflag==0) &&(k==5))
+      if (arg =~ re)
+        k1 = $1
+        k2 = $3
+        sm = $num_map.has_key?(k1) ? $num_map[k1] : k1
+        sd = $num_map.has_key?(k2) ? $num_map[k2] : k2
+        sdate = sy.to_s + "-" + sm + "-" + sd
+        sflag = 1
+      end
+    end
+    ####################################
+  end
+  puts "date_filter>sdate #{sdate} edate #{edate}"
+  return [sdate, edate]
+end
+
+##################################################################################
+
+# init patterns
+get_num_map
+get_holiday_map
+get_general_map
+get_position_list
+get_position_map
+get_contact_map
+get_date_map
+get_cur_year
+
+# web site setting
+#types = Array(67..73)
+#type_maps = {67 => '大陆港澳台', 68 => '欧洲', 69 => '美洲', 70 => '非洲', 71 => '亚洲', 72 => '大洋洲', 73 => '无目的地'}
+#url1 = 'http://open.qyer.com/qyer/bbs/forum_thread_list?forum_id=2&page='
+#url2 = '&forum_type='
+#url3 = '&delcache=0&client_id=qyer_android&client_secret=9fcaae8aefc4f9ac4915'
+
+types = Array(1)
+url1 = 'http://open.qyer.com/qyer/bbs/forum_thread_list?forum_id=2&page='
+url2 = ''
+url3 = '&delcache=0&client_id=qyer_android&client_secret=9fcaae8aefc4f9ac4915'
+
+# global variable
+thetotal = 0
+ccount = 0
+sdcount = 0
+edcount = 0
+spcount = 0
+epcount = 0
+vcount = 0
+vratio = 0
+ucount = 0
+uratio = 0
+
+# main loop
+types.each do |t|
+  url = url1 + '0' + url2 + url3
+  #url = url1 + '0' + url2 + t.to_s + url3
+  #$txt.puts "#{url}"
+  resp = Net::HTTP.get_response(URI(url))
+  data = resp.body
+  result = JSON.parse(data)
+  total = result['data']['total']
+  page_num = total/10
+  $txt.puts "total page number #{page_num}"
+  last_thread = nil
+  (result['data']['entry']).each do |tid|
+    #type = type_maps[t]
+    time = Time.at(tid['lastpost']).strftime("%Y-%m-%d %H:%M:%S")
+    title = tid['title']
+    user = tid['username']
+    view = tid['view_url']+'?authorid='+tid['user_id'].to_s
+    if (last_thread == tid['view_url'])
+      break
+    else
+      last_thread = tid['view_url']
+    end
+    content = Net::HTTP.get_response(URI(view))
+    doc = Nokogiri::HTML(content.body)
+    d1 = doc.css('div.text').text
+    d2 = doc.css('td').text
+    #$txt.puts view
+    contact_arr = [nil, nil]
+    date_arr = [nil, nil]
+    pos_arr = [nil, nil]
+    # filters
+    arg1 = title
+    arg2 = d1
+    arg3 = d2
+    arg4 = title + d1 + d2
+    raw_data = arg4.gsub(/\s+/, "")
+    contact_arr = contact_filter(arg4)
+    # different content has different priority
+    t1 = date_filter(arg1)
+    t2 = date_filter(arg2)
+    t3 = date_filter(arg3)
+    if (t1[0])
+      date_arr[0] = t1[0];
+    elsif (t2[0])
+      date_arr[0] = t2[0];
+    elsif (t3[0])
+      date_arr[0] = t3[0];
+    end
+    if (t1[1])
+      date_arr[1] = t1[1];
+    elsif (t2[1])
+      date_arr[1] = t2[1];
+    elsif (t3[1])
+      date_arr[1] = t3[1];
+    end
+    # different content has different priority
+    p1 = position_filter(arg1)
+    p2 = position_filter(arg2)
+    p3 = position_filter(arg3)
+    if (p1[0])
+      pos_arr[0] = p1[0];
+    elsif (p2[0])
+      pos_arr[0] = p2[0];
+    elsif (p3[0])
+      pos_arr[0] = p3[0];
+    end
+    if (p1[1])
+      pos_arr[1] = p1[1];
+    elsif (p2[1])
+      pos_arr[1] = p2[1];
+    elsif (p3[1])
+      pos_arr[1] = p3[1];
+    end
+    if (contact_arr[0] || contact_arr[1] || contact_arr[2])
+      ccount +=1
+    end
+    if (date_arr[0])
+      sdcount +=1
+    end
+    if (date_arr[1])
+      edcount +=1
+    end
+    if (pos_arr[0])
+      spcount +=1
+    end
+    if (pos_arr[1])
+      epcount +=1
+    end
+    if ((contact_arr[0] || contact_arr[1] || contact_arr[2]) && date_arr[0] && pos_arr[0] && pos_arr[1])
+      #$txt.puts "记录: 手机:#{contact_arr[0]}微信:#{contact_arr[1]}QQ:#{contact_arr[2]}出发日:#{date_arr[0]}出发地:#{pos_arr[0]}目的地:#{pos_arr[1]}"
+      exec_insert_sql(view, pos_arr[0], pos_arr[1], date_arr[0], date_arr[1], title)
+      vcount +=1
+    end
+    if ((contact_arr[0] || contact_arr[1] || contact_arr[2]) && date_arr[0] && pos_arr[1])
+#      exec_insert_sql(view, pos_arr[1], date_arr[0], date_arr[1], title)      
+      ucount +=1
+    end
+    thetotal +=1
+    vratio = 100 * vcount.to_f/thetotal.to_f
+    uratio = 100 * ucount.to_f/thetotal.to_f
+    #$txt.puts "总记录数量: #{thetotal}\n有联系方式: #{ccount}\n有出发日期: #{sdcount}\n有回来日期: #{edcount}\n有出发城市: #{spcount}\n有目的城市: #{epcount}"
+    $txt.puts "总记录数量: #{thetotal}\n"
+    $txt.puts "-------------------------------------------------------------------------------------------------------------------------------"
+    $txt.puts "URL: #{view}"
+    $txt.puts "解析内容: #{raw_data}"
+    spos_v = pos_arr[0] ? pos_arr[0] : "解析失败"
+    epos_v = pos_arr[1] ? pos_arr[1] : "解析失败"
+    sdate_v = date_arr[0] ? date_arr[0] : "解析失败"
+    edate_v = date_arr[1] ? date_arr[1] : "解析失败"
+  $txt.puts "联系方式: 手机:#{contact_arr[0]}微信:#{contact_arr[1]}QQ:#{contact_arr[2]}"    
+    $txt.puts "出发城市: #{spos_v}"
+    $txt.puts "目的城市: #{epos_v}"
+    $txt.puts "出发日期: #{sdate_v}"
+    $txt.puts "回来日期: #{edate_v}"
+#    $txt.puts "-------------------------------------------------------------------------------------------------------------------------------"
+    $txt.puts "有效记录数: #{vcount} 记录占比: #{vratio}\%\n"
+    $txt.puts "半有效记录: #{ucount} 记录占比: #{uratio}\%\n"
   end
 
-
-def isExist(cityArr, cityName)
-    cityArr.each do |i|
-      if (cityName.eql? i)
-        return true
+  page_num.times do |i|
+    #url = url1 + i.to_s + url2 + t.to_s + url3
+    url = url1 + i.to_s + url2 + url3
+    #$txt.puts "#{url}"
+    resp = Net::HTTP.get_response(URI(url))
+    data = resp.body
+    result = JSON.parse(data)
+    (result['data']['entry']).each do |tid|
+      #type = type_maps[t]
+      time = Time.at(tid['lastpost']).strftime("%Y-%m-%d %H:%M:%S")
+      title = tid['title']
+      user = tid['username']
+      if (last_thread == tid['view_url'])
+        break
+      else
+        last_thread = tid['view_url']
       end
+      view = tid['view_url']+'?authorid='+tid['user_id'].to_s
+      content = Net::HTTP.get_response(URI(view))
+      doc = Nokogiri::HTML(content.body)
+      d1 = doc.css('div.text').text
+      d2 = doc.css('td').text
+      #$txt.puts "================================================"
+      #$txt.puts view
+      contact_arr = [nil, nil]
+      date_arr = [nil, nil]
+      pos_arr = [nil, nil]
+      # filters
+      arg1 = title
+      arg2 = d1
+      arg3 = d2
+      arg4 = title + d1 + d2
+      raw_data = arg4.gsub(/\s+/, "")
+      contact_arr = contact_filter(arg4)
+      # different content has different priority
+      t1 = date_filter(arg1)
+      t2 = date_filter(arg2)
+      t3 = date_filter(arg3)
+      if (t1[0])
+        date_arr[0] = t1[0];
+      elsif (t2[0])
+        date_arr[0] = t2[0];
+      elsif (t3[0])
+        date_arr[0] = t3[0];
+      end
+      if (t1[1])
+        date_arr[1] = t1[1];
+      elsif (t2[1])
+        date_arr[1] = t2[1];
+      elsif (t3[1])
+        date_arr[1] = t3[1];
+      end
+      # different content has different priority
+      p1 = position_filter(arg1)
+      p2 = position_filter(arg2)
+      p3 = position_filter(arg3)
+      if (p1[0])
+        pos_arr[0] = p1[0];
+      elsif (p2[0])
+        pos_arr[0] = p2[0];
+      elsif (p3[0])
+        pos_arr[0] = p3[0];
+      end
+      if (p1[1])
+        pos_arr[1] = p1[1];
+      elsif (p2[1])
+        pos_arr[1] = p2[1];
+      elsif (p3[1])
+        pos_arr[1] = p3[1];
+      end
+      if (contact_arr[0] || contact_arr[1] || contact_arr[2])
+        ccount +=1
+      end
+      if (date_arr[0])
+        sdcount +=1
+      end
+      if (date_arr[1])
+        edcount +=1
+      end
+      if (pos_arr[0])
+        spcount +=1
+      end
+      if (pos_arr[1])
+        epcount +=1
+      end
+      if ((contact_arr[0] || contact_arr[1] || contact_arr[2]) && date_arr[0] && pos_arr[0] && pos_arr[1])
+        vcount +=1
+        #$txt.puts "记录: 手机:#{contact_arr[0]}微信:#{contact_arr[1]}QQ:#{contact_arr[2]}出发日:#{date_arr[0]}出发地:#{pos_arr[0]}目的地:#{pos_arr[1]}"
+        exec_insert_sql(view, pos_arr[0], pos_arr[1], date_arr[0], date_arr[1], title)
+      end
+      if ((contact_arr[0] || contact_arr[1] || contact_arr[2]) && date_arr[0] && pos_arr[1])
+        ucount +=1
+      end
+      thetotal +=1
+      vratio = 100 * vcount.to_f/thetotal.to_f
+      uratio = 100 * ucount.to_f/thetotal.to_f
+      #$txt.puts "总记录数量: #{thetotal}\n有联系方式: #{ccount}\n有出发日期: #{sdcount}\n有回来日期: #{edcount}\n有出发城市: #{spcount}\n有目的城市: #{epcount}"
+      $txt.puts "总记录数量: #{thetotal}\n"
+      $txt.puts "-------------------------------------------------------------------------------------------------------------------------------"
+      $txt.puts "URL: #{view}"
+      $txt.puts "解析内容: #{raw_data}"
+      spos_v = pos_arr[0] ? pos_arr[0] : "解析失败"
+      epos_v = pos_arr[1] ? pos_arr[1] : "解析失败"
+      sdate_v = date_arr[0] ? date_arr[0] : "解析失败"
+      edate_v = date_arr[1] ? date_arr[1] : "解析失败"
+    $txt.puts "联系方式: 手机:#{contact_arr[0]}微信:#{contact_arr[1]}QQ:#{contact_arr[2]}"    
+      $txt.puts "出发城市: #{spos_v}"
+      $txt.puts "目的城市: #{epos_v}"
+      $txt.puts "出发日期: #{sdate_v}"
+      $txt.puts "回来日期: #{edate_v}"
+#      $txt.puts "-------------------------------------------------------------------------------------------------------------------------------"
+      $txt.puts "有效记录数: #{vcount} 记录占比: #{vratio}\%\n"
+      $txt.puts "半有效记录: #{ucount} 记录占比: #{uratio}\%\n"
     end
-    return false
+    sleep(1.0/100.0)
+    #if (thetotal%3000 == 0)
+    #  sleep(60)
+    #end
   end
-
-#get all lcitylist & countylist from db,then just check is it in it.
-#the contenient(have)--->the nations--->the citys
-#这个方法需要改为从数据库中去检索 判断根据关键字检索到的城市名称是否合法
-
-=begin
-def isValidCity(cityName,continent)
-       #sql = "select * from  `citylist` where continent=%#{continent}% and city=%#{cityName}%"
-       #puts sql;  
-       sql = "select * from  `citylist` where continent=? and city=?"
-       stmt=dbh.prepare(sql) 
-       stmt.execute(continent,cityName)
-       stmt.fetch do |row|
-       if(row!=nil )
-              if(row[0]!=nil&&row[0]!="")
-                    return cityName
-              end 
-       end
-              return nil
-       end
 end
 
-#最好采用预加载方式，先从数据库中读出来，然后在数组中查询
-def isValidCountry(countryName,continent)
-      sql = "select * from  `citylist` where continent=? and country=?"
-       #puts sql; 
-       stmt=dbh.prepare(sql) 
-       stmt.execute(continent,countryName)
-       stmt.fetch do |row|
-       if(row!=nil )
-              if(row[0]!=nil&&row[0]!="")
-                    return countryName
-              end 
-       end
-              return nil
-       end
-end
-=end
-
-def isValidCity(cityName)
-      if(nil == cityName || cityName == "")
-            return nil;
-      end
-       
-      #dbh = Mysql.real_connect("localhost","root","123456","kuailv-development",3306);
-      #dbh.query("SET NAMES utf8")
-      #stmt=dbh.prepare(sql)
-      cityArr = Array.new();
-      cityArr[cityArr.size] ="乌鲁木齐";
-      cityArr[cityArr.size] ="土耳其";
-      cityArr[cityArr.size] ="北京";
-      cityArr[cityArr.size] ="新疆";
-      cityArr[cityArr.size] ="西藏";
-      cityArr[cityArr.size] ="上海";
-      cityArr[cityArr.size] ="南京";
-      cityArr[cityArr.size] ="广州";
-      cityArr[cityArr.size] ="深圳";
-      cityArr[cityArr.size] ="香港";
-      cityArr[cityArr.size] ="泰国";
-      cityArr[cityArr.size] ="杭州";
-      cityArr[cityArr.size] ="韩国";
-      cityArr[cityArr.size] ="首尔";
-      cityArr[cityArr.size] ="欧洲";
-      cityArr[cityArr.size] ="香格里拉";
-      cityArr[cityArr.size] ="丽江";
-      cityArr[cityArr.size] ="尼泊尔";
-      cityArr[cityArr.size] ="柬埔寨";
-      cityArr[cityArr.size] ="云南";
-      cityArr[cityArr.size] ="昆明";
-      cityArr[cityArr.size] ="厦门";
-      cityArr[cityArr.size] ="日本";
-      cityArr[cityArr.size] ="拉萨";
-      cityArr[cityArr.size] ="三亚";
-      cityArr[cityArr.size] ="成都";
-      cityArr[cityArr.size] ="英国";
-      cityArr[cityArr.size] ="西藏";
-      cityArr[cityArr.size] ="台湾";
-      cityArr[cityArr.size] ="丽江";
-      cityArr[cityArr.size] ="成都";
-      cityArr[cityArr.size] ="林芝";
-      cityArr[cityArr.size] ="帕劳";  
-      cityArr[cityArr.size] ="稻城亚丁";
-      cityArr[cityArr.size] ="武汉";
-      cityArr[cityArr.size] ="澳大利亚";
-      cityArr[cityArr.size] ="俄罗斯";
-      cityArr[cityArr.size] ="冰岛";
-      cityArr[cityArr.size] ="斯里兰卡";
-      cityArr[cityArr.size] ="济南";
-
-
-      cityArr.each do |i|
-        if (i.include? cityName)
-          return i
-        end
-      end
-      return nil
-    end
-end
-
-f= File.new("detail.txt", "w")  #创建一个可写文件流 
-txt = File.open("qyer.txt","w")
-
-txt.puts(Time.now)
-$getPageTimes = 0;
-
-conn = Faraday.new(:url => "http://bbs.qyer.com") do |faraday|
-  faraday.request  :url_encoded             # form-encode POST params
-  faraday.adapter  :excon           # make requests with Net::HTTP
-  faraday.options[:timeout] = 200
-  faraday.options[:open_timeout] = 200
-end
-
-begin
-    $getPageTimes +=1;
-    response = conn.get "/forum-2-"+$getPageTimes.to_s+".html"     
-         #一级页面
-    doc = Nokogiri::HTML(response.body)
-
-      thevents = doc.css("#moderate > ul > li")
-        
-      #txt.puts "1.获得段落：#{thevents}"
-      #txt.puts "1.end获得段落"
-      li_in_onepage = thevents.count
-      txt.puts "list-num:#{li_in_onepage}"
-      #li_in_onepage = 1
-
-       li_in_onepage.times do |lid|
-      thevent = thevents[lid] 
-      thetitle = thevent.css("h3 a").text
-      puts "=========================================="
-      puts "帖子标题："
-      puts thetitle
-
-      #帖子的链接地址 
-      thelink = thevent.css("h3 a")[0]["href"]
-
-              #moderate > ul > li:nth-child(13) > div > p:nth-child(2) > a
-              nation = thevent.css("div > p:nth-child(2) > a").text
-#              p nation
-              #无目的地征同游  大陆港澳台征同游  欧洲征同游 美洲征同游 非洲征同游 亚洲征同游 大洋洲征同游  
-              nation = nation[0..(nation.index("征同游")-1)]
-              #txt.puts "nation:#{nation}"
-              #moderate > ul > li:nth-child(9) > div > p.info > span.sum
-              post_nums = thevent.css("div > p.info > span.sum").text
-
-
-              # div > p:nth-child(2) > span > a
-              author = thevent.css("div > p > span>a").text
-              #find the city according to the nation
-
-              #二级页面---获取多少页:post_nums/15+1
-              #thelink:thread-1070639-1.html-->thread-1070639-2.html
-              page_nums = post_nums.to_i/15
-              txt.puts "author:#{author}"
-              
-              #txt.puts "page_nums:#{page_nums}"
-              #txt.puts "post_nums:#{post_nums}"
-              txt.puts   "link ：#{thelink}"
-#              puts thelink
-
-              #arilpan:改成单独页面获取
-              post_count=-1
-              page_i=1
-              first_floor=1
-              contact_num=0
-              #while post_count.to_i < post_nums.to_i do
-=begin                    
-                    if(post_count == -1)
-                          post_count=1
-                    end
-                    if(page_i!=1)
-                          thelink.delete(".html").delete((page_i-1).to_s)
-                          thelink = thelink+page_i.to_s+".html"
-                    end
-=end              
-                    son_response = conn.get thelink.to_s
-                    #get content author -->analysice
-
-                    sondoc = Nokogiri::HTML(son_response.body)
-                    sonevents = sondoc.css("div.bbs_titboxs > div.bbs_titbox > h1").text
-                    #author=sondoc.css("#viewthread > div.bbs_titboxs > div > div > div > a.ml10").text
-#                     if(post_count == 1)
-                          txt.puts "title:#{nation}----#{sonevents.to_s}"
-#                    end
-                   
-                    #sonevents2= sondoc.css("#viewthread > div.bbs_titboxs > div > h1").text           
-                    #txt.puts "1.title2=:#{sonevents2}"
-                    #arilpan调用检索程序
-                    tl1 = TravelLineService.new()
-                    #remarks ="有木有想去土耳其自由行的小伙伴，本人坐标北京，最好是单身女青年，一起结伴游玩、拍照。年龄25+。出游时间4、5月。"
-                    #arilpan检索城市
-
-#                    sonevents = "有木有想去土耳其自由行的小伙伴，本人坐标北京，最好是单身女青年，一起结伴游玩、拍照。年龄25+。出游时间4、5月。"
-
-                    startCityArr = tl1.parseCity(sonevents, 1);
-                    targetCityArr = tl1.parseCity(sonevents, 3)
-                    if(startCityArr.size > 0)
-                            startCityArr.each do |i|
-                            if(targetCityArr.size > 0)
-                                     targetCityArr.each do |j|
-                                              if (!i.eql? j)
-                                                txt.puts "城市：#{i}-#{j}"
-                                                puts "出发&目的城市：#{i}-#{j}"
-                                              end
-                                    end
-                                    else
-                                      txt.puts "城市：#{i}-"
-                                      puts "出发&目的城市：：#{i}- NULL "
-                                    end
-                            end
-                            end
-                            if(targetCityArr.size > 0)
-                                      targetCityArr.each do |i|
-                                                if(startCityArr.size > 0)
-                                                        startCityArr.each do |j|
-                                                                  if (!i.eql? j)
-                                                                    txt.puts "城市：#{i}-#{j}"
-                                                                    puts "出发&目的城市：#{i}-#{j}"
-                                                                  end
-                                                        end
-                                                else
-                                                  txt.puts "地点分析：-#{i}"
-                                                  puts "出发&目的城市：NULL -#{i}"
-                                      end
-                              end
-                    end
-
-                 
-#                    list = sondoc.css("#postlist");
-#                    contents= list.css("div div div:nth-child(2) td")
-#                    contents = list.css("div.bbs_postview div.bbs_txtbox table tr td")
-
-#                    persons= list.css("div div div:nth-child(1) div.userinfo a")
-
-#                    puts contents[0].text 
-
-#                    f.puts contents.length
-#                    times=0
-#                    f.puts persons
-                    #arilpan:nil error
-#                    if persons!=nil
-
-                            #先拆分，然后根据楼层和用户名判断是谁说的话，提取联系方式
-#                           while times< contents.length  do
-#                                  content = contents[times].text.lstrip.rstrip
-#                                  content = contents[0].text.lstrip.rstrip
-#                                  puts content
-#                                  person = persons[times].text
-
-#                                  content_info = getTravel(content)
-#                                  puts content_info
-                                 
-#                                  if(author == person)
-                                        #city time & wechat
-#                                        p getTravel(content);
-#                                  end
-#                                  getContact(content)
-                                  #contact_info=getContact(person,content)
-                                  #contact_num=contact_num+contact_info[0,1].to_i
-                                 # contact_info=contact_info[1,contact_info.length-1]
-#                                  f.puts person
-#                                  f.puts content
-
-=begin
-                                   if(first_floor==1)
-                                                  txt.puts "发帖内容：#{content}"
-                                                  first_floor=0
-                                                  #txt.puts "联系分析:#{contact_info}"
-                                                  content_info=  getTravel(content)
-                                                  city_nums = content_info[0,1].to_i
-                                                  txt.puts content_info[1,content_info.length-1]
-
-                                  end
-=end
-
-#                                  times=times+1
-#                          end
-#                    end
-                    title = sonevents;
-                    #各种节假日 年月日正则匹配！！！
-                    
-                    data_set=Set.new
-                    holiday = Array["五一","十一","国庆","元旦","端午","中秋","清明","元宵","春节","重阳","除夕","情人","狂欢","愚人","开斋","圣诞"];
-                    regSt  = /(2015[年,\-,\/,\.])?(15[年,\-,\/,\.])?{0,1}(([1-2]{0,1}[0-9])|.)(月|\-|\/|\.)(\d{0,2})(日|号){0,1}/;
-                    regEn = /(2015[年,\-,\/,\.])?(15[年,\-,\/,\.])?{0,1}(([1-2]{0,1}[0-9])(月|\-|\/|\.)){0,1}(\d+)(日|号|月){0,1}/;
-                    #arilpan  '共13天'  '13天后返回'
-                    #匹配第一个
-                    startDt = regSt.match(title);
-                    if (startDt !=nil)
-                         #txt.puts "startDt:"
-                         #txt.puts startDt[0];
-                         startDtStr = startDt[0];
-                         data_set.add(startDtStr)
-                         loc = title=~regSt;
-                         #txt.puts "loc+startDtStr.length:"
-                         #txt.puts loc+startDtStr.length
-                          endDtStr = nil;
-                          if (nil != startDtStr && startDtStr !="")
-                          leftStr = title[loc+startDtStr.length, title.length]
-                          #txt.puts "leftStr:"
-                          #txt.puts leftStr
-                          endDt = leftStr.match(regEn)
-                          if (endDt !=nil)
-                                endDtStr = endDt[0];
-                                   # txt.puts  "endDtStr:#{endDtStr}"
-                                    after_data_position=leftStr.index(endDtStr)+endDtStr.length
-                                   # txt.puts "leftStr[after_data_position, 1] #{leftStr[after_data_position, 1] }"
-                                    if (leftStr[after_data_position, 1] == "天"&&(/[0-9]/.match(leftStr[after_data_position-1, 1]  )!=nil))
-                                           endDtStr = endDtStr+"天后" ;
-                                           # /abc/.match('cdg') 
-                                    end
-
-                           #arilpan如果后面是如28日|号 前面也是5日|号 则判断位月份到达日期;如果后面是天，则加上日期
-                           #txt.puts "endDtStr[0,1]:"
-                           #txt.puts endDtStr[0, 1];
-                           # i can't understand this
-                                  if (endDtStr[0, 1] == "-" || endDtStr[0, 1] == "到")
-                                        endDtStr = endDtStr[1, endDtStr.length];
-                                  end
-                                   
-                           end
-                        end
-                      
-                    else
-                          holiday.each do |i|
-                                  if(title.include?i)
-                                       #txt.puts "启程:#{i}--返程:";
-                                       data_set.add(i)
-                                  end
-                           end
-                    end
-                    data_set_string=""
-                    data_set.each {|x|  data_set_string=data_set_string+ x }
-                   
-                    if(post_count ==  1)
-                            #txt.puts "日期分析：#{startDtStr}到#{endDtStr}-";
-                            txt.puts "日期分析："+data_set_string 
-                            puts "日期：#{data_set_string}"
-                    end
-
-                    post_count=post_count+15
-                    page_i=page_i+1 
-              #end 
-
-              records_num=post_nums.to_i+1
-              data_num=data_set.length
-#              txt.puts "一共分析了#{records_num}个记录，日期成功分析#{data_num}个，地点成功分析#{city_nums}个，联系方式成功分析#{contact_num}个。"
-              txt.puts "-----------------------------------------------------------------------------------------------"
-      end 
- 
-#end while li_in_onepage >=3
-end while $getPageTimes <1
-
-
-
-=begin
-txt.close
-stmt.close if stmt
-dbh.close if dbh
-=end
+# close handle
+$txt.close if $txt
+$ins.close if $ins
+$dbh.close if $dbh
