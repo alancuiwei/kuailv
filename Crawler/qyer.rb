@@ -15,7 +15,7 @@ $ins = File.open("qyer_insert.sql", "w")
 # mysql handle
 #$dbh = nil
 #$dbh = Mysql.real_connect("localhost", "root", "zhongren#1234", "kuailv-production", 3306);
-$dbh = Mysql.real_connect("localhost", "root", "zhongren#1234", "kuailv-development", 3306);
+$dbh = Mysql.real_connect("localhost", "root", "zhongren#1234", "kuailv-production", 3306);
 
 # write insert sql as a file
 def gen_insert_file(a1, a2, a3, a4, a5, a6)
