@@ -7,6 +7,11 @@
     <link rel="stylesheet" href="css/Site20150525.css">
   <title></title>
   <script type="text/javascript">
+
+     $(function(){
+     $("link").attr("href","/assets/Site20150525.css")
+     })
+  
      $(document).scroll(function(){
        var scroolY=$(window).scrollTop();
        var len=$(".contenty .list").length;
@@ -34,7 +39,7 @@
             <a href="#"><%= image_tag "20150525/1.jpg",alt:"#1fca7c",name:"" %></a>                   
         </div>
         <div class="swiper-slide">
-            <a href="#"><%= image_tag "20150525/2.jpg",alt:"#2dbcff",name:"20150525/bg.png" %></a>                
+            <a href="#"><%= image_tag "20150525/2.jpg",alt:"#2dbcff",name:"assets/20150525/bg.png" %></a>                
         </div>
     <div class="swiper-slide">
             <a href="#"><%= image_tag "20150525/3.jpg",alt:"#29b7c5",name:"" %></a>                   
@@ -85,7 +90,7 @@ $(function(){
                   <div class="a1">
                       <div class="a1L"><%= image_tag "20150525/a1.png"%></div>
                       <div class="a1R">
-                          <p><strong>快驴</strong> 最快的方式,找到小伙伴,拼吃拼住出国玩.</p>
+                          <p><strong>快驴</strong> 最快的方式,找到小伙伴,拼吃拼住出国玩</p>
                             <div class="a1R1">
                               <%= image_tag "20150525/a2.png"%>
                               <%= image_tag "20150525/a3.png"%>
