@@ -15,7 +15,7 @@ $ins = File.open("qyer_insert.sql", "w")
 # mysql handle
 #$dbh = nil
 #$dbh = Mysql.real_connect("localhost", "root", "zhongren#1234", "kuailv-production", 3306);
-$dbh = Mysql.real_connect("localhost", "root", "zhongren#1234", "kuailv-production", 3306);
+$dbh = Mysql.real_connect("localhost", "root", "zhongren#1234", "kuailv-development", 3306);
 
 # write insert sql as a file
 def gen_insert_file(a1, a2, a3, a4, a5, a6)
@@ -117,7 +117,30 @@ def position_filter(arg)
   $position_map.each do |k, v|
     re = Regexp.new(v)
     ####################################
-    if ((sflag==0) && (k==1))
+    if ((sflag==0) && (eflag==0) && (k==1))
+      if (arg =~ re)
+        mh1 = $1
+		mh2 = $2
+        $position_list.each do |p|
+          if mh1.include? p
+            spos = p
+            sflag = 1
+            arg.gsub!(mh1, "")
+            break
+          end
+        end
+        $position_list.each do |p|
+          if mh2.include? p
+            epos = p
+            eflag = 1
+            arg.gsub!(mh2, "")
+            break
+          end
+        end
+      end
+    end
+    ####################################
+    if ((sflag==0) && (k==2))
       if (arg =~ re)
         mh = $1
         $position_list.each do |p|
@@ -131,7 +154,7 @@ def position_filter(arg)
       end
     end
     ####################################
-    if ((eflag==0) && (k==2))
+    if ((eflag==0) && (k==3))
       if (arg =~ re)
         mh = $1
         $position_list.each do |p|
@@ -144,8 +167,23 @@ def position_filter(arg)
         end
       end
     end
+    ####################################
+    if ((eflag==0) && (k==4))
+      if (arg =~ re)
+        mh = $1
+        $position_list.each do |p|
+          if mh.include? p
+            epos = p
+            eflag = 1
+            arg.gsub!(mh, "")
+            break
+          end
+        end   
+      end
+    end
+    ####################################
   end
-  #################################### 
+
   if (eflag==0)
     $position_list.each do |p|
       if arg.include? p
@@ -242,7 +280,7 @@ def date_filter(arg)
     if ((sflag==0) && (eflag==0) &&(k==2))
       if (arg =~ re)
         mh1 = $1
-        mh2 = $2
+        mh2 = $3
         sm = em = $num_map.has_key?(mh1) ? $num_map[mh1] : mh1
         sd = $general_map.has_key?(mh2) ? $general_map[mh2][0] : '01'
         ed = $general_map.has_key?(mh2) ? $general_map[mh2][1] : '01'
@@ -378,6 +416,7 @@ types.each do |t|
     arg3 = d2
     arg4 = title + d1 + d2
     raw_data = arg4.gsub(/\s+/, "")
+    arg4.gsub!(/\s+/, "")
     contact_arr = contact_filter(arg4)
     # different content has different priority
     t1 = date_filter(arg1)
@@ -430,7 +469,8 @@ types.each do |t|
     if (pos_arr[1])
       epcount +=1
     end
-    if ((contact_arr[0] || contact_arr[1] || contact_arr[2]) && date_arr[0] && pos_arr[0] && pos_arr[1])
+#    if ((contact_arr[0] || contact_arr[1] || contact_arr[2]) && date_arr[0] && pos_arr[0] && pos_arr[1])
+    if (date_arr[0] && pos_arr[0] && pos_arr[1])
       #$txt.puts "记录: 手机:#{contact_arr[0]}微信:#{contact_arr[1]}QQ:#{contact_arr[2]}出发日:#{date_arr[0]}出发地:#{pos_arr[0]}目的地:#{pos_arr[1]}"
       exec_insert_sql(view, pos_arr[0], pos_arr[1], date_arr[0], date_arr[1], title)
       vcount +=1
@@ -494,6 +534,7 @@ types.each do |t|
       arg3 = d2
       arg4 = title + d1 + d2
       raw_data = arg4.gsub(/\s+/, "")
+      arg4.gsub!(/\s+/, "")
       contact_arr = contact_filter(arg4)
       # different content has different priority
       t1 = date_filter(arg1)
@@ -546,7 +587,8 @@ types.each do |t|
       if (pos_arr[1])
         epcount +=1
       end
-      if ((contact_arr[0] || contact_arr[1] || contact_arr[2]) && date_arr[0] && pos_arr[0] && pos_arr[1])
+#      if ((contact_arr[0] || contact_arr[1] || contact_arr[2]) && date_arr[0] && pos_arr[0] && pos_arr[1])
+      if (date_arr[0] && pos_arr[0] && pos_arr[1])
         vcount +=1
         #$txt.puts "记录: 手机:#{contact_arr[0]}微信:#{contact_arr[1]}QQ:#{contact_arr[2]}出发日:#{date_arr[0]}出发地:#{pos_arr[0]}目的地:#{pos_arr[1]}"
         exec_insert_sql(view, pos_arr[0], pos_arr[1], date_arr[0], date_arr[1], title)
