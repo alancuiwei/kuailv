@@ -3,7 +3,7 @@ body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fiel
 margin:0;
 padding:0;
 }
-.new20150525{background-color:#FFF;font-family: "Hiragino Sans GB,sans-serif";}
+.new20150525{background-color:#FFF;font-family: "Hiragino Sans GB,sans-serif";min-width:1200px; overflow-x:hidden}
 body{ background-color:#FFF;font-family: "Hiragino Sans GB,sans-serif";}
 .new20150525 a{
 	text-decoration: none;
