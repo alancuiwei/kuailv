@@ -162,34 +162,34 @@ body{ background-color:#FFF;font-family: "Hiragino Sans GB,sans-serif";}
 .new20150525 .contenty .list.no4.dq .conter .wrap .verticalWrap .vertical .a1 .a1L .tagico a{-webkit-animation:animationBT 2s both;animation:animationBT 2s both;animation-delay:0.5s;}
 @keyframes animation1a
 {
-0% {  opacity:0; transform:translateX(-200px) }
+0% {  opacity:0; transform:translateX(-100px) }
 100%{ opacity:1;transform:translateX(0px)}
 }
 @-webkit-keyframes animation1a
 {
-0% {  -webkit-opacity:0; -webkit-transform:translateX(-200px) }
+0% {  -webkit-opacity:0; -webkit-transform:translateX(-100px) }
 100%{ -webkit-opacity:1;-webkit-transform:translateX(0px)}
 }
 
 @keyframes animation1ax
 {
-0% {  opacity:0; transform:translateX(200px) }
+0% {  opacity:0; transform:translateX(100px) }
 100%{ opacity:1;transform:translateX(0px)}
 }
 @-webkit-keyframes animation1ax
 {
-0% {  -webkit-opacity:0; -webkit-transform:translateX(200px) }
+0% {  -webkit-opacity:0; -webkit-transform:translateX(100px) }
 100%{ -webkit-opacity:1;-webkit-transform:translateX(0px)}
 }
 
 @keyframes animation1
 {
-0% {  opacity:0; transform:translateY(-200px) }
+0% {  opacity:0; transform:translateY(-100px) }
 100%{ opacity:1;transform:translateY(0px)}
 }
 @-webkit-keyframes animation1
 {
-0% {  -webkit-opacity:0; -webkit-transform:translateY(-200px)}
+0% {  -webkit-opacity:0; -webkit-transform:translateY(-100px)}
 100%{ -webkit-opacity:1;-webkit-transform:translateY(0px)}
 }
 
@@ -236,5 +236,4 @@ body{ background-color:#FFF;font-family: "Hiragino Sans GB,sans-serif";}
 0% {  -webkit-opacity:0; -webkit-transform:translate(200px,0px) rotate(360deg) }
 100%{ -webkit-opacity:1;-webkit-transform:translate(0,0) rotate(0deg)}
 }
-
 .contenty{min-width:1200px;}
