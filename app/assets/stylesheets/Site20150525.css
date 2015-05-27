@@ -96,7 +96,7 @@ body{ background-color:#FFF;font-family: "Hiragino Sans GB,sans-serif";}
 .new20150525 .verticalWrap{*position:absolute;*top:50%;}
 .new20150525 .vertical{*position:relative;*top:-50%;}
 
-
+.new20150525 .contenty{ background-color:#FFF}
 .new20150525 .contenty .list{min-width:1200px;}
 .new20150525 .contenty .list .conter{ position:relative}
 .new20150525 .contenty .list .conter .tag{
